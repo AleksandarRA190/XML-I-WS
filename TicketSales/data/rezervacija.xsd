@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://booking.uns.ac.rs/rezervacija"
+    xmlns:korisnici="http://booking.uns.ac.rs/korisnici"
+    xmlns:rez="http://booking.uns.ac.rs/rezervacija"
+    xmlns:smestaj="http://booking.uns.ac.rs/smestaj">
+
+    <xs:import namespace="http://booking.uns.ac.rs/korisnici" schemaLocation="korisnici.xsd"/>
+    <xs:import namespace="http://booking.uns.ac.rs/smestaj" schemaLocation="smestaj.xsd"/>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="korisnici:Krajnji_korisnik"/>
+                <xs:element ref="smestaj:Smestajna_jedinica"/>
+                <xs:element name="Od_datuma" type="xs:dateTime"/>
+                <xs:element name="Do_datuma" type="xs:dateTime"/>
+                <xs:element name="Potvrdjeno" type="xs:boolean"/>
+                <xs:element name="konverzacija" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" ref="rez:Poruka"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="Komentar_ocena">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="Komentar">
+                                <xs:complexType>
+                                    <xs:attribute name="Odobren" type="xs:boolean"/>
+                                    <xs:attribute name="Sadrzaj" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Ocena">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                        <xs:enumeration value="4"/>
+                                        <xs:enumeration value="5"/>
+                                        <xs:enumeration value="0"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Datum_vreme" type="xs:dateTime"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Poruka">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Sadrzaj" type="xs:string"/>
+                <xs:element name="Primalac" type="korisnici:TKorisnik"/>
+                <xs:element name="Posiljalac" type="korisnici:TKorisnik"/>
+                <xs:element name="Procitana" type="xs:boolean"/>
+            </xs:sequence>
+            <xs:attribute name="Datum_vreme" type="xs:dateTime"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
