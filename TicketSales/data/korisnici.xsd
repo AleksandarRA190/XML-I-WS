@@ -1,50 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://booking.uns.ac.rs/korisnici"
-    xmlns:korisnici="http://booking.uns.ac.rs/korisnici">
-    <xs:element name="Adresa">
+    targetNamespace="http://booking.uns.ac.rs/users" xmlns:users="http://booking.uns.ac.rs/users">
+    <xs:element name="Address">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Drzava" type="xs:string"/>
-                <xs:element name="Mesto" type="xs:string"/>
-                <xs:element name="Postanski_broj" type="xs:int"/>
-                <xs:element name="Ulica" type="xs:string"/>
-                <xs:element name="Broj" type="xs:string"/>
-                <xs:element minOccurs="0" name="Broj_stana" type="xs:string"/>
-                <xs:element name="Geografska_sirina" type="xs:float"/>
-                <xs:element name="Geografska_duzina" type="xs:float"/>
+                <xs:element name="Country" type="xs:string"/>
+                <xs:element name="City" type="xs:string"/>
+                <xs:element name="Postal_code" type="xs:int"/>
+                <xs:element name="Street" type="xs:string"/>
+                <xs:element name="Number" type="xs:string"/>
+                <xs:element minOccurs="0" name="Apartment_number" type="xs:string"/>
+                <xs:element name="Longitude" type="xs:double"/>
+                <xs:element name="Latitude" type="xs:double"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType abstract="true" name="TKorisnik">
+    <xs:complexType name="User">
         <xs:sequence>
-            <xs:element name="Ime" type="xs:string"/>
-            <xs:element name="Prezime" type="xs:string"/>
-            <xs:element ref="korisnici:Adresa"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Lastname" type="xs:string"/>
             <xs:element name="Email" type="xs:string"/>
+            <xs:element name="Username" type="xs:string"/>
+            <xs:element name="Password" type="xs:string"/>
+            <xs:element name="Id" type="xs:long"/>
+            <xs:element name="Enabled" type="xs:boolean"/>
+            <xs:element name="Deleted" type="xs:boolean"/>
+            <xs:element name="Role" type="xs:string"/>
+            <xs:element ref="users:Address"/>
+            <xs:element name="Bussines_registration_number" type="xs:long"/>
+            <xs:element name="Blocked" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TAdmin">
-        <xs:complexContent>
-            <xs:extension base="korisnici:TKorisnik">
-                <xs:sequence>
-                    <xs:element name="Poslovni_maticni_broj"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="TAgent">
-        <xs:complexContent>
-            <xs:extension base="korisnici:TKorisnik"/>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="TKrajnjiKorisnik">
-        <xs:complexContent>
-            <xs:extension base="korisnici:TKorisnik"/>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:element name="Admin" type="korisnici:TAdmin"/>
-    <xs:element name="Korisnik" type="korisnici:TKorisnik"/>
-    <xs:element name="Agent" type="korisnici:TAgent"/>
-    <xs:element name="Krajnji_korisnik" type="korisnici:TKrajnjiKorisnik"/>
 </xs:schema>

@@ -1,69 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://booking.uns.ac.rs/smestaj"
-    xmlns:smestaj="http://booking.uns.ac.rs/smestaj"
-    xmlns:korisnici="http://booking.uns.ac.rs/korisnici">
+    targetNamespace="http://booking.uns.ac.rs/accommodation"
+    xmlns:accommodation="http://booking.uns.ac.rs/accommodation"
+    xmlns:users="http://booking.uns.ac.rs/users">
 
-    <xs:import namespace="http://booking.uns.ac.rs/korisnici" schemaLocation="korisnici.xsd"/>
-    <xs:element name="Smestaj">
+    <xs:import namespace="http://booking.uns.ac.rs/users" schemaLocation="korisnici.xsd"/>
+    <xs:element name="Accommodation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Tip_smestaja">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="hotel"/>
-                            <xs:enumeration value="apartman"/>
-                            <xs:enumeration value="hostel"/>
-                            <xs:enumeration value="motel"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="usluge">
+                <xs:element name="services">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Usluga">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="parking"/>
-                                        <xs:enumeration value="wi-fi"/>
-                                        <xs:enumeration value="wellness_and_spa"/>
-                                        <xs:enumeration value="tv"/>
-                                        <xs:enumeration value="mini_kuhinja"/>
-                                        <xs:enumeration value="kuhinja"/>
-                                        <xs:enumeration value="polupansion"/>
-                                        <xs:enumeration value="pansion"/>
-                                        <xs:enumeration value="all_inclusive"/>
-                                        <xs:enumeration value="dorucak"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element ref="accommodation:Service"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Opis" type="xs:string"/>
-                <xs:element name="Naziv" type="xs:string"/>
-                <xs:element name="slike">
+                <xs:element name="Description" type="xs:string"/>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="images">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Slika" type="xs:byte"/>
+                            <xs:element name="Image" type="xs:byte"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="smestajne_jedinice">
+                <xs:element name="accommodation_units">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="smestaj:Smestajna_jedinica"/>
+                            <xs:element ref="accommodation:Accommodation_unit"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="agenti">
+                <xs:element name="agents">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="korisnici:Agent"/>
+                            <xs:element name="Agent" type="users:User"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Kategorija_smestaja">
+                <xs:element name="Category">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:enumeration value="1"/>
@@ -71,37 +46,61 @@
                             <xs:enumeration value="3"/>
                             <xs:enumeration value="4"/>
                             <xs:enumeration value="5"/>
-                            <xs:enumeration value="nekategorisano"/>
+                            <xs:enumeration value="uncategorised"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element ref="korisnici:Adresa"/>
+                <xs:element ref="users:Address"/>
+                <xs:element ref="accommodation:Accommodation_type"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Smestajna_jedinica">
+    <xs:element name="Accommodation_unit">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Sprat" type="xs:int"/>
-                <xs:element name="Broj" type="xs:string"/>
-                <xs:element name="Broj_kreveta" type="xs:int"/>
-                <xs:element minOccurs="0" name="Podrazumevana_cena" type="xs:double"/>
-                <xs:element name="terminske_cene">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element ref="smestaj:Terminska_cena"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Floor" type="xs:int"/>
+                <xs:element name="Number" type="xs:string"/>
+                <xs:element name="Number_of_beds" type="xs:int"/>
+                <xs:element minOccurs="0" name="Default_price" type="xs:double"/>
+                <xs:element ref="accommodation:Period_price"/>
+                <xs:element ref="accommodation:Accommodation_unit_type"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Terminska_cena">
+    <xs:element name="Period_price">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Od_datuma" type="xs:dateTime"/>
-                <xs:element name="Do_datuma" type="xs:dateTime"/>
-                <xs:element name="Iznos" type="xs:double"/>
+                <xs:element name="From_date" type="xs:dateTime"/>
+                <xs:element name="To_date" type="xs:dateTime"/>
+                <xs:element name="Price" type="xs:double"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Accommodation_type">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Service">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Description" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Accommodation_unit_type">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

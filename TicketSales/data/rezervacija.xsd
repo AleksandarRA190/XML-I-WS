@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://booking.uns.ac.rs/rezervacija"
-    xmlns:korisnici="http://booking.uns.ac.rs/korisnici"
-    xmlns:rez="http://booking.uns.ac.rs/rezervacija"
-    xmlns:smestaj="http://booking.uns.ac.rs/smestaj">
+    targetNamespace="http://booking.uns.ac.rs/reservation"
+    xmlns:accommodation="http://booking.uns.ac.rs/accommodation"
+    xmlns:reservation="http://booking.uns.ac.rs/reservation"
+    xmlns:users="http://booking.uns.ac.rs/users">
 
-    <xs:import namespace="http://booking.uns.ac.rs/korisnici" schemaLocation="korisnici.xsd"/>
-    <xs:import namespace="http://booking.uns.ac.rs/smestaj" schemaLocation="smestaj.xsd"/>
-    <xs:element name="Rezervacija">
+    <xs:import namespace="http://booking.uns.ac.rs/users" schemaLocation="korisnici.xsd"/>
+    <xs:import namespace="http://booking.uns.ac.rs/accommodation" schemaLocation="smestaj.xsd"/>
+    <xs:element name="Reservation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="korisnici:Krajnji_korisnik"/>
-                <xs:element ref="smestaj:Smestajna_jedinica"/>
-                <xs:element name="Od_datuma" type="xs:dateTime"/>
-                <xs:element name="Do_datuma" type="xs:dateTime"/>
-                <xs:element name="Potvrdjeno" type="xs:boolean"/>
-                <xs:element name="konverzacija" minOccurs="0">
+                <xs:element name="From_date" type="xs:dateTime"/>
+                <xs:element name="To_date" type="xs:dateTime"/>
+                <xs:element name="Confirmed" type="xs:boolean"/>
+                <xs:element name="conversation" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element minOccurs="0" ref="rez:Poruka"/>
+                            <xs:element ref="reservation:Message"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element minOccurs="0" name="Komentar_ocena">
+                <xs:element minOccurs="0" name="Comment_rate">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element minOccurs="0" name="Komentar">
@@ -47,16 +45,20 @@
                         <xs:attribute name="Datum_vreme" type="xs:dateTime"/>
                     </xs:complexType>
                 </xs:element>
+                <xs:element ref="accommodation:Accommodation_unit"/>
+                <xs:element name="Guest"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Poruka">
+    <xs:element name="Message">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Sadrzaj" type="xs:string"/>
-                <xs:element name="Primalac" type="korisnici:TKorisnik"/>
-                <xs:element name="Posiljalac" type="korisnici:TKorisnik"/>
-                <xs:element name="Procitana" type="xs:boolean"/>
+                <xs:element name="Message_content" type="xs:string"/>
+                <xs:element name="Seen" type="xs:boolean"/>
+                <xs:element name="Sender" type="users:User"/>
+                <xs:element name="Reciever" type="users:User"/>
+                <xs:element name="Id" type="xs:long"/>
             </xs:sequence>
             <xs:attribute name="Datum_vreme" type="xs:dateTime"/>
         </xs:complexType>
