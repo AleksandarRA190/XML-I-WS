@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/address"
+	targetNamespace="http://www.projectXml.com/address"
+	elementFormDefault="qualified">
+
+
+	<xs:element name="getAddressRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getAddressResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="address" type="tns:address" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAddressRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="address" type="tns:address" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAddressResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="address">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="City" type="xs:string" />
+			<xs:element name="Postal_code" type="xs:int" />
+			<xs:element name="Street" type="xs:string" />
+			<xs:element name="Number" type="xs:string" />
+			<xs:element minOccurs="0" name="Apartment_number" type="xs:string" />
+			<xs:element name="Longitude" type="xs:double" />
+			<xs:element name="Latitude" type="xs:double" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>
