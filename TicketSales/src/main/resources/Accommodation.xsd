@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/accommodation"
+	targetNamespace="http://www.projectXml.com/accommodation"
+	elementFormDefault="qualified">
+
+
+	<xs:element name="getAccommodationRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getAccommodationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodation" type="tns:accommodation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="addAccommodationRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodation" type="tns:accommodation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAccommodationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodation" type="tns:accommodation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="updateAccommodationRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+				<xs:element name="accommodation" type="tns:accommodation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="removeAccommodationRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="accommodation">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" />
+			<xs:element name="Name" type="xs:string" />
+			<xs:element name="Category" type="xs:int" />
+			<xs:element name="Address" type="tns:address" />
+			<xs:element name="AccommodationType" type="tns:accommodationType" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="address">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="City" type="xs:string" />
+			<xs:element name="Postal_code" type="xs:int" />
+			<xs:element name="Street" type="xs:string" />
+			<xs:element name="Number" type="xs:string" />
+			<xs:element minOccurs="0" name="Apartment_number" type="xs:string" />
+			<xs:element name="Longitude" type="xs:double" />
+			<xs:element name="Latitude" type="xs:double" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodationType">
+		<xs:sequence>
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Name" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://booking.uns.ac.rs/users" xmlns:users="http://booking.uns.ac.rs/users"
+    xmlns:accommodation="http://booking.uns.ac.rs/accommodation"
+    xmlns:reservation="http://booking.uns.ac.rs/reservation"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0" attributeFormDefault="unqualified">
+    <xs:import namespace="http://booking.uns.ac.rs/accommodation" schemaLocation="smestaj.xsd"/>
+    <xs:import namespace="http://booking.uns.ac.rs/reservation" schemaLocation="rezervacija.xsd"/>
+    <xs:element name="Address">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Country" type="xs:string"/>
+                <xs:element name="City" type="xs:string"/>
+                <xs:element name="Postal_code" type="xs:int"/>
+                <xs:element name="Street" type="xs:string"/>
+                <xs:element name="Number" type="xs:string"/>
+                <xs:element minOccurs="0" name="Apartment_number" type="xs:string"/>
+                <xs:element name="Longitude" type="xs:double"/>
+                <xs:element name="Latitude" type="xs:double"/>
+                <xs:element name="Id" type="xs:long"/>
+                <xs:element name="Deleted" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="User">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Lastname" type="xs:string"/>
+            <xs:element name="Email" type="xs:string"/>
+            <xs:element name="Username" type="xs:string"/>
+            <xs:element name="Password" type="xs:string"/>
+            <xs:element name="Id" type="xs:long"/>
+            <xs:element name="Enabled" type="xs:boolean"/>
+            <xs:element name="Deleted" type="xs:boolean"/>
+            <xs:element ref="users:Address"/>
+            <xs:element name="Bussines_registration_number" type="xs:long" minOccurs="0"/>
+            <xs:element name="Blocked" type="xs:boolean"/>
+            <xs:element minOccurs="0" ref="accommodation:Accommodation"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="reservation:Reservation">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:property name="reservations"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="users:Role"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Role">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Id" type="xs:long"/>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Deleted" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

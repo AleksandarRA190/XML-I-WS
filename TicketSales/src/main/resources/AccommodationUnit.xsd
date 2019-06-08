@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/accommodationUnit"
+	targetNamespace="http://www.projectXml.com/accommodationUnit"
+	elementFormDefault="qualified">
+
+
+	
+	<xs:element name="getAccommodationUnitsRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getAccommodationUnitsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnits" type="tns:accommodationUnits" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+
+	<xs:element name="getAccommodationUnitRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationUnitId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getAccommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit" type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="addAccommodationUnitRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationId" type="xs:long" />
+				<xs:element name="accommodationUnit" type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAccommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit" type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="updateAccommodationUnitRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationUnitId" type="xs:long" />
+				<xs:element name="accommodationUnit" type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="removeAccommodationUnitRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationUnitId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="accommodation">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" />
+			<xs:element name="Name" type="xs:string" />
+			<xs:element name="Category" type="xs:int" />
+			<xs:element name="Address" type="tns:address" />
+			<xs:element name="AccommodationType" type="tns:accommodationType" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodationUnit">
+		<xs:sequence>
+			<xs:element name="Floor" type="xs:int" />
+			<xs:element name="Number" type="xs:string" />
+			<xs:element name="NumberOfBeds" type="xs:int" />
+			<xs:element name="DefaultPrice" type="xs:double" />
+			<xs:element name="AccommodationType" type="tns:accommodationUnitType" />
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Accommodation" type="tns:accommodation" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodationUnits">
+		<xs:sequence>
+			<xs:element name="AccommodationUnit" type="tns:accommodationUnit" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="address">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="City" type="xs:string" />
+			<xs:element name="Postal_code" type="xs:int" />
+			<xs:element name="Street" type="xs:string" />
+			<xs:element name="Number" type="xs:string" />
+			<xs:element minOccurs="0" name="Apartment_number" type="xs:string" />
+			<xs:element name="Longitude" type="xs:double" />
+			<xs:element name="Latitude" type="xs:double" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodationUnitType">
+		<xs:sequence>
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Name" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodationType">
+		<xs:sequence>
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Name" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

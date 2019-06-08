@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/service"
+	targetNamespace="http://www.projectXml.com/service"
+	elementFormDefault="qualified">
+
+
+	
+	<xs:element name="getAccommodationServicesRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getAccommodationServicesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="services" type="tns:services" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		
+	<xs:element name="addAccommodationServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationId" type="xs:long" />
+				<xs:element name="serviceId" type="xs:long" />
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAccommodationServiceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="removeAccommodationServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="accommodationId" type="xs:long" />
+				<xs:element name="accommodationServiceId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getServicesRequest">
+		<xs:complexType>   
+			<xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getServicesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="services" type="tns:services" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="getServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="serviceId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getServiceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="addServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addServiceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="updateServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="serviceId" type="xs:long" />
+				<xs:element name="service" type="tns:service" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="removeServiceRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="serviceId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	
+		
+	<xs:complexType name="services">
+		<xs:sequence>
+			<xs:element name="Service" type="tns:service" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="service">
+		<xs:sequence>
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Name" type="xs:string" />
+			<xs:element name="Description" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	
+</xs:schema>
