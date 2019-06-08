@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/reservation"
+	targetNamespace="http://www.projectXml.com/reservation"
+	elementFormDefault="qualified"
+	xmlns:addr="http://www.projectXml.com/address">
+	<xs:import namespace="http://www.projectXml.com/address"
+		schemaLocation="address.xsd" />
+
+	<xs:element name="getReservationsByUnitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="unit_id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getReservationsByUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reservation" type="tns:reservation"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="confirmReservationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id_reservation" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="confirmReservationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="reservation">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="confirmed" type="xs:boolean" />
+			<xs:element name="deleted" type="xs:boolean" />
+			<xs:element name="userDto" type="tns:user" />
+			<xs:element name="fromDate" type="xs:date" />
+			<xs:element name="toDate" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" />
+			<xs:element name="Lastname" type="xs:string" />
+			<xs:element name="Email" type="xs:string" />
+			<xs:element name="Username" type="xs:string" />
+			<xs:element name="Password" type="xs:string" />
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Enabled" type="xs:boolean" />
+			<xs:element name="Deleted" type="xs:boolean" />
+			<xs:element name="Role" type="xs:string" />
+			<xs:element name="Address" type="addr:address" />
+			<xs:element name="Bussines_registration_number"
+				type="xs:long" />
+			<xs:element name="Blocked" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

@@ -1,0 +1,111 @@
+<header class="header">
+  <div class="container">
+    <div class="teacher-name" style="padding-top:20px;">
+
+      <div class="row" style="margin-top:0px;">
+        <div class="col-md-9">
+          <h2 style="font-size:38px"><strong>{{user.username}}</strong></h2>
+        </div>
+        <div class="col-md-3">
+          <div class="button" style="float:right;">
+            <a href="#" class="btn btn-outline-success btn-sm">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-3">
+        <!-- Image -->
+        <a href="#"> <img class="rounded-circle" src="data/user_profile.png" alt="Image"
+            style="width:200px;height:200px"></a>
+      </div>
+
+      <div class="col-md-6">
+        <!-- Rank & Qualifications -->
+        <h5 style="color:#fed136">{{user.name}} {{user.lastname}}</h5>
+        <p>Address: {{user.address.street}}, {{user.address.city}}, {{user.address.country}}</p>
+      </div>
+
+      <div class="col-md-3 text-center">
+        <!-- Phone & Social -->
+        <span class="Email" style="font-size:18px">e-mail: <strong>{{user.email}}</strong></span>
+        <div class="button" style="padding-top:18px">
+          <a href="mailto:ahmkctg@yahoo.com" class="btn btn-outline-success btn-block">Send mail</a>
+        </div>
+        <div class="social-icons" style="padding-top:18px">
+          <a href="#">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" style="color:#fed136"></i>
+              <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span></a>
+          <a href="#">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" style="color:#fed136"></i>
+              <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+            </span></a>
+          <a href="#">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" style="color:#fed136"></i>
+              <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+            </span></a>
+          <a href="#">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" style="color:#fed136"></i>
+              <i class="fa fa-slideshare fa-stack-1x fa-inverse"></i>
+            </span></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!--End of Header-->
+
+<!-- Main container -->
+<div class="container">
+
+  <!-- Section:Awards -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-block">
+        <h2 class="card-title" style="color:#fed136"><i class="fa fa-trophy fa-fw"></i>Address</h2>
+        <div style="height: 15px"></div>
+        <table class="table table-bordered table-hover">
+          <thead class="thead-default">
+            <tr>
+              <th>#</th>
+              <th>Name of the #</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Country</td>
+              <td>{{user.address.country}}</td>
+            </tr>
+            <tr>
+              <td>City</td>
+              <td>{{user.address.city}}</td>
+            </tr>
+            <tr>
+              <td>Street</td>
+              <td>{{user.address.street}}</td>
+            </tr>
+            <tr>
+              <td>Number</td>
+              <td>{{user.address.number}}</td>
+            </tr>
+            <tr>
+              <td>Apartment</td>
+              <td>{{user.address.apartmentNumber}}</td>
+            </tr>
+            <tr>
+              <td>Postal code</td>
+              <td>{{user.address.postalCode}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End:Awards -->
