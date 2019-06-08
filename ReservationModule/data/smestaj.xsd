@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://booking.uns.ac.rs/accommodation"
+    xmlns:accommodation="http://booking.uns.ac.rs/accommodation"
+    xmlns:users="http://booking.uns.ac.rs/users">
+
+    <xs:import namespace="http://booking.uns.ac.rs/users" schemaLocation="korisnici.xsd"/>
+    <xs:element name="Accommodation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="services">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="accommodation:Service"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Description" type="xs:string"/>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="images">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Image" type="xs:byte"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="accommodation_units">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="accommodation:Accommodation_unit"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="agents">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Agent" type="users:User"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Category">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="1"/>
+                            <xs:enumeration value="2"/>
+                            <xs:enumeration value="3"/>
+                            <xs:enumeration value="4"/>
+                            <xs:enumeration value="5"/>
+                            <xs:enumeration value="uncategorised"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="users:Address"/>
+                <xs:element ref="accommodation:Accommodation_type"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Accommodation_unit">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Floor" type="xs:int"/>
+                <xs:element name="Number" type="xs:string"/>
+                <xs:element name="Number_of_beds" type="xs:int"/>
+                <xs:element minOccurs="0" name="Default_price" type="xs:double"/>
+                <xs:element ref="accommodation:Period_price"/>
+                <xs:element ref="accommodation:Accommodation_unit_type"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Period_price">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="From_date" type="xs:dateTime"/>
+                <xs:element name="To_date" type="xs:dateTime"/>
+                <xs:element name="Price" type="xs:double"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Accommodation_type">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Service">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Description" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Accommodation_unit_type">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
