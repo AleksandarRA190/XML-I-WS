@@ -8,16 +8,10 @@
 
 package ftn.xmlws.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,10 +30,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Description" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="Deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element ref="{http://booking.uns.ac.rs/accommodation}Accommodation" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -51,34 +43,29 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "name",
-    "description",
     "id",
-    "deleted",
-    "accommodation"
+    "deleted"
 })
-@XmlRootElement(name = "Service")
+@XmlRootElement(name = "Accommodation_unit_type")
 @Entity
-public class Service {
+public class AccommodationUnitType {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@XmlElement(name = "Id")
+    @XmlElement(name = "Name", required = true)
+    protected String name;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlElement(name = "Id")
     protected Long id;
     
-	
-	@XmlElement(name = "Name", required = true)
-    protected String name;
-    @XmlElement(name = "Description", required = true)
-    protected String description;
     @XmlElement(name = "Deleted")
     protected boolean deleted;
-    
-    
-    @ManyToMany
-	@JoinTable(name = "Accommodation", joinColumns = @JoinColumn(name = "avio_company_id", referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
-    protected List<Accommodation> accommodation;
 
-    /**
+    public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the name property.
      * 
      * @return
@@ -100,30 +87,6 @@ public class Service {
      */
     public void setName(String value) {
         this.name = value;
-    }
-
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDescription(String value) {
-        this.description = value;
     }
 
     /**
@@ -156,35 +119,6 @@ public class Service {
      */
     public void setDeleted(boolean value) {
         this.deleted = value;
-    }
-
-    /**
-     * Gets the value of the accommodation property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the accommodation property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAccommodation().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Accommodation }
-     * 
-     * 
-     */
-    public List<Accommodation> getAccommodation() {
-        if (accommodation == null) {
-            accommodation = new ArrayList<Accommodation>();
-        }
-        return this.accommodation;
     }
 
 }

@@ -163,6 +163,8 @@ public class Accommodation {
     @XmlElement(required = true)
     protected List<Service> services = new ArrayList<>();
 
+    @XmlElement(name = "Deleted")
+    protected boolean deleted;
 
     
     public Accommodation() {}
