@@ -9,7 +9,7 @@ public class AccommodationUnitDTO {
     private String number;
     private int numberOfBeds;
     private Double defaultPrice;
-    //protected Accommodation accommodation;
+    private AccommodationDTO accommodation;
     
     public AccommodationUnitDTO() {}
     
@@ -19,6 +19,7 @@ public class AccommodationUnitDTO {
     	this.number = unit.getNumber();
     	this.numberOfBeds = unit.getNumberOfBeds();
     	this.defaultPrice = unit.getDefaultPrice();
+    	this.accommodation = new AccommodationDTO(unit.getAccommodation());
     }
 
 	public Long getId() {
@@ -59,6 +60,14 @@ public class AccommodationUnitDTO {
 
 	public void setDefaultPrice(Double defaultPrice) {
 		this.defaultPrice = defaultPrice;
+	}
+
+	public AccommodationDTO getAccommodation() {
+		return accommodation;
+	}
+
+	public void setAccommodation(AccommodationDTO accommodation) {
+		this.accommodation = accommodation;
 	}
     
     

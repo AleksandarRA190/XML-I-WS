@@ -8,8 +8,7 @@
 
 package ftn.xmlws.model;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +28,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import ftn.xmlws.dto.ReservationDTO;
-import ftn.xmlws.miscellaneous.MyTypeConverter;
 
 
 /**
@@ -117,20 +115,17 @@ public class Reservation {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fromDate;
     
-	@Column(name = "From_date")
-	public Calendar getFromDateToCalendar() {
-	    return new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay());
-	}
-	
-    @Transient
+	@Transient
     @XmlElement(name = "To_date", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar toDate;
     
-    @Column(name = "To_date")
-	public Calendar getToDateToCalendar() {
-	    return new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay());
-	}
+	
+	@Column(name = "From_date")
+	protected LocalDateTime fromDateTime;
+	
+	@Column(name = "To_date")
+	protected LocalDateTime toDateTime;
     
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Guest", namespace = "http://booking.uns.ac.rs/reservation", required = true)
@@ -168,10 +163,11 @@ public Reservation() {}
     
     public Reservation(ReservationDTO res) {
 		super();
-		this.fromDate = MyTypeConverter.localDateToXMLGregorianCalendar(res.getFromDate());
-		this.toDate = MyTypeConverter.localDateToXMLGregorianCalendar(res.getToDate());
+		//this.fromDate = MyTypeConverter.localDateToXMLGregorianCalendar(res.getFromDate());
+		//this.toDate = MyTypeConverter.localDateToXMLGregorianCalendar(res.getToDate());
+		this.fromDateTime = res.getFromDateTime();
+		this.toDateTime = res.getToDateTime();
 		this.confirmed = res.isConfirmed();
-		this.deleted = res.isDeleted();
 	}
 
     
@@ -342,6 +338,31 @@ public Reservation() {}
     public void setDeleted(boolean value) {
         this.deleted = value;
     }
+
+
+	public LocalDateTime getFromDateTime() {
+		return fromDateTime;
+	}
+
+
+	public void setFromDateTime(LocalDateTime fromDateTime) {
+		this.fromDateTime = fromDateTime;
+	}
+
+
+	public LocalDateTime getToDateTime() {
+		return toDateTime;
+	}
+
+
+	public void setToDateTime(LocalDateTime toDateTime) {
+		this.toDateTime = toDateTime;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     /**
      * Gets the value of the messages property.

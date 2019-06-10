@@ -10,6 +10,9 @@ import { HotelsComponent } from './hotels/hotels.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserReservationsComponent } from './user-reservations/user-reservations.component';
 import { HomeComponent } from './home/home.component';
+import { UserEditProfileComponent } from './user-edit-profile/user-edit-profile.component';
+import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { HomeComponent } from './home/home.component';
     HotelsComponent,
     UserProfileComponent,
     UserReservationsComponent,
-    HomeComponent
+    HomeComponent,
+    UserEditProfileComponent,
+    ConfirmationPageComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

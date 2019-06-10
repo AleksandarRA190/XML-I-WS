@@ -6,6 +6,9 @@ import { HotelsComponent } from './hotels/hotels.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserReservationsComponent } from './user-reservations/user-reservations.component';
 import { HomeComponent } from './home/home.component';
+import { UserEditProfileComponent } from './user-edit-profile/user-edit-profile.component';
+import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,7 +17,10 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'accomodations', component: HotelsComponent },
   {path: 'profile', component: UserProfileComponent },
-  {path: 'reservations', component: UserReservationsComponent }
+  {path: 'reservations', component: UserReservationsComponent },
+  {path: 'edit', component:UserEditProfileComponent},
+  {path: 'activate/:id', component:ConfirmationPageComponent},
+  {path: 'changePassword', component:ChangePasswordComponent}
 ];
 
 @NgModule({

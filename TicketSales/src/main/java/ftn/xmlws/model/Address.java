@@ -89,9 +89,19 @@ public class Address {
     @XmlElement(name = "Deleted", namespace = "http://booking.uns.ac.rs/users")
     protected boolean deleted;
     
-public Address() {}
+    public Address() {}
     
-    
+    public Address(Address a) {
+		this.country = a.getCountry();
+		this.city = a.getCity();
+		this.postalCode = a.getPostalCode();
+		this.street = a.getStreet();
+		this.number = a.getNumber();
+		this.apartmentNumber = a.getApartmentNumber();
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
+		this.deleted = false;
+    }
 
     public Address(String country, String city, int postalCode, String street, String number, String apartmentNumber,
 			double longitude, double latitude) {
@@ -106,18 +116,6 @@ public Address() {}
 		this.latitude = latitude;
 		this.deleted = false;
 	}
-    
-    public Address(Address a) {
-		this.country = a.getCountry();
-		this.city = a.getCity();
-		this.postalCode = a.getPostalCode();
-		this.street = a.getStreet();
-		this.number = a.getNumber();
-		this.apartmentNumber = a.getApartmentNumber();
-		this.longitude = a.getLongitude();
-		this.latitude = a.getLatitude();
-		this.deleted = false;
-    }
 
     /**
      * Gets the value of the country property.
@@ -291,7 +289,7 @@ public Address() {}
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -299,7 +297,7 @@ public Address() {}
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

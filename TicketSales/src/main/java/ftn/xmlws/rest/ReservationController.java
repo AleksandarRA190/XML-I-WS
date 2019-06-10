@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import ftn.xmlws.dto.ReservationDTO;
+import ftn.xmlws.dto.UserReservationsDTO;
 
 @RestController
 @RequestMapping(value = "/reservation")
@@ -87,6 +88,8 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
+	
+	
 	
 
 }

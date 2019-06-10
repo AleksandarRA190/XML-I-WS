@@ -1,0 +1,92 @@
+<div class="container-fluid">
+		<div class="container">
+			<div class="formBox">
+				<form role="form" (ngSubmit)="onSubmit()">
+						<div class="row">
+							<div class="col-sm-12">
+								<h1>Edit profile</h1>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-6">
+                <h5 class="inputText">First Name</h5>
+                <div class="inputBox ">
+									<input type="text" [(ngModel)]="user.name" placeholder="First Name" name="first" class="input" value="">
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+                <h5 class="inputText">Last Name</h5>
+                <div class="inputBox">
+									<input type="text" [(ngModel)]="user.lastname" placeholder="Last Name" name="last" class="input">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-6">
+                <h5 class="inputText">Email</h5>
+								<div class="inputBox">
+									<input type="text" [(ngModel)]="user.email" placeholder="Email" name="email" class="input">
+								</div>
+							</div>
+            </div>
+            
+            <div class="row">
+							<div class="col-sm-6">
+                <h5 class="inputText">Country</h5>
+								<div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.country" placeholder="Country" name="country" class="input">
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+                <h5 class="inputText">City</h5>
+								<div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.city" placeholder="City" name="city" class="input">
+								</div>
+							</div>
+            </div>
+            
+            <div class="row">
+							<div class="col-sm-6">
+                <h5 class="inputText">Street</h5>
+                <div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.street" placeholder="Street" name="street" class="input">
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+                <h5 class="inputText">Number</h5>  
+                <div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.number" placeholder="Number" name="number" class="input">
+								</div>
+							</div>
+            </div>
+            
+            <div class="row">
+							<div class="col-sm-6">
+                <h5 class="inputText">Apartment number</h5>
+                <div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.apartmentNumber" placeholder="Apartment number" name="apartment number" class="input">
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+                <h5 class="inputText">Postal code</h5>
+                <div class="inputBox">
+									<input type="text" [(ngModel)]="user.address.postalCode" placeholder="Postal code" name="Postal code" class="input">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12">
+								<input type="submit" name="" class="button" value="Save">
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div>

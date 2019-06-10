@@ -1,5 +1,7 @@
 package ftn.xmlws.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import ftn.xmlws.dto.ChangePasswordDTO;
 import ftn.xmlws.dto.LoginDTO;
+import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.dto.UserDTO;
+import ftn.xmlws.dto.UserReservationsDTO;
 
 
 @RestController
@@ -54,6 +59,7 @@ public class UserController {
 		} else if(!user.getPassword().equals(userToLog.getPassword())) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
+			
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 	
@@ -93,10 +99,10 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/activate/{username}", method = RequestMethod.GET)
-	public ResponseEntity<Void> activateUser(@PathVariable("username") String username) {
+	@RequestMapping(value = "/activate/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Void> activateUser(@PathVariable("id") Long id) {
 
-		restTemplate.getForObject("http://localhost:9006/users/activate/"+username,Void.class);
+		restTemplate.getForObject("http://localhost:9006/users/activate/"+id,Void.class);
 
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -123,6 +129,30 @@ public class UserController {
 		restTemplate.getForObject("http://localhost:9006/users/changeRole/"+username+"/"+role,Void.class);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+
+	@RequestMapping(value = "/getByUser/{username}", method = RequestMethod.GET)
+	public ResponseEntity<List<ReservationDTO>> getUserReservations(@PathVariable("username") String username) {
+		
+		UserReservationsDTO response = restTemplate.getForObject(
+				"http://localhost:9006/users/getByUser/"+username, UserReservationsDTO.class);
+		
+		return new ResponseEntity<>(response.getReservations(),HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePass) {
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<ChangePasswordDTO> request = new HttpEntity<>(changePass,headers);
+		Boolean response = restTemplate.postForObject(
+				"http://localhost:9006/users/changePassword", request, Boolean.class);
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
+		
 	}
 
 }

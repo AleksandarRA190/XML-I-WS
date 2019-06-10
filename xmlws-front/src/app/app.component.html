@@ -35,18 +35,13 @@
           Menu
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="/home" (click)="logOut()">LogOut</a>
+          <a class="dropdown-item" routerLink="/changePassword">Change Password</a>
+          <a class="dropdown-item"(click)="logOut()">LogOut</a>
         </div>
       </li>
-      <!--
-      <li>
-        <button>Log Out</button>
-      </li>
-      -->
       </ul>
     </div>
     </div>
   </nav>
-
   
 <router-outlet></router-outlet>

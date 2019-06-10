@@ -1,6 +1,6 @@
 package ftn.xmlws.miscellaneous;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
 
@@ -10,13 +10,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 public class MyTypeConverter {
 	
-	public static LocalDate xmlCalendarToLocalDate(XMLGregorianCalendar xmlc) {
-		return xmlc.toGregorianCalendar().toZonedDateTime().toLocalDate();
+	public static LocalDateTime xmlCalendarToLocalDateTime(XMLGregorianCalendar xmlc) {
+		return xmlc.toGregorianCalendar().toZonedDateTime().toLocalDateTime();
 	}
 	
-	public static XMLGregorianCalendar localDateToXMLGregorianCalendar(LocalDate localDate) {
+	public static XMLGregorianCalendar localDateTimeToXMLGregorianCalendar(LocalDateTime localDate) {
 		
-		GregorianCalendar gcal = GregorianCalendar.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+		GregorianCalendar gcal = GregorianCalendar.from(localDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()));
 		try {
 			XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 			return xcal;

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
-  user : UserDTO = new UserDTO();
+  user : UserDTO = new UserDTO();  
 
   constructor(private http : HttpClient) { }
   
