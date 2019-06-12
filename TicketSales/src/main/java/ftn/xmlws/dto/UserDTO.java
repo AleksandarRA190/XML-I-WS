@@ -24,19 +24,7 @@ public class UserDTO {
     	
     }
     
-    public UserDTO(com.projectxml.user.User xml) {
-    	this.name = xml.getName();
-    	this.lastname = xml.getLastname();
-    	this.email = xml.getEmail();
-    	this.username = xml.getUsername();
-    	this.password = xml.getPassword();
-    	this.id = xml.getId();
-    	this.enabled = xml.isEnabled();
-    	this.deleted = xml.isDeleted();
-    	//this.role = xml.getRole().toString();
-    	this.blocked = xml.isBlocked();
-    	this.address = new Address(xml.getAddress());
-    }
+    
     
     
 
@@ -137,6 +125,18 @@ public class UserDTO {
 	public boolean isDeleted() {
 		return deleted;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", username="
+				+ username + ", password=" + password + ", enabled=" + enabled + ", deleted=" + deleted + ", role="
+				+ role + ", bussinesRegistrationNumber=" + bussinesRegistrationNumber + ", blocked=" + blocked
+				+ ", address=" + address.toString() + ", accommodation=" + accommodation + "]";
+	}
+
+
 
 
 

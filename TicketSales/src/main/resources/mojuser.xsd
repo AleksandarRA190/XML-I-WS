@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.projectXml.com/mojuser"
+	targetNamespace="http://www.projectXml.com/mojuser"
+	elementFormDefault="qualified"
+	xmlns:moj="http://booking.uns.ac.rs/users">
+	<xs:import namespace="http://booking.uns.ac.rs/users"
+		schemaLocation="korisnici.xsd" />
+
+	<xs:element name="getUsersRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getUsersResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="tns:user" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="tns:user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addUserResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="deleteRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="deleteResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="blockRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="blockResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="unblockRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="unblockResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="activateRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="activateResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" />
+			<xs:element name="Lastname" type="xs:string" />
+			<xs:element name="Email" type="xs:string" />
+			<xs:element name="Username" type="xs:string" />
+			<xs:element name="Password" type="xs:string" />
+			<xs:element name="Id" type="xs:long" />
+			<xs:element name="Enabled" type="xs:boolean" />
+			<xs:element name="Deleted" type="xs:boolean" />
+			<xs:element name="Role" type="xs:string" />
+			<xs:element name="Address" type="tns:Address" />
+			<xs:element name="Bussines_registration_number"
+				type="xs:long" />
+			<xs:element name="Blocked" type="xs:boolean" />
+			<xs:element name="AccommodationDTO" type="tns:AccommodationDTO"  minOccurs="0"
+					maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="City" type="xs:string" />
+			<xs:element name="Postal_code" type="xs:int" />
+			<xs:element name="Street" type="xs:string" />
+			<xs:element name="Number" type="xs:string" />
+			<xs:element minOccurs="0" name="Apartment_number"
+				type="xs:string" />
+			<xs:element name="Longitude" type="xs:double" />
+			<xs:element name="Latitude" type="xs:double" />
+			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AccommodationDTO">
+		<xs:sequence>
+			<xs:element name="Country" type="xs:string" />
+			<xs:element name="City" type="xs:string" />
+			<xs:element name="Postal_code" type="xs:int" />
+			<xs:element name="Street" type="xs:string" />
+			<xs:element name="Number" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+
+
+
+</xs:schema>

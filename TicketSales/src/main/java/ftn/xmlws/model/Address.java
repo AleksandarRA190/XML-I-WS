@@ -329,4 +329,11 @@ public class Address {
         this.deleted = value;
     }
 
+	@Override
+	public String toString() {
+		return "Address [country=" + country + ", city=" + city + ", postalCode=" + postalCode + ", street=" + street
+				+ ", number=" + number + ", apartmentNumber=" + apartmentNumber + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", id=" + id + ", deleted=" + deleted + "]";
+	}
+
 }

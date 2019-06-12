@@ -57,19 +57,20 @@ public class WebServiceConfig {
 	  return new SimpleXsdSchema(new ClassPathResource("reservation.xsd"));
 	}
 	
-	@Bean(name = "users")
-	public DefaultWsdl11Definition defaultWsdl13Definition(XsdSchema usersSchema) {
+	@Bean(name = "mojusers")
+	public DefaultWsdl11Definition defaultWsdl14Definition(XsdSchema mojusersSchema) {
 	  DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
-	  definition.setPortTypeName("UserPort");
-	  definition.setTargetNamespace("http://www.projectXml.com/user");
+	  definition.setPortTypeName("MojuserPort");
+	  definition.setTargetNamespace("http://www.projectXml.com/mojuser");
 	  definition.setLocationUri("/ws");
-	  definition.setSchema(usersSchema);
+	  
+	  definition.setSchema(mojusersSchema);
 	  return definition;
 	}
 	
 	@Bean
-	public XsdSchema usersSchema() {
-	  return new SimpleXsdSchema(new ClassPathResource("user.xsd"));
+	public XsdSchema mojusersSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("mojuser.xsd"));
 	}
 	
 }
