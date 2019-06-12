@@ -20,6 +20,7 @@ import ftn.xmlws.dto.LoginDTO;
 import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
+import ftn.xmlws.dto.Users;
 
 
 @RestController
@@ -29,13 +30,13 @@ public class UserController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	/*@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsers() {
 
-		List<UserDTO> users = userService.getAllUsers();
+		Users users = restTemplate.getForObject("http://localhost:9006/users", Users.class);
 
-		return new ResponseEntity<>(users, HttpStatus.OK);
-	}*/
+		return new ResponseEntity<>(users.getUsers(), HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username) {

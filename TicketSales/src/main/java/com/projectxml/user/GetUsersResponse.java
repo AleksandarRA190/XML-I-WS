@@ -6,11 +6,12 @@
 //
 
 
-package com.projectxml.service;
+package com.projectxml.user;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="service" type="{http://www.projectXml.com/service}service"/>
+ *         &lt;element name="user" type="{http://www.projectXml.com/user}user" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +37,40 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "service"
+    "user"
 })
-@XmlRootElement(name = "addServiceRequest")
-public class AddServiceRequest {
+@XmlRootElement(name = "getUsersResponse")
+public class GetUsersResponse {
 
-    @XmlElement(required = true)
-    protected Service service;
-
-    /**
-     * Gets the value of the service property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Service }
-     *     
-     */
-    public Service getService() {
-        return service;
-    }
+    protected List<User> user;
 
     /**
-     * Sets the value of the service property.
+     * Gets the value of the user property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Service }
-     *     
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the user property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getUser().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link User }
+     * 
+     * 
      */
-    public void setService(Service value) {
-        this.service = value;
+    public List<User> getUser() {
+        if (user == null) {
+            user = new ArrayList<User>();
+        }
+        return this.user;
     }
 
 }

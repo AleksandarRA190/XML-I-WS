@@ -6,10 +6,11 @@
 //
 
 
-package com.projectxml.service;
+package com.projectxml.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="user" type="{http://www.projectXml.com/user}user"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,9 +35,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(name = "getServicesRequest")
-public class GetServicesRequest {
+@XmlType(name = "", propOrder = {
+    "user"
+})
+@XmlRootElement(name = "addUserRequest")
+public class AddUserRequest {
 
+    @XmlElement(required = true)
+    protected User user;
+
+    /**
+     * Gets the value of the user property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link User }
+     *     
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the value of the user property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link User }
+     *     
+     */
+    public void setUser(User value) {
+        this.user = value;
+    }
 
 }

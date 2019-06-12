@@ -16,8 +16,8 @@
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
             <h5 class="card-title">{{res.accommodationUnit.accommodation.name}}</h5>
-            <p class="card-text">Start Date: {{res.fromDateTime}}.</p>
-            <p class="card-text">End Date: {{res.toDateTime}}.</p>
+            <p class="card-text">Start Date: {{mica(res.fromDateTime)}}</p>
+            <p class="card-text">End Date: {{mica(res.toDateTime)}}</p>
             <a *ngIf="!res.confirmed" class="btn btn-primary" (click)="confirm(res.id)" style="background-color: #fed136; color: black">Confirm reservation</a>              
           </div>
           <div class="tab-pane fade p-3" id="{{res.id}}" role="tabpanel" aria-labelledby="two-tab">

@@ -24,6 +24,20 @@ public class UserDTO {
     	
     }
     
+    public UserDTO(com.projectxml.user.User xml) {
+    	this.name = xml.getName();
+    	this.lastname = xml.getLastname();
+    	this.email = xml.getEmail();
+    	this.username = xml.getUsername();
+    	this.password = xml.getPassword();
+    	this.id = xml.getId();
+    	this.enabled = xml.isEnabled();
+    	this.deleted = xml.isDeleted();
+    	//this.role = xml.getRole().toString();
+    	this.blocked = xml.isBlocked();
+    	this.address = new Address(xml.getAddress());
+    }
+    
     
 
     public UserDTO(User user) {

@@ -102,6 +102,18 @@ public class Address {
 		this.latitude = a.getLatitude();
 		this.deleted = false;
     }
+    
+    public Address(com.projectxml.address.Address a) {
+		this.country = a.getCountry();
+		this.city = a.getCity();
+		this.postalCode = a.getPostalCode();
+		this.street = a.getStreet();
+		this.number = a.getNumber();
+		this.apartmentNumber = a.getApartmentNumber();
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
+		this.deleted = false;
+    }
 
     public Address(String country, String city, int postalCode, String street, String number, String apartmentNumber,
 			double longitude, double latitude) {
