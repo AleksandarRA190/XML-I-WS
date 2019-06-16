@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.service.ReservationService;
 
@@ -70,7 +71,7 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/confirm/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Boolean> confirmResevation(@PathVariable("id") Long id) {
+	public ResponseEntity<Boolean> confirmReservation(@PathVariable("id") Long id) {
 		boolean success = reservationService.confirmReservation(id);
 		if (success) {
 			return new ResponseEntity<>(true,HttpStatus.OK);
@@ -78,5 +79,47 @@ public class ReservationController {
 			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@RequestMapping(value = "/agentConfirm/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> agentConfirmReservation(@PathVariable("id") Long id) {
+		boolean success = reservationService.agentConfirmReservation(id);
+		if (success) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/addEditComment/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> addEditComment(@PathVariable("id") Long id,@RequestBody CommentDTO commentDTO) {
+		boolean success = reservationService.addEditComment(id, commentDTO.getContentOfComment());
+		if (success) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/confirmComment/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> confirmComment(@PathVariable("id") Long id) {
+		boolean success = reservationService.confirmComment(id);
+		if (success) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/getComment/{id}", method = RequestMethod.GET)
+	public ResponseEntity<CommentDTO> getComment(@PathVariable("id") Long id) {
+		CommentDTO comment = reservationService.getComment(id);
+		if (comment != null) {
+			return new ResponseEntity<>(comment,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
+	
 }

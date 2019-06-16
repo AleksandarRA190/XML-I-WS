@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { UserEditProfileComponent } from './user-edit-profile/user-edit-profile.component';
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PostCommentComponent } from './post-comment/post-comment.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     HomeComponent,
     UserEditProfileComponent,
     ConfirmationPageComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PostCommentComponent
   ],
   imports: [
     BrowserModule,

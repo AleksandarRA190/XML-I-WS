@@ -12,6 +12,8 @@ public class ReservationDTO {
     private AccommodationUnitDTO accommodationUnit;
 	private LocalDateTime fromDateTime;
 	private LocalDateTime toDateTime;
+	private boolean agentConfirmed;
+	private CommentDTO commentDTO;
     
 	public ReservationDTO() {
 		
@@ -24,6 +26,13 @@ public class ReservationDTO {
 		this.fromDateTime = res.getFromDateTime();
 		this.toDateTime = res.getToDateTime();
 		this.accommodationUnit = new AccommodationUnitDTO(res.getAccommodationUnit());
+		this.agentConfirmed = res.isAgentConfirmed();
+		
+		if(res.getCommentRate() != null) {
+			this.commentDTO = new CommentDTO();
+			commentDTO.setApprovedComment(res.getCommentRate().isApprovedComment());
+			commentDTO.setContentOfComment(res.getCommentRate().getContentOfComment());
+		}
 	}
 
 	public Long getId() {
@@ -40,6 +49,14 @@ public class ReservationDTO {
 
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	
+	public boolean isAgentConfirmed() {
+		return agentConfirmed;
+	}
+
+	public void setAgentConfirmed(boolean confirmed) {
+		this.agentConfirmed = confirmed;
 	}
 
 	public UserDTO getGuest() {
@@ -72,6 +89,14 @@ public class ReservationDTO {
 
 	public void setToDateTime(LocalDateTime toDateTime) {
 		this.toDateTime = toDateTime;
+	}
+
+	public CommentDTO getCommentDTO() {
+		return commentDTO;
+	}
+
+	public void setCommentDTO(CommentDTO commentDTO) {
+		this.commentDTO = commentDTO;
 	}
 
 	

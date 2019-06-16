@@ -2,10 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:tns="http://www.projectXml.com/mojuser"
 	targetNamespace="http://www.projectXml.com/mojuser"
-	elementFormDefault="qualified"
-	xmlns:moj="http://booking.uns.ac.rs/users">
-	<xs:import namespace="http://booking.uns.ac.rs/users"
-		schemaLocation="korisnici.xsd" />
+	elementFormDefault="qualified">
 
 	<xs:element name="getUsersRequest">
 		<xs:complexType>
@@ -39,6 +36,8 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+
 	
 	<xs:element name="deleteRequest">
 		<xs:complexType>
@@ -103,6 +102,25 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:element name="loginRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="loginDTO" type="tns:LoginDTO" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="loginResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="tns:user" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	
 
 	<xs:complexType name="user">
 		<xs:sequence>
@@ -150,7 +168,14 @@
 		</xs:sequence>
 	</xs:complexType>
 	
-
+	<xs:complexType name="LoginDTO">
+		<xs:sequence>
+			<xs:element name="username" type="xs:string" />
+			<xs:element name="password" type="xs:string" />
+			<xs:element name="role" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
 
 
 </xs:schema>

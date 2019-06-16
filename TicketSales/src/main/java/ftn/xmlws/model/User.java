@@ -123,6 +123,14 @@ public class User {
     @XmlElement(name = "Reservation", required = true)
     protected List<Reservation> reservations = new ArrayList<>();
     
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Sent_messages", required = true)
+    protected List<Message> sentMessages = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "reciever", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Recieved_messages", required = true)
+    protected List<Message> recievedMessages = new ArrayList<>();
+    
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Accommodation agentOfAccommodation;
     
@@ -433,6 +441,30 @@ public class User {
 
 	public void setAgentOfAccommodation(Accommodation accommodation) {
 		this.agentOfAccommodation = accommodation;
+	}
+
+
+
+	public List<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+
+
+	public void setSentMessages(List<Message> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
+
+
+
+	public List<Message> getRecievedMessages() {
+		return recievedMessages;
+	}
+
+
+
+	public void setRecievedMessages(List<Message> recievedMessages) {
+		this.recievedMessages = recievedMessages;
 	}
 
 }

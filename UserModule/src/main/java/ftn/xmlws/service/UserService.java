@@ -6,9 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ftn.xmlws.dto.ChangePasswordDTO;
+import ftn.xmlws.dto.LoginDTO;
+import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.dto.UserDTO;
+import ftn.xmlws.dto.UserReservationsDTO;
 import ftn.xmlws.enums.Role;
 import ftn.xmlws.model.Address;
+import ftn.xmlws.model.Reservation;
 import ftn.xmlws.model.User;
 import ftn.xmlws.repository.UserRepository;
 
@@ -66,6 +71,7 @@ public class UserService {
 		user.setUsername(userDTO.getUsername());
 		user.setName(userDTO.getName());
 		user.setBussinesRegistrationNumber(userDTO.getBussinesRegistrationNumber());
+		user.setAddress(userDTO.getAddress());
 		//adresa ce se menjati preko adres servisa, da se torke ne bi gomilale za jednog korisnika
 		
 		this.userRepository.save(user);
@@ -81,7 +87,11 @@ public class UserService {
 		
 		User user = this.userRepository.findByUsername(username);
 		
-		return new UserDTO(user);
+		if(user.isEnabled() && !user.isBlocked()) {
+			return new UserDTO(user);	
+		} else {
+			return null;
+		}
 	}
 	
 	public boolean registerUser(UserDTO userToReg) {
@@ -100,14 +110,20 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean activateUser(String username) {
+	public boolean activateUser(Long id) {
 
-		if (!this.isRegistered(username)) {
+		User user = this.userRepository.getOne(id);
+		
+		if (user == null) {
 			return false;
 		}
 		
-		User user = this.userRepository.findByUsername(username);
+		if(user.isDeleted()) {
+			return false;
+		}
+		
 		user.setEnabled(true);
+		
 		this.userRepository.save(user);
 		
 		return true;
@@ -165,13 +181,25 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean changePassword() {
-		// To be implemented
+	public boolean changePassword(ChangePasswordDTO request) {
+		
+		if (!this.isRegistered(request.getUsername())) {
+			return false;
+		}
+		
+		User user = this.userRepository.findByUsername(request.getUsername());
+		if(!user.getPassword().equals(request.getOldPassword())) {
+			return false;
+		}
+		
+		user.setPassword(request.getNewPassword());
+		this.userRepository.save(user);
+		
 		return true;
 	}
 	
 	public boolean addAccommodation() {
-		// To be implemented, calling a microservice
+		// To be implemented, calling a microservice, dodavanje smestaje kome je agent
 		return true;
 	}
 
@@ -182,6 +210,33 @@ public class UserService {
 		}
 		
 		return this.userRepository.findByUsername(username);
+	}
+	
+	public UserReservationsDTO getUserReservations(String username) {
+		User user = this.getUserByUsernameNoDto(username);
+		List<Reservation> list = user.getReservations();
+		
+		UserReservationsDTO retVal = new UserReservationsDTO();
+		
+		for(Reservation r : list) {
+			if(!r.isDeleted())
+				retVal.getReservations().add(new ReservationDTO(r));
+		}
+		
+		return retVal;
+	}
+	
+	public UserDTO login(LoginDTO request) {
+		
+		UserDTO user = this.getUserByUsername(request.getUsername());
+		
+		if(user == null)
+			return null;
+		
+		if(user.getPassword().equals(request.getPassword()) && user.getRole() == request.getRole())
+			return user;
+		else
+			return null;
 	}
 	
 }

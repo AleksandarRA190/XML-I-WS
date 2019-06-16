@@ -17,8 +17,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -82,6 +84,9 @@ public class AccommodationUnit {
     @XmlElement(name = "Default_price")
     protected Double defaultPrice;
     
+    @XmlElement(name = "Deleted")
+    protected boolean deleted;
+    
     @OneToMany(mappedBy = "accommodationUnit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Reservation", required = true)
     protected List<Reservation> reservations = new ArrayList<>();
@@ -93,6 +98,11 @@ public class AccommodationUnit {
     @ManyToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Accommodation", required = true)
     protected Accommodation accommodation;
+    
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName="id", nullable = false, unique = true)	
+    @XmlElement(name = "Accommodation_unit_type", required = true)
+    protected AccommodationUnitType accommodationUnitType;
     
     
     public AccommodationUnit() {}
@@ -258,6 +268,22 @@ public class AccommodationUnit {
 
 	public void setPeriodPrices(List<PeriodPrice> periodPrices) {
 		this.periodPrices = periodPrices;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public AccommodationUnitType getAccommodationUnitType() {
+		return accommodationUnitType;
+	}
+
+	public void setAccommodationUnitType(AccommodationUnitType accommodationUnitType) {
+		this.accommodationUnitType = accommodationUnitType;
 	}
 
 }

@@ -22,6 +22,8 @@ import com.projectxml.mojuser.DeleteRequest;
 import com.projectxml.mojuser.DeleteResponse;
 import com.projectxml.mojuser.GetUsersRequest;
 import com.projectxml.mojuser.GetUsersResponse;
+import com.projectxml.mojuser.LoginRequest;
+import com.projectxml.mojuser.LoginResponse;
 import com.projectxml.mojuser.UnblockRequest;
 import com.projectxml.mojuser.UnblockResponse;
 import com.projectxml.mojuser.User;
@@ -109,6 +111,17 @@ public class MojUserEndpoint {
 		
 		restTemplate.getForObject("http://localhost:9006/users/unblock/"+request.getUsername(),Void.class);
 		response.setSuccess(true);
+		
+		return response;
+	}
+	
+	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "loginRequest")
+	@ResponsePayload
+	public LoginResponse processLoginRequest(@RequestPayload LoginRequest request) {
+		LoginResponse response = new LoginResponse();
+		
+		UserDTO user = restTemplate.postForObject("http://localhost:9006/users/login",request.getLoginDTO(),UserDTO.class);
+		response.setUser(user);
 		
 		return response;
 	}

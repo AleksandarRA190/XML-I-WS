@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.xmlws.dto.ChangePasswordDTO;
+import ftn.xmlws.dto.LoginDTO;
 import ftn.xmlws.dto.UserDTO;
+import ftn.xmlws.dto.UserReservationsDTO;
+import ftn.xmlws.dto.Users;
 import ftn.xmlws.model.User;
+import ftn.xmlws.service.MailService;
 import ftn.xmlws.service.UserService;
 
 @RestController
@@ -22,18 +27,37 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private MailService mailService;
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<UserDTO>> getUsers() {
+	public ResponseEntity<Users> getUsers() {
 
+		
 		List<UserDTO> users = userService.getAllUsers();
+		Users retVal = new Users();
+		retVal.setUsers(users);
 
-		return new ResponseEntity<>(users, HttpStatus.OK);
+		return new ResponseEntity<>(retVal, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username) {
 		
 		UserDTO user = userService.getUserByUsername(username);
+		
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<UserDTO> login(@RequestBody LoginDTO request) {
+		
+		UserDTO user = userService.login(request);
 		
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,11 +83,13 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Void> registerUser(@RequestBody UserDTO userToReg) {
 
+		System.out.println(userToReg.toString());
 		boolean success = userService.registerUser(userToReg);
 		
 		if (!success) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
+			//mailService.sendNotification(userService.getUserByUsernameNoDto(userToReg.getUsername()));
 			return new ResponseEntity<>(HttpStatus.CREATED);	
 		}
 	}
@@ -86,10 +112,10 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/activate/{username}", method = RequestMethod.GET)
-	public ResponseEntity<Void> activateUser(@PathVariable("username") String username) {
+	@RequestMapping(value = "/activate/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Void> activateUser(@PathVariable("id") Long id) {
 
-		boolean success = userService.activateUser(username);
+		boolean success = userService.activateUser(id);
 		
 		if(success)
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -135,17 +161,26 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
-	/*@RequestMapping(value = "/changePassword/{username}", method = RequestMethod.GET)
-	public ResponseEntity<Void> changePassword(@PathVariable("username") String username,
-			RequestBody PasswordChangeDTO) {
-
-		boolean success = userService.unblockUser(username);
-
-		if(success)
-			return new ResponseEntity<>(HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}*/
+	
+	
+	@RequestMapping(value = "/getByUser/{username}", method = RequestMethod.GET)
+	public ResponseEntity<UserReservationsDTO> getUserReservations(@PathVariable("username") String username) {
+		
+		UserReservationsDTO response = userService.getUserReservations(username);
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePass) {
+		
+		boolean response = userService.changePassword(changePass);
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
+		
+	}
+	
 	
 	
 	

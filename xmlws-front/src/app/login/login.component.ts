@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginDto.password = "";
     this.loginDto.username = "";
+    this.loginDto.role = "REGISTERED_USER";
   }
 
   onSubmit() {

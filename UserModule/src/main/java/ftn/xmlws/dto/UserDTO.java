@@ -15,7 +15,7 @@ public class UserDTO {
     private boolean enabled;
     private boolean deleted;
     private Role role;
-    private long bussinesRegistrationNumber;
+    private Long bussinesRegistrationNumber;
     private boolean blocked;
     private Address address;
     private AccommodationDTO accommodation;
@@ -144,13 +144,13 @@ public class UserDTO {
 
 
 
-	public long getBussinesRegistrationNumber() {
+	public Long getBussinesRegistrationNumber() {
 		return bussinesRegistrationNumber;
 	}
 
 
 
-	public void setBussinesRegistrationNumber(long bussinesRegistrationNumber) {
+	public void setBussinesRegistrationNumber(Long bussinesRegistrationNumber) {
 		this.bussinesRegistrationNumber = bussinesRegistrationNumber;
 	}
 
@@ -200,6 +200,16 @@ public class UserDTO {
 
 	public void setAccommodation(AccommodationDTO accommodation) {
 		this.accommodation = accommodation;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", username="
+				+ username + ", password=" + password + ", enabled=" + enabled + ", deleted=" + deleted + ", role="
+				+ role + ", bussinesRegistrationNumber=" + bussinesRegistrationNumber + ", blocked=" + blocked
+				 + ", accommodation=" + accommodation + "]";
 	}
 
     

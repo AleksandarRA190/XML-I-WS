@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
 
 @RestController
@@ -48,6 +49,7 @@ public class ReservationController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ReservationDTO> request = new HttpEntity<>(reservation,headers);
+		System.out.println("Glavni bekend: " + reservation.getGuest().getUsername());
 		
 		restTemplate.put("http://localhost:9008/reservation/add", request);
 		System.out.println("Glavni bekend: " + reservation.getGuest().getUsername());
@@ -77,7 +79,7 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/confirm/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Void> confirmResevation(@PathVariable("id") Long id) {
+	public ResponseEntity<Void> confirmReservation(@PathVariable("id") Long id) {
 		
 		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/confirm/"+id, boolean.class);
 		
@@ -85,6 +87,50 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/agentConfirm/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Void> agentConfirmReservation(@PathVariable("id") Long id) {
+		
+		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/agentConfirm/"+id, boolean.class);
+		
+		if (!success) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+	
+	
+	@RequestMapping(value = "/addEditComment/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> addEditComment(@PathVariable("id") Long id,@RequestBody CommentDTO commentDTO) {
+		boolean success = restTemplate.postForObject("http://localhost:9008/reservation/addEditComment/"+id, commentDTO,boolean.class);
+		if (success) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/confirmComment/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> confirmComment(@PathVariable("id") Long id) {
+		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/confirmComment/"+id,boolean.class);
+		if (success) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/getComment/{id}", method = RequestMethod.GET)
+	public ResponseEntity<CommentDTO> getComment(@PathVariable("id") Long id) {
+		CommentDTO comment = restTemplate.getForObject("http://localhost:9008/reservation/getComment/"+id,CommentDTO.class);
+		
+		if (comment != null) {
+			return new ResponseEntity<>(comment,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

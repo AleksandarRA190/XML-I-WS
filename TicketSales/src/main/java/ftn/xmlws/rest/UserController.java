@@ -54,16 +54,13 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<UserDTO> loginUser(@RequestBody LoginDTO userToLog) {
 		
-		UserDTO user = restTemplate.getForObject("http://localhost:9006/users/"+userToLog.getUsername(), UserDTO.class);
+		UserDTO user = restTemplate.postForObject("http://localhost:9006/users/login",userToLog, UserDTO.class);
+		
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else if(!user.getPassword().equals(userToLog.getPassword())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
-			
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
-	
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.PUT, consumes = "application/json")

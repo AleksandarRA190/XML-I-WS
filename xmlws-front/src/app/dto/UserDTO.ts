@@ -8,4 +8,5 @@ export class UserDTO {
     name : string;
     lastname : string;
     address : AddressDTO = new AddressDTO();
+    role : string = "REGISTERED_USER";
 }

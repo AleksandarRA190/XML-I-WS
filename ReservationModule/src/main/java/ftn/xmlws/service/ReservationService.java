@@ -1,21 +1,34 @@
 package ftn.xmlws.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
-import ftn.xmlws.miscellaneous.MyTypeConverter;
+import ftn.xmlws.dto.UserReservationsDTO;
+import ftn.xmlws.model.CommentRate;
 import ftn.xmlws.model.Reservation;
+import ftn.xmlws.repository.AccommodationUnitRepository;
 import ftn.xmlws.repository.ReservationRepository;
+import ftn.xmlws.repository.UserRepository;
 
 @Service
 public class ReservationService {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private AccommodationUnitRepository accommodationUnitRepository;
+	
+	
 	
 	public List<ReservationDTO> getAllReservations() {
 		List<Reservation> list = new ArrayList<Reservation>();
@@ -45,12 +58,14 @@ public class ReservationService {
 	public boolean makeReservation(ReservationDTO reservation) {
 		System.out.println("ReservationServisce: " + reservation.getGuest().getUsername());
 		Reservation r = new Reservation();
+		r.setAccommodationUnit(this.accommodationUnitRepository.getOne(reservation.getAccommodationUnit().getId()));
+		r.setGuest(this.userRepository.findByUsername(reservation.getGuest().getUsername()));
 		//r.setAccommodationUnit(); ovde poziv mikroservisu za get acc
 		//r.setGuest(restTemplate.getForObject("http://localhost:9006/users/user/"+reservation.getGuest().getUsername(), ftn.xmlws.model.User.class));// ovde poziv mikroservisu za uzer
 		r.setConfirmed(false);
 		r.setDeleted(false);
-		r.setFromDate(MyTypeConverter.localDateToXMLGregorianCalendar(reservation.getFromDate()));
-		r.setToDate(MyTypeConverter.localDateToXMLGregorianCalendar(reservation.getToDate()));
+		r.setFromDateTime(reservation.getFromDateTime());
+		r.setToDateTime(reservation.getToDateTime());
 		
 		this.reservationRepository.save(r);
 		return true;
@@ -74,8 +89,8 @@ public class ReservationService {
 		if(r != null)
 			if(!r.isDeleted()) {
 				//ne moze se menjati korisnik ili soba jer to onda nije ta rezervacija
-				r.setFromDate(MyTypeConverter.localDateToXMLGregorianCalendar(reservation.getFromDate()));
-				r.setToDate(MyTypeConverter.localDateToXMLGregorianCalendar(reservation.getToDate()));
+				r.setFromDateTime(reservation.getFromDateTime());
+				r.setToDateTime(reservation.getToDateTime());
 				this.reservationRepository.save(r);
 				return reservation;
 			}
@@ -94,6 +109,86 @@ public class ReservationService {
 			}
 		
 		return false;
+	}
+	
+	public boolean agentConfirmReservation(Long id) {
+		Reservation reservation = this.reservationRepository.getOne(id);
+
+		if(reservation != null)
+			if(!reservation.isDeleted()) {
+				reservation.setAgentConfirmed(true);
+				this.reservationRepository.save(reservation);
+				return true;
+			}
+		
+		return false;
+	}
+	
+	public UserReservationsDTO getUserReservations(String username) {
+		UserReservationsDTO retVal = new UserReservationsDTO();
+		
+		return retVal;
+	}
+	
+	public boolean addEditComment(Long id, String content) {
+		Reservation reservation = this.reservationRepository.getOne(id);
+		
+		if(reservation == null)
+			return false;
+		
+		if(reservation.getCommentRate() == null) {
+			CommentRate newComment = new CommentRate();
+			newComment.setApprovedComment(false);
+			newComment.setCommentDateTime(LocalDateTime.now());
+			newComment.setContentOfComment(content);
+			reservation.setCommentRate(newComment);
+			this.reservationRepository.save(reservation);
+		} else {
+			CommentRate existingComment = reservation.getCommentRate();
+			existingComment.setApprovedComment(false);
+			existingComment.setCommentDateTime(LocalDateTime.now());
+			existingComment.setContentOfComment(content);
+			reservation.setCommentRate(existingComment);
+			this.reservationRepository.save(reservation);
+		}
+		
+		return true;
+	}
+	
+	public CommentDTO getComment(Long id) {
+		Reservation reservation = this.reservationRepository.getOne(id);
+		
+		if(reservation == null)
+			return null;
+		
+		if(reservation.getCommentRate() == null) {
+			return null;
+		} else {
+			CommentRate comment = reservation.getCommentRate();
+			CommentDTO commentDTO = new CommentDTO();
+			commentDTO.setContentOfComment(comment.getContentOfComment());
+			commentDTO.setApprovedComment(comment.isApprovedComment());
+			return commentDTO;
+		}
+		
+	}
+	
+	public boolean confirmComment(Long id) {
+		Reservation reservation = this.reservationRepository.getOne(id);
+		
+		if(reservation == null)
+			return false;
+		
+		if(reservation.getCommentRate() == null) {
+			return false;
+		} else {
+			CommentRate comment = reservation.getCommentRate();
+			comment.setApprovedComment(true);
+			reservation.setCommentRate(comment);
+			this.reservationRepository.save(reservation);
+			return true;
+		}
+		
 	}
 
 }

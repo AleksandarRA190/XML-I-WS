@@ -9,6 +9,8 @@
 package ftn.xmlws.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +19,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -134,6 +139,9 @@ public class Reservation {
     @XmlElement(name = "Confirmed", namespace = "http://booking.uns.ac.rs/reservation")
     protected boolean confirmed;
     
+    @XmlElement(name = "Agent_confirmed", namespace = "http://booking.uns.ac.rs/reservation")
+    protected boolean agentConfirmed;
+    
     @XmlElement(name = "Deleted", namespace = "http://booking.uns.ac.rs/reservation")
     protected boolean deleted;
     
@@ -141,13 +149,14 @@ public class Reservation {
     @XmlElement(name = "Accommodation_unit", required = true)
     protected AccommodationUnit accommodationUnit;
     
-    /*@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName="id", nullable = false, unique = true)	
-    @XmlElement(name = "Comment_rate", namespace = "http://booking.uns.ac.rs/reservation")
-    protected Reservation.CommentRate commentRate;
+    @XmlElement(name = "Comment_rate", required = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName="id", nullable = true, unique = true)	
+    protected CommentRate commentRate;
 
-    @XmlElement(name = "Message", namespace = "http://booking.uns.ac.rs/reservation")
-    protected List<Message> messages;*/
+    @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Message", required = true)
+    protected List<Message> messages = new ArrayList<>();
 
     
 public Reservation() {}
@@ -168,6 +177,7 @@ public Reservation() {}
 		this.fromDateTime = res.getFromDateTime();
 		this.toDateTime = res.getToDateTime();
 		this.confirmed = res.isConfirmed();
+		this.agentConfirmed = res.isAgentConfirmed();
 	}
 
     
@@ -235,30 +245,7 @@ public Reservation() {}
         this.confirmed = value;
     }
 
-    /**
-     * Gets the value of the commentRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Reservation.CommentRate }
-     *     
-     */
-    /*public Reservation.CommentRate getCommentRate() {
-        return commentRate;
-    }
-*/
-    /**
-     * Sets the value of the commentRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Reservation.CommentRate }
-     *     
-     */
-  /*  public void setCommentRate(Reservation.CommentRate value) {
-        this.commentRate = value;
-    }
-*/
+    
     /**
      * Gets the value of the accommodationUnit property.
      * 
@@ -311,7 +298,7 @@ public Reservation() {}
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -319,7 +306,7 @@ public Reservation() {}
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -360,10 +347,6 @@ public Reservation() {}
 	}
 
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
     /**
      * Gets the value of the messages property.
      * 
@@ -386,223 +369,40 @@ public Reservation() {}
      * 
      * 
      */
-  /*  public List<Message> getMessages() {
+    public List<Message> getMessages() {
         if (messages == null) {
             messages = new ArrayList<Message>();
         }
         return this.messages;
     }
-*/
+
+
+	public CommentRate getCommentRate() {
+		return commentRate;
+	}
+
+
+	public void setCommentRate(CommentRate commentRate) {
+		this.commentRate = commentRate;
+	}
+
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+
+	public boolean isAgentConfirmed() {
+		return agentConfirmed;
+	}
+
+
+	public void setAgentConfirmed(boolean agentConfirmed) {
+		this.agentConfirmed = agentConfirmed;
+	}
+
 
     
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="Komentar" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;attribute name="Odobren" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="Sadrzaj" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="Ocena">
-     *           &lt;simpleType>
-     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
-     *               &lt;enumeration value="1"/>
-     *               &lt;enumeration value="2"/>
-     *               &lt;enumeration value="3"/>
-     *               &lt;enumeration value="4"/>
-     *               &lt;enumeration value="5"/>
-     *               &lt;enumeration value="0"/>
-     *             &lt;/restriction>
-     *           &lt;/simpleType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *       &lt;attribute name="Datum_vreme" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    /*
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "komentar",
-        "ocena"
-    })
-    @Entity
-    public static class CommentRate {
-
-    	@XmlElement(name = "Komentar", namespace = "http://booking.uns.ac.rs/reservation")
-        protected Reservation.CommentRate.Komentar komentar;
-
-    	@XmlElement(name = "Ocena", namespace = "http://booking.uns.ac.rs/reservation")
-        protected int ocena;
         
-    	@Transient
-    	@XmlAttribute(name = "Datum_vreme")
-        @XmlSchemaType(name = "dateTime")
-        protected XMLGregorianCalendar datumVreme;
-
-    	@Column(name = "Datum_vreme")
-    	public Calendar getFromDateToCalendar() {
-    	    return new GregorianCalendar(datumVreme.getYear(), datumVreme.getMonth(), datumVreme.getDay());
-    	}
-        /**
-         * Gets the value of the komentar property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link Reservation.CommentRate.Komentar }
-         *     
-         */
-        //public Reservation.CommentRate.Komentar getKomentar() {
-          //  return komentar;
-        //}
-
-        /**
-         * Sets the value of the komentar property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link Reservation.CommentRate.Komentar }
-         *     
-         */
-        //public void setKomentar(Reservation.CommentRate.Komentar value) {
-          //  this.komentar = value;
-        //}
-
-        /**
-         * Gets the value of the ocena property.
-         * 
-         */
-        //public int getOcena() {
-          //  return ocena;
-        //}
-
-        /**
-         * Sets the value of the ocena property.
-         * 
-         */
-        //public void setOcena(int value) {
-         //   this.ocena = value;
-        //}
-
-        /**
-         * Gets the value of the datumVreme property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
-         */
-        //public XMLGregorianCalendar getDatumVreme() {
-          //  return datumVreme;
-        //}
-
-        /**
-         * Sets the value of the datumVreme property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
-         */
-        //public void setDatumVreme(XMLGregorianCalendar value) {
-          //  this.datumVreme = value;
-        //}
-
-
-        /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
-         * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;attribute name="Odobren" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="Sadrzaj" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
-         * </pre>
-         * 
-         * 
-         */
-        /*@XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "")
-        @Entity
-        public static class Komentar {
-
-            @XmlAttribute(name = "Odobren")
-            protected Boolean odobren;
-            @XmlAttribute(name = "Sadrzaj")
-            protected String sadrzaj;
-*/
-            /**
-             * Gets the value of the odobren property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Boolean }
-             *     
-             */
-  /*          public Boolean isOdobren() {
-                return odobren;
-            }
-*/
-            /**
-             * Sets the value of the odobren property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Boolean }
-             *     
-             */
-  /*          public void setOdobren(Boolean value) {
-                this.odobren = value;
-            }
-
-    */        /**
-             * Gets the value of the sadrzaj property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
-             */
-      /*      public String getSadrzaj() {
-                return sadrzaj;
-            }
-*/
-            /**
-             * Sets the value of the sadrzaj property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
-             */
-  /*          public void setSadrzaj(String value) {
-                this.sadrzaj = value;
-            }
-*/
-  //      }
-
-    
 
 }

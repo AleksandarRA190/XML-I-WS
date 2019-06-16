@@ -15,7 +15,7 @@ public class UserDTO {
     private boolean enabled;
     private boolean deleted;
     private Role role;
-    private long bussinesRegistrationNumber;
+    private Long bussinesRegistrationNumber;
     private boolean blocked;
     private Address address;
     private AccommodationDTO accommodation;
@@ -144,13 +144,13 @@ public class UserDTO {
 
 
 
-	public long getBussinesRegistrationNumber() {
+	public Long getBussinesRegistrationNumber() {
 		return bussinesRegistrationNumber;
 	}
 
 
 
-	public void setBussinesRegistrationNumber(long bussinesRegistrationNumber) {
+	public void setBussinesRegistrationNumber(Long bussinesRegistrationNumber) {
 		this.bussinesRegistrationNumber = bussinesRegistrationNumber;
 	}
 

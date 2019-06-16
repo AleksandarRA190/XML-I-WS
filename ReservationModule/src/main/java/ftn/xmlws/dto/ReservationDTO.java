@@ -1,19 +1,19 @@
 package ftn.xmlws.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import ftn.xmlws.miscellaneous.MyTypeConverter;
 import ftn.xmlws.model.Reservation;
 
 public class ReservationDTO {
 	
 	private Long id;
-	private LocalDate fromDate;
-	private LocalDate toDate;
 	private boolean confirmed;
     private UserDTO guest;
     private AccommodationUnitDTO accommodationUnit;
-    private boolean deleted;
+	private LocalDateTime fromDateTime;
+	private LocalDateTime toDateTime;
+	private boolean agentConfirmed;
+	private CommentDTO commentDTO;
     
 	public ReservationDTO() {
 		
@@ -22,15 +22,17 @@ public class ReservationDTO {
 	public ReservationDTO(Reservation res) {
 		this.id = res.getId();
 		this.confirmed = res.isConfirmed();
-		//this.guest = new UserDTO(res.getGuest());
-		//this.fromDate = MyTypeConverter.xmlCalendarToLocalDate(res.getFromDate());
-		//this.toDate = MyTypeConverter.xmlCalendarToLocalDate(res.getToDate());
-		//this.accommodationUnit = new AccommodationUnitDTO(res.getAccommodationUnit());
-		this.deleted = res.isDeleted();
+		this.guest = new UserDTO(res.getGuest());
+		this.fromDateTime = res.getFromDateTime();
+		this.toDateTime = res.getToDateTime();
+		this.accommodationUnit = new AccommodationUnitDTO(res.getAccommodationUnit());
+		this.agentConfirmed = res.isAgentConfirmed();
 		
-		//kad se odrade pozivi drugim mikroservisima onda skini ovo i otkomentarisi ono gore
-		this.guest = null;
-		this.accommodationUnit = null;
+		if(res.getCommentRate() != null) {
+			this.commentDTO = new CommentDTO();
+			commentDTO.setApprovedComment(res.getCommentRate().isApprovedComment());
+			commentDTO.setContentOfComment(res.getCommentRate().getContentOfComment());
+		}
 	}
 
 	public Long getId() {
@@ -41,28 +43,20 @@ public class ReservationDTO {
 		this.id = id;
 	}
 
-	public LocalDate getFromDate() {
-		return fromDate;
-	}
-
-	public void setFromDate(LocalDate fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	public LocalDate getToDate() {
-		return toDate;
-	}
-
-	public void setToDate(LocalDate toDate) {
-		this.toDate = toDate;
-	}
-
 	public boolean isConfirmed() {
 		return confirmed;
 	}
 
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	
+	public boolean isAgentConfirmed() {
+		return agentConfirmed;
+	}
+
+	public void setAgentConfirmed(boolean confirmed) {
+		this.agentConfirmed = confirmed;
 	}
 
 	public UserDTO getGuest() {
@@ -81,15 +75,30 @@ public class ReservationDTO {
 		this.accommodationUnit = accommodationUnit;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	public LocalDateTime getFromDateTime() {
+		return fromDateTime;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setFromDateTime(LocalDateTime fromDateTime) {
+		this.fromDateTime = fromDateTime;
 	}
-	
-	
+
+	public LocalDateTime getToDateTime() {
+		return toDateTime;
+	}
+
+	public void setToDateTime(LocalDateTime toDateTime) {
+		this.toDateTime = toDateTime;
+	}
+
+	public CommentDTO getCommentDTO() {
+		return commentDTO;
+	}
+
+	public void setCommentDTO(CommentDTO commentDTO) {
+		this.commentDTO = commentDTO;
+	}
+
 	
     
 

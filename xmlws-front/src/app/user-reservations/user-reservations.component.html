@@ -5,10 +5,12 @@
         <div class="card-header tab-card-header">
           <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Basic info</a>
+              <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One"
+                aria-selected="true">Basic info</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="two-tab" data-toggle="tab" href="#{{res.id}}" role="tab" aria-controls="Two" aria-selected="false">Accommodation unit info</a>
+              <a class="nav-link" id="two-tab" data-toggle="tab" href="#{{res.id}}" role="tab" aria-controls="Two"
+                aria-selected="false">Accommodation unit info</a>
             </li>
           </ul>
         </div>
@@ -18,12 +20,26 @@
             <h5 class="card-title">{{res.accommodationUnit.accommodation.name}}</h5>
             <p class="card-text">Start Date: {{mica(res.fromDateTime)}}</p>
             <p class="card-text">End Date: {{mica(res.toDateTime)}}</p>
-            <a *ngIf="!res.confirmed" class="btn btn-primary" (click)="confirm(res.id)" style="background-color: #fed136; color: black">Confirm reservation</a>              
+            <a *ngIf="!res.confirmed" class="btn btn-primary" (click)="confirm(res.id)"
+              style="background-color: #fed136; color: black">Confirm reservation</a>
+            <p *ngIf="res.confirmed" class="card-text" style="background-color: #fed136; color:black">Confirmed</p>
+            <p *ngIf="res.agentConfirmed" class="card-text" class="card-text"
+              style="background-color: black; color: #fed136">Agent confirmed !</p>
+            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary"
+              style="background-color: #fed136; color: black" [routerLink]="['/postComment', res.id]" >Add comment</a>
+            <!--Za sada home, posle komponenta commenta!-->
+            <div *ngIf="res.commentDTO">
+              <h6>Comment</h6>
+              <p style="font-style: italic;"> {{res.commentDTO.contentOfComment}} </p>
+              <p *ngIf="res.commentDTO.approvedComment">>Posted</p>
+              <p *ngIf="!res.commentDTO.approvedComment">Waiting to be approved by admin...</p>
+            </div>
           </div>
           <div class="tab-pane fade p-3" id="{{res.id}}" role="tabpanel" aria-labelledby="two-tab">
             <h5 class="card-title">Floor {{res.accommodationUnit.floor}}, number {{res.accommodationUnit.number}}</h5>
             <p class="card-text">Number of beds: {{res.accommodationUnit.numberOfBeds}}</p>
-            <a href="#" class="btn btn-primary" routerLink="/home">Visit profile</a> <!--Za sada home, posle profil smestaja-->              
+            <a href="#" class="btn btn-primary" routerLink="/home">Visit profile</a>
+            <!--Za sada home, posle profil smestaja-->
           </div>
 
         </div>
@@ -31,3 +47,4 @@
     </div>
   </div>
 </div>
+

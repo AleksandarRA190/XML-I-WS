@@ -21,47 +21,118 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.enums.Role;
 
+
+/**
+ * <p>Java class for User complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="User"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Lastname" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Password" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="Enabled" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="Deleted" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="Role" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element ref="{http://booking.uns.ac.rs/users}Address"/&gt;
+ *         &lt;element name="Bussines_registration_number" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="Blocked" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
+ * </pre>
+ * 
+ * 
+ */
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "User", propOrder = {
+    "name",
+    "lastname",
+    "email",
+    "username",
+    "password",
+    "id",
+    "enabled",
+    "deleted",
+    "role",
+    "address",
+    "bussinesRegistrationNumber",
+    "blocked"
+})
 @Entity
 public class User {
 	
+    @XmlElement(name = "Id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
 
-    private String name;
+    @XmlElement(name = "Name", required = true)
+    protected String name;
     
-    private String lastname;
+    @XmlElement(name = "Lastname", required = true)
+    protected String lastname;
     
-    private String email;
+    @XmlElement(name = "Email", required = true)
+    protected String email;
     
-    private String username;
+    @XmlElement(name = "Username", required = true)
+    protected String username;
     
-    private String password;
+    @XmlElement(name = "Password", required = true)
+    protected String password;
     
-    private boolean enabled;
+    @XmlElement(name = "Enabled")
+    protected boolean enabled;
     
-    private boolean deleted;
+    @XmlElement(name = "Deleted")
+    protected boolean deleted;
     
-    private Role role;
+    @XmlElement(name = "Role", required = true)
+    protected Role role;
     
-    private long bussinesRegistrationNumber;
-    
-    private boolean blocked;
-    
-    @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Reservation> reservations = new ArrayList<>();
-    
+    @XmlElement(name = "Address", required = true)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName="id", nullable = false, unique = true)	
-    private Address address;
+    protected Address address;
+    
+    @XmlElement(name = "Bussines_registration_number")
+    protected long bussinesRegistrationNumber;
+    
+    @XmlElement(name = "Blocked")
+    protected boolean blocked;
+    
+    @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Reservation", required = true)
+    protected List<Reservation> reservations = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Sent_messages", required = true)
+    protected List<Message> sentMessages = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "reciever", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Recieved_messages", required = true)
+    protected List<Message> recievedMessages = new ArrayList<>();
     
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Accommodation agentOfAccommodation;
-    
+    protected Accommodation agentOfAccommodation;
     
     public User() {
     	
@@ -96,7 +167,6 @@ public class User {
     	this.role = dto.getRole();
     	this.bussinesRegistrationNumber = dto.getBussinesRegistrationNumber();
     	this.blocked = dto.isBlocked();
-    	
     }
 
 
@@ -371,6 +441,30 @@ public class User {
 
 	public void setAgentOfAccommodation(Accommodation accommodation) {
 		this.agentOfAccommodation = accommodation;
+	}
+
+
+
+	public List<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+
+
+	public void setSentMessages(List<Message> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
+
+
+
+	public List<Message> getRecievedMessages() {
+		return recievedMessages;
+	}
+
+
+
+	public void setRecievedMessages(List<Message> recievedMessages) {
+		this.recievedMessages = recievedMessages;
 	}
 
 }
