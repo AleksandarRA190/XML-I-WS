@@ -72,10 +72,7 @@ public class Service {
     protected String description;
     @XmlElement(name = "Deleted")
     protected boolean deleted;
-    
-    
-    @ManyToMany
-	@JoinTable(name = "Accommodation", joinColumns = @JoinColumn(name = "avio_company_id", referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "services")
     protected List<Accommodation> accommodation;
 
     /**

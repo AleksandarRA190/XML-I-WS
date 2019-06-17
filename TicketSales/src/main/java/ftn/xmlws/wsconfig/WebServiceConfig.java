@@ -73,4 +73,50 @@ public class WebServiceConfig {
 	  return new SimpleXsdSchema(new ClassPathResource("mojuser.xsd"));
 	}
 	
+	@Bean(name = "accommodations")
+	public DefaultWsdl11Definition defaultWsdl15Definition(XsdSchema accommodationsSchema) {
+	  DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+	  definition.setPortTypeName("AccommodationPort");
+	  definition.setTargetNamespace("http://www.projectXml.com/accommodation");
+	  definition.setLocationUri("/ws");
+	  definition.setSchema(accommodationsSchema);
+	  return definition;
+	}
+	
+	@Bean
+	public XsdSchema accommodationsSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("Accommodation.xsd"));
+	}
+	
+	
+	@Bean(name = "accommodationUnits")
+	public DefaultWsdl11Definition defaultWsdl16Definition(XsdSchema accommodationUnitsSchema) {
+	  DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+	  definition.setPortTypeName("AccommodationUnitPort");
+	  definition.setTargetNamespace("http://www.projectXml.com/accommodationUnit");
+	  definition.setLocationUri("/ws");
+	  definition.setSchema(accommodationUnitsSchema);
+	  return definition;
+	}
+	
+	@Bean
+	public XsdSchema accommodationUnitsSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("AccommodationUnit.xsd"));
+	}
+	
+	@Bean(name = "services")
+	public DefaultWsdl11Definition defaultWsdl17Definition(XsdSchema servicesSchema) {
+	  DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+	  definition.setPortTypeName("ServicePort");
+	  definition.setTargetNamespace("http://www.projectXml.com/service");
+	  definition.setLocationUri("/ws");
+	  definition.setSchema(servicesSchema);
+	  return definition;
+	}
+	
+	@Bean
+	public XsdSchema servicesSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("Service.xsd"));
+	}
+	
 }

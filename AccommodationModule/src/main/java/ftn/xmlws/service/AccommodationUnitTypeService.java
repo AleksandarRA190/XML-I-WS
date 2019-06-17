@@ -2,6 +2,9 @@ package ftn.xmlws.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,17 +22,20 @@ public class AccommodationUnitTypeService {
 	public List<AccommodationUnitTypeDTO> getAllAccommodationUnitTypes() {
 		List<AccommodationUnitType> list = accommodationUnitTypeRepository.findAll();
 		List<AccommodationUnitTypeDTO> listDTO = new ArrayList<>();
-		list.forEach(item -> {
-			if(!item.isDeleted())
-				listDTO.add(new AccommodationUnitTypeDTO(item));
-		});
+		for(AccommodationUnitType aut: list) {
+			if(!aut.isDeleted()) 
+				listDTO.add(new AccommodationUnitTypeDTO(aut));
+		}
 		return listDTO;
 	}
 	
 	public AccommodationUnitType findAccommodationUnitType(Long id) {
-		AccommodationUnitType aut  = accommodationUnitTypeRepository.getOne(id);
-		if(aut == null || aut.isDeleted())
+		AccommodationUnitType aut = null;
+		try {
+			aut  = 	accommodationUnitTypeRepository.getOne(id);
+		} catch (EntityNotFoundException e) {
 			return null;
+		}	
 		return aut;
 	}
 	

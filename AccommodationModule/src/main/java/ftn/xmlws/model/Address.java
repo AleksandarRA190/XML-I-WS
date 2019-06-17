@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import ftn.xmlws.dto.AddressDTO;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -119,6 +121,19 @@ public Address() {}
 		this.deleted = false;
     }
 
+    public Address(AddressDTO a) {
+    	//System.out.println(a.toString());
+    	this.country = a.getCountry();
+		this.city = a.getCity();
+		this.postalCode = a.getPostalCode();
+		this.street = a.getStreet();
+		this.number = a.getNumber();
+		this.apartmentNumber = a.getApartmentNumber();
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
+		this.deleted = false;
+    }
+    
     /**
      * Gets the value of the country property.
      * 
@@ -318,5 +333,16 @@ public Address() {}
     public void setDeleted(boolean value) {
         this.deleted = value;
     }
+
+
+
+	@Override
+	public String toString() {
+		return "Address [country=" + country + ", city=" + city + ", postalCode=" + postalCode + ", street=" + street
+				+ ", number=" + number + ", apartmentNumber=" + apartmentNumber + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", id=" + id + ", deleted=" + deleted + "]";
+	}
+    
+    
 
 }

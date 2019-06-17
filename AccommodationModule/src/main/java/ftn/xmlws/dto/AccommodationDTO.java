@@ -2,13 +2,14 @@ package ftn.xmlws.dto;
 
 import ftn.xmlws.enums.AccommodationType;
 import ftn.xmlws.model.Accommodation;
+import ftn.xmlws.model.Address;
 
 public class AccommodationDTO {
 
 	private String description;
 	private String name;
 	private String category;
-	private AddressDTO addressDTO;
+	private Address address;
 	private AccommodationType accommodationType;
 	private Long id;
 	
@@ -20,7 +21,7 @@ public class AccommodationDTO {
 		description = a.getDescription();
 		name = a.getName();
 		category = a.getCategory();
-		addressDTO = new AddressDTO(a.getAddress());
+		address = a.getAddress();
 		accommodationType = a.getAccommodationType();
 		id = a.getId();
 	}
@@ -49,23 +50,23 @@ public class AccommodationDTO {
 		this.category = category;
 	}
 
-	public AddressDTO getAddressDTO() {
-		return addressDTO;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddressDTO(AddressDTO addressDTO) {
-		this.addressDTO = addressDTO;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public AccommodationType getAccommodationType() {
 		return accommodationType;
 	}
 
-	public void setAccommodationTypeDTO(AccommodationType accommodationType) {
+	public void setAccommodationType(AccommodationType accommodationType) {
 		this.accommodationType = accommodationType;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

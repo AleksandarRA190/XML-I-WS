@@ -2,44 +2,45 @@ package ftn.xmlws.dto;
 
 import ftn.xmlws.enums.AccommodationType;
 import ftn.xmlws.model.Accommodation;
+import ftn.xmlws.model.Address;
 
 public class AccommodationDTO {
 	
-	private Long id;
-	private String name;
 	private String description;
+	private String name;
 	private String category;
+	private Address address;
 	private AccommodationType accommodationType;
+	private Long id;
 	
 	public AccommodationDTO() {
 		
 	}
-
-	public AccommodationDTO(Long id, String name, String description, String category,
-			AccommodationType accommodationType) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.category = category;
-		this.accommodationType = accommodationType;
-	}
 	
 	public AccommodationDTO(Accommodation a) {
-		super();
-		this.id = a.getId();
-		this.name = a.getName();
-		this.description = a.getDescription();
-		this.category = a.getCategory();
-		this.accommodationType = a.getAccommodationType();
+		description = a.getDescription();
+		name = a.getName();
+		category = a.getCategory();
+		address = a.getAddress();
+		accommodationType = a.getAccommodationType();
+		id = a.getId();
+	}
+	
+//	public AccommodationDTO(com.projectxml.accommodation.Accommodation a) {
+//		description = a.getDescription();
+//		name = a.getName();
+//		category = a.getCategory();
+//		this.setAddress(a.getAddress());
+//		id = a.getId();
+//		accommodationType = AccommodationType.valueOf(a.getAccommodationType().toString());
+//	}
+
+	public String getDescription() {
+		return description;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getName() {
@@ -50,20 +51,20 @@ public class AccommodationDTO {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public AccommodationType getAccommodationType() {
@@ -73,7 +74,13 @@ public class AccommodationDTO {
 	public void setAccommodationType(AccommodationType accommodationType) {
 		this.accommodationType = accommodationType;
 	}
-	
-	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }

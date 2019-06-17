@@ -1,7 +1,7 @@
 package ftn.xmlws.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.dto.AccommodationDTO;
 import ftn.xmlws.dto.AccommodationUnitDTO;
+import ftn.xmlws.dto.AccommodationUnitsDTO;
+import ftn.xmlws.dto.AccommodationsDTO;
 import ftn.xmlws.dto.ServiceDTO;
 import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.AccommodationUnit;
-import ftn.xmlws.model.Service;
 import ftn.xmlws.service.AccommodationService;
 import ftn.xmlws.service.AccommodationUnitService;
 import ftn.xmlws.service.ServiceService;
@@ -36,9 +37,10 @@ public class AccommodationController {
 	private ServiceService serviceService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<AccommodationDTO>> getAccommodations() {
-		List<AccommodationDTO> accommodationsDTO = accommodationService.getAllAccommodations();
-		if(accommodationsDTO == null)
+	public ResponseEntity<AccommodationsDTO> getAccommodations() {
+		AccommodationsDTO accommodationsDTO = new AccommodationsDTO();
+		accommodationsDTO.setAccommodations(accommodationService.getAllAccommodations());
+		if(accommodationsDTO.getAccommodations().isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(accommodationsDTO, HttpStatus.OK);
 	}
@@ -53,8 +55,6 @@ public class AccommodationController {
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<AccommodationDTO> addAccommodation(@RequestBody AccommodationDTO accommodationDTO) {
-		//napravi i za dodavanje adrese
-		//restTemplate.put("http://localhost:9006/address/add", request);
 		Accommodation accommodation = accommodationService.saveAccommodation(accommodationDTO);
 		if(accommodation == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,9 +82,10 @@ public class AccommodationController {
 	
 	
 	@RequestMapping(value="/{id}/units", method = RequestMethod.GET)
-	public ResponseEntity<List<AccommodationUnitDTO>> getAccommodationUnits(@PathVariable("id") Long accommodationId) {
-		List<AccommodationUnitDTO> unitsDTO = accommodationUnitService.getAllUnitsOfAccommodation(accommodationId);
-		if(unitsDTO == null) 
+	public ResponseEntity<AccommodationUnitsDTO> getAccommodationUnits(@PathVariable("id") Long accommodationId) {
+		AccommodationUnitsDTO unitsDTO = new AccommodationUnitsDTO();
+		unitsDTO.setAccommodationUnits(accommodationUnitService.getAllUnitsOfAccommodation(accommodationId));
+		if(unitsDTO.getAccommodationUnits().isEmpty()) 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(unitsDTO, HttpStatus.OK);
 	}

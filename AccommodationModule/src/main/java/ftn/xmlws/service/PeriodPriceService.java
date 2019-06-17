@@ -24,10 +24,10 @@ public class PeriodPriceService {
 	public List<PeriodPriceDTO> getAllPeriodPrices(Long auId) {
 		List<PeriodPrice> list = accommodationUnitService.findAccommodationUnit(auId).getPeriodPrices();
 		List<PeriodPriceDTO> listDTO = new ArrayList<>();
-		list.forEach(item -> {
-			if(!item.isDeleted())
-				listDTO.add(new PeriodPriceDTO(item));
-		});
+		for(PeriodPrice pp: list) {
+			if(!pp.isDeleted())
+				listDTO.add(new PeriodPriceDTO(pp));
+		}
 		return listDTO;
 	}
 	

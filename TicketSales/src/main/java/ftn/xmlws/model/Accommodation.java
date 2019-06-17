@@ -18,6 +18,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -159,7 +161,11 @@ public class Accommodation {
     @XmlElement(required = true)
     protected List<Image> images = new ArrayList<>();    
     
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "accommodation_service",
+        joinColumns = @JoinColumn(name = "accommodation_id"),
+        inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
     @XmlElement(required = true)
     protected List<Service> services = new ArrayList<>();
 

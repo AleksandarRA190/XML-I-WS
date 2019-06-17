@@ -8,10 +8,16 @@
 
 package ftn.xmlws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -60,6 +66,10 @@ public class AccommodationUnitType {
     
     @XmlElement(name = "Deleted")
     protected boolean deleted;
+    
+    @OneToMany(mappedBy = "accommodationUnitType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Units", required = true)
+    protected List<AccommodationUnit> accommodationUnits = new ArrayList<>();
 
     public void setId(Long id) {
 		this.id = id;
@@ -121,4 +131,11 @@ public class AccommodationUnitType {
         this.deleted = value;
     }
 
+	public List<AccommodationUnit> getAccommodationUnits() {
+		return accommodationUnits;
+	}
+
+	public void setAccommodationUnits(List<AccommodationUnit> accommodationUnits) {
+		this.accommodationUnits = accommodationUnits;
+	}
 }

@@ -8,15 +8,23 @@
 
 package ftn.xmlws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import ftn.xmlws.dto.AccommodationUnitTypeDTO;
 
 
 /**
@@ -61,10 +69,28 @@ public class AccommodationUnitType {
     @XmlElement(name = "Deleted")
     protected boolean deleted;
 
+    @OneToMany(mappedBy = "accommodationUnitType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(name = "Units", required = true)
+    protected List<AccommodationUnit> accommodationUnits = new ArrayList<>();
+    
+    public AccommodationUnitType() {
+    	
+    }
+    
+    public AccommodationUnitType(AccommodationUnitTypeDTO autDTO) {
+    	this.deleted = false;
+    	this.name = autDTO.getName();    	
+    }
+    
+    public AccommodationUnitType(String name) {
+    	this.deleted = false;
+    	this.name = name;
+    }
+    
+    
     public void setId(Long id) {
 		this.id = id;
 	}
-
 	/**
      * Gets the value of the name property.
      * 
@@ -121,4 +147,11 @@ public class AccommodationUnitType {
         this.deleted = value;
     }
 
+	public List<AccommodationUnit> getAccommodationUnits() {
+		return accommodationUnits;
+	}
+
+	public void setAccommodationUnits(List<AccommodationUnit> accommodationUnits) {
+		this.accommodationUnits = accommodationUnits;
+	}
 }

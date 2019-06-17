@@ -23,6 +23,8 @@ import com.projectxml.service.Service;
 import com.projectxml.service.Services;
 import com.projectxml.service.UpdateServiceRequest;
 
+import ftn.xmlws.dto.ServiceDTO;
+
 @Endpoint
 public class ServiceEndpoint {
 
@@ -36,7 +38,7 @@ public class ServiceEndpoint {
 	public GetAccommodationServicesResponse processGetAccommodationServicesRequest(@RequestPayload GetAccommodationServicesRequest request) {
 		GetAccommodationServicesResponse response = new GetAccommodationServicesResponse();
 	  
-		Services s = restTemplate.getForObject("http://localhost:9008/accommodation/" + request.getAccommodationId() + "/services", Services.class);
+		Services s = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", Services.class);
 		response.setServices(s);
 	
 	  	return response;
@@ -47,7 +49,7 @@ public class ServiceEndpoint {
 	public AddAccommodationServiceResponse processAddAccommodationServiceRequest(@RequestPayload AddAccommodationServiceRequest request) {
 		AddAccommodationServiceResponse response = new AddAccommodationServiceResponse();
 	  
-		Service s = restTemplate.postForObject("http://localhost:9008/accommodation/" + request.getAccommodationId() + "/services", request, Service.class);
+		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", request, Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -56,7 +58,7 @@ public class ServiceEndpoint {
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "removeAccommodationServiceRequest")
 	@ResponsePayload
 	public void processRemoveAccommodationServiceRequest(@RequestPayload RemoveAccommodationServiceRequest request) {
-		restTemplate.delete("http://localhost:9008/accommodation/" + request.getAccommodationId() + "/services/" + request.getAccommodationServiceId());
+		restTemplate.delete("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services/" + request.getAccommodationServiceId());
 	 }
 	
 	// ********************************** crud for services **************************************************
@@ -65,7 +67,7 @@ public class ServiceEndpoint {
 	public GetServicesResponse processGetServicesRequest(@RequestPayload GetServicesRequest request) {
 		GetServicesResponse response = new GetServicesResponse();
 	  
-		Services s = restTemplate.getForObject("http://localhost:9008/services" , Services.class);
+		Services s = restTemplate.getForObject("http://localhost:9009/services" , Services.class);
 		response.setServices(s);
 	
 	  	return response;
@@ -76,7 +78,7 @@ public class ServiceEndpoint {
 	public GetServiceResponse processGetServiceRequest(@RequestPayload GetServiceRequest request) {
 		GetServiceResponse response = new GetServiceResponse();
 	  
-		Service s = restTemplate.getForObject("http://localhost:9008/services/" + request.getServiceId(), Service.class);
+		Service s = restTemplate.getForObject("http://localhost:9009/services/" + request.getServiceId(), Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -86,8 +88,10 @@ public class ServiceEndpoint {
 	@ResponsePayload
 	public AddServiceResponse processAddServiceRequest(@RequestPayload AddServiceRequest request) {
 		AddServiceResponse response = new AddServiceResponse();
+		
+		ServiceDTO sDTO = new ServiceDTO(request.getService());
 	  
-		Service s = restTemplate.postForObject("http://localhost:9008/services", request, Service.class);
+		Service s = restTemplate.postForObject("http://localhost:9009/services", sDTO, Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -96,12 +100,13 @@ public class ServiceEndpoint {
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "updateServiceRequest")
 	@ResponsePayload
 	public void processUpdateServiceRequest(@RequestPayload UpdateServiceRequest request) {
-		restTemplate.put("http://localhost:9008/services/" + request.getServiceId(), request);
+		ServiceDTO sDTO = new ServiceDTO(request.getService());
+		restTemplate.put("http://localhost:9009/services/" + request.getService().getId(), sDTO);
 	 }
 	
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "removeServiceRequest")
 	@ResponsePayload
 	public void processRemoveServiceRequest(@RequestPayload RemoveServiceRequest request) {
-		restTemplate.delete("http://localhost:9008/services/" + request.getServiceId());
+		restTemplate.delete("http://localhost:9009/services/" + request.getServiceId());
 	 }
 }

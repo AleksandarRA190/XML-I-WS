@@ -30,10 +30,10 @@ public class ServiceService {
 			return null;
 		List<ServiceDTO> listDTO = new ArrayList<>();
 		list = serviceRepository.findAll();
-		list.stream().filter(item -> !item.isDeleted()).forEach(list::add);
-		list.forEach(item -> {
-			listDTO.add(new ServiceDTO(item));
-		});
+		for(ftn.xmlws.model.Service s: list) {
+			if(!s.isDeleted()) 
+				listDTO.add(new ServiceDTO(s));
+		}
 		return listDTO;
 	}
 	

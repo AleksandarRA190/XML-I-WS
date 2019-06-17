@@ -101,7 +101,6 @@
 	<xs:element name="updateServiceRequest">
 		<xs:complexType>   
 			<xs:sequence>
-				<xs:element name="serviceId" type="xs:long" />
 				<xs:element name="service" type="tns:service" />
 			</xs:sequence>
 		</xs:complexType>

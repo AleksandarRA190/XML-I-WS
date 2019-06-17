@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.xmlws.dto.AccommodationUnitDTO;
+import ftn.xmlws.dto.AccommodationUnitTypeDTO;
 import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.AccommodationUnit;
+import ftn.xmlws.model.AccommodationUnitType;
 import ftn.xmlws.repository.AccommodationUnitRepository;
 
 @Service
@@ -26,10 +28,10 @@ public class AccommodationUnitService {
 	public List<AccommodationUnitDTO> getAllAccommodationUnits() {
 		List<AccommodationUnit> list = accommodationUnitRepository.findAll(); 
 		List<AccommodationUnitDTO> listDTO = new ArrayList<>();
-		list.forEach(item -> {
-			if(!item.isDeleted())
-				listDTO.add(new AccommodationUnitDTO(item));
-		});
+		for(AccommodationUnit au : list) {
+			if(!au.isDeleted())
+				listDTO.add(new AccommodationUnitDTO(au));
+		}
 		return listDTO;
 	}
 	
@@ -49,7 +51,8 @@ public class AccommodationUnitService {
 		au.setNumber(auDTO.getNumber());
 		au.setNumberOfBeds(auDTO.getNumberOfBeds());
 		au.setDefaultPrice(auDTO.getDefaultPrice());
-		au.setAccommodationUnitType(accommodationUnitTypeService.findAccommodationUnitType(auDTO.getAccommodationUnitType().getId()));
+		AccommodationUnitType aut = accommodationUnitTypeService.findAccommodationUnitType(auDTO.getAccommodationUnitType().getId());
+		au.setAccommodationUnitType(aut);			
 		au.setAccommodation(a);
 		return accommodationUnitRepository.save(au);
 	}

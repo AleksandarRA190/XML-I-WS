@@ -99,8 +99,7 @@ public class AccommodationUnit {
     @XmlElement(name = "Accommodation", required = true)
     protected Accommodation accommodation;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName="id", nullable = false, unique = true)	
+    @ManyToOne(fetch = FetchType.LAZY)	
     @XmlElement(name = "Accommodation_unit_type", required = true)
     protected AccommodationUnitType accommodationUnitType;
     

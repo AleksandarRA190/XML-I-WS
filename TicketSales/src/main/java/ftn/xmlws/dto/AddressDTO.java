@@ -2,6 +2,7 @@ package ftn.xmlws.dto;
 
 import ftn.xmlws.model.Address;
 
+
 public class AddressDTO {
 
 	private String country;
@@ -28,6 +29,18 @@ public class AddressDTO {
 		longitude = address.getLongitude();
 		latitude = address.getLatitude();
 		id = address.getId();
+	}
+	
+	public AddressDTO(com.projectxml.address.Address addressWS) {
+		country = addressWS.getCountry();
+		city = addressWS.getCity();
+		postalCode = addressWS.getPostalCode();
+		street = addressWS.getStreet();
+		number = addressWS.getNumber();
+		apartmentNumber = addressWS.getApartmentNumber();
+		longitude = addressWS.getLongitude();
+		latitude = addressWS.getLatitude();
+		id = addressWS.getId();
 	}
 
 	public String getCountry() {
@@ -101,13 +114,4 @@ public class AddressDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	@Override
-	public String toString() {
-		return "AddressDTO [country=" + country + ", city=" + city + ", postalCode=" + postalCode + ", street=" + street
-				+ ", number=" + number + ", apartmentNumber=" + apartmentNumber + ", longitude=" + longitude
-				+ ", latitude=" + latitude + ", id=" + id + "]";
-	}
-	
-	
 }

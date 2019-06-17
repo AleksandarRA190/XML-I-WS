@@ -17,15 +17,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 
 /**
@@ -99,8 +100,8 @@ public class AccommodationUnit {
     @XmlElement(name = "Accommodation", required = true)
     protected Accommodation accommodation;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName="id", nullable = false, unique = true)	
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @NotFound(action=NotFoundAction.IGNORE)
     @XmlElement(name = "Accommodation_unit_type", required = true)
     protected AccommodationUnitType accommodationUnitType;
     
@@ -241,7 +242,7 @@ public class AccommodationUnit {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -15,6 +15,11 @@ public class AccommodationUnitTypeDTO {
 		name = aut.getName();
 		id = aut.getId();
 	}
+	
+//	public AccommodationUnitTypeDTO(com.projectxml.accommodationunit.AccommodationUnitType aut) {
+//		name = aut.getName();
+//		id = aut.getId();
+//	}
 
 	public String getName() {
 		return name;
@@ -31,11 +36,5 @@ public class AccommodationUnitTypeDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	@Override
-	public String toString() {
-		return "AccommodationUnitTypeDTO [name=" + name + ", id=" + id + "]";
-	}
-	
 	
 }
