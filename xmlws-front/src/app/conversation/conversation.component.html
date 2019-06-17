@@ -1,0 +1,11 @@
+<div class="left_bar" id="collapsibleNavbar">
+  <ul class=" nav-tabs--vertical nav">
+    <li class="nav-item" *ngFor="let res of reservations">
+      <!--<a class="nav-link" [routerLink]="['/conversations', res.id]">{{res.accommodationUnit.accommodation.name}}</a>-->
+      <a class="nav-link" [routerLink]="['/conversations', res.id]">{{res.id}}</a>
+    </li>
+  </ul>
+</div>
+<div class="right_bar ">
+  <router-outlet></router-outlet>
+</div>

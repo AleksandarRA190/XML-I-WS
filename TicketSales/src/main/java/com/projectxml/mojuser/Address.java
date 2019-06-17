@@ -72,9 +72,21 @@ public class Address {
     @XmlElement(name = "Latitude")
     protected double latitude;
     @XmlElement(name = "Id")
-    protected long id;
+    protected Long id;
+    
+    public Address(ftn.xmlws.model.Address a) {
+    	this.country = a.getCountry();
+		this.city = a.getCity();
+		this.postalCode = a.getPostalCode();
+		this.street = a.getStreet();
+		this.number = a.getNumber();
+		this.apartmentNumber = a.getApartmentNumber();
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
+		this.id = a.getId();
+    }
 
-    /**
+	/**
      * Gets the value of the country property.
      * 
      * @return
@@ -246,7 +258,7 @@ public class Address {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -254,7 +266,7 @@ public class Address {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

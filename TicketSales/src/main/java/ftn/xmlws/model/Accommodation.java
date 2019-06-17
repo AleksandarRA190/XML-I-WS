@@ -171,6 +171,10 @@ public class Accommodation {
 
     @XmlElement(name = "Deleted")
     protected boolean deleted;
+    
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlElement(required = true)
+    protected List<Message> unansweredMessages = new ArrayList<>();
 
     
     public Accommodation() {}
@@ -323,6 +327,22 @@ public class Accommodation {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public List<Message> getUnansweredMessages() {
+		return unansweredMessages;
+	}
+
+	public void setUnansweredMessages(List<Message> unansweredMessages) {
+		this.unansweredMessages = unansweredMessages;
 	}
 
 }

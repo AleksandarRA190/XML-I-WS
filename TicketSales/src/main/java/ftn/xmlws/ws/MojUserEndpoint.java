@@ -45,9 +45,12 @@ public class MojUserEndpoint {
 		Users users = restTemplate.getForObject("http://localhost:9006/users", Users.class);
 		List<UserDTO> userDTOs = users.getUsers();
 		System.out.println(userDTOs.size());
-		
-		
-		response.getUser().addAll(userDTOs);
+		for(UserDTO u : userDTOs) {
+			User kor = new User(u);
+			System.out.println(kor.toString());
+			response.getUser().add(kor);
+		}
+			
 		
 		return response;
 	}

@@ -10,6 +10,8 @@ import { UserEditProfileComponent } from './user-edit-profile/user-edit-profile.
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostCommentComponent } from './post-comment/post-comment.component';
+import { ConversationComponent } from './conversation/conversation.component';
+import { OneConversationComponent } from './conversation/one-conversation/one-conversation.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +24,12 @@ const routes: Routes = [
   {path: 'activate/:id', component:ConfirmationPageComponent},
   {path: 'changePassword', component:ChangePasswordComponent},
   {path: 'postComment/:id', component:PostCommentComponent},
+  {
+    path: 'conversations', 
+    component:ConversationComponent, 
+    children : [
+      {path: ':id', component: OneConversationComponent}
+  ]},
   {path: 'reservations', component:UserReservationsComponent}
 ];
 

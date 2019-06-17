@@ -47,12 +47,14 @@ public class ReservationService {
 		Reservation r = reservationRepository.getOne(id);
 		
 		if(r!=null) {
-			System.out.println("Nije null nego je confirmed : " + r.isConfirmed());
-			return new ReservationDTO(r);
+			System.out.println(r.getAccommodationUnit().getAccommodation().getId());
+			ReservationDTO res = new ReservationDTO(r);
+			System.out.println(res.getAccommodationUnit().getAccommodation().getId());
+			return res;
+		} else {
+			return null;		
 		}
 		
-		System.out.println("Vratio je null");
-		return null;
 	}
 
 	public boolean makeReservation(ReservationDTO reservation) {

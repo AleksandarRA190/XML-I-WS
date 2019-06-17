@@ -1,7 +1,7 @@
 <div class="container">
     <form class="form-horizontal" role="form" (ngSubmit)="onSubmit()">
     <label for="comment">Comment:</label>
-    <textarea class="form-control" rows="5" id="comment"></textarea>
+    <textarea class="form-control" rows="5" id="comment" [(ngModel)]="request.contentOfComment" name="commentarea"></textarea>
     <button type="submit" class="btn btn-primary btn-block" style="background-color: #fed136; color: black">Confirm</button>
   </form> <!-- /form -->
 </div>

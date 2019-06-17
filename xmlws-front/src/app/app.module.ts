@@ -14,6 +14,8 @@ import { UserEditProfileComponent } from './user-edit-profile/user-edit-profile.
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostCommentComponent } from './post-comment/post-comment.component';
+import { ConversationComponent } from './conversation/conversation.component';
+import { OneConversationComponent } from './conversation/one-conversation/one-conversation.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { PostCommentComponent } from './post-comment/post-comment.component';
     UserEditProfileComponent,
     ConfirmationPageComponent,
     ChangePasswordComponent,
-    PostCommentComponent
+    PostCommentComponent,
+    ConversationComponent,
+    OneConversationComponent
   ],
   imports: [
     BrowserModule,

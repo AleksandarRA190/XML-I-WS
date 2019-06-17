@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import ftn.xmlws.dto.MessageDTO;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -96,6 +98,10 @@ public class Message {
     @XmlElement(name = "Reservation", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     protected Reservation reservation;
     
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@XmlElement(name = "Accomodation", namespace = "http://booking.uns.ac.rs/accommodation", required = true)
+    protected Accommodation accommodation;
+    
     @Transient
     @XmlAttribute(name = "Datum_vreme")
     @XmlSchemaType(name = "dateTime")
@@ -103,6 +109,21 @@ public class Message {
     
     @Column(name = "Date_time")
 	protected LocalDateTime dateTime;
+    
+    public Message() {
+    	
+    }
+    
+    public Message(MessageDTO m) {
+    	this.messageContent = m.getMessageContent();
+    	this.seen = m.isSeen();
+    	this.deleted = false;
+    	//this.sender = m.getSender();
+    	//resiver je uvek u ovom trenutku null
+    	//this.reservation = m.getReservation();
+    	//this.accommodation = m.getAccommodation();
+    	this.dateTime = LocalDateTime.now();
+    }
 
     /**
      * Gets the value of the messageContent property.
@@ -271,5 +292,21 @@ public class Message {
     public void setDatumVreme(XMLGregorianCalendar value) {
         this.datumVreme = value;
     }
+
+	public Accommodation getAccommodation() {
+		return accommodation;
+	}
+
+	public void setAccommodation(Accommodation accommodation) {
+		this.accommodation = accommodation;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
+	}
 
 }

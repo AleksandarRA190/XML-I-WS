@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import ftn.xmlws.dto.UserDTO;
+
 
 /**
  * <p>Java class for user complex type.
@@ -36,7 +38,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Address" type="{http://www.projectXml.com/mojuser}Address"/>
  *         &lt;element name="Bussines_registration_number" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="Blocked" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="AccommodationDTO" type="{http://www.projectXml.com/mojuser}AccommodationDTO" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -58,8 +59,7 @@ import javax.xml.bind.annotation.XmlType;
     "role",
     "address",
     "bussinesRegistrationNumber",
-    "blocked",
-    "accommodationDTO"
+    "blocked"
 })
 public class User {
 
@@ -74,7 +74,7 @@ public class User {
     @XmlElement(name = "Password", required = true)
     protected String password;
     @XmlElement(name = "Id")
-    protected long id;
+    protected Long id;
     @XmlElement(name = "Enabled")
     protected boolean enabled;
     @XmlElement(name = "Deleted")
@@ -84,11 +84,30 @@ public class User {
     @XmlElement(name = "Address", required = true)
     protected Address address;
     @XmlElement(name = "Bussines_registration_number")
-    protected long bussinesRegistrationNumber;
+    protected Long bussinesRegistrationNumber;
     @XmlElement(name = "Blocked")
     protected boolean blocked;
-    @XmlElement(name = "AccommodationDTO")
-    protected AccommodationDTO accommodationDTO;
+    //@XmlElement(name = "AccommodationDTO")
+    //protected AccommodationDTO accommodationDTO;
+    
+    public User(UserDTO user) {
+    	this.name = user.getName();
+    	this.lastname = user.getLastname();
+    	this.email = user.getEmail();
+    	this.username = user.getUsername();
+    	this.password = user.getPassword();
+    	this.id = user.getId();
+    	this.enabled = user.isEnabled();
+    	this.deleted = user.isDeleted();
+    	if(user.getRole() != null)
+    		this.role = user.getRole().toString();
+    	else
+    		this.role = "REGISTERED_USER";
+    	this.address = new Address(user.getAddress());
+    	this.bussinesRegistrationNumber = user.getBussinesRegistrationNumber();
+    	this.blocked = user.isBlocked();
+    	//this.accommodationDTO = user.getAccommodation();
+    }
 
     /**
      * Gets the value of the name property.
@@ -214,7 +233,7 @@ public class User {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -222,7 +241,7 @@ public class User {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -310,7 +329,7 @@ public class User {
      * Gets the value of the bussinesRegistrationNumber property.
      * 
      */
-    public long getBussinesRegistrationNumber() {
+    public Long getBussinesRegistrationNumber() {
         return bussinesRegistrationNumber;
     }
 
@@ -338,28 +357,14 @@ public class User {
         this.blocked = value;
     }
 
-    /**
-     * Gets the value of the accommodationDTO property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AccommodationDTO }
-     *     
-     */
-    public AccommodationDTO getAccommodationDTO() {
-        return accommodationDTO;
-    }
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", lastname=" + lastname + ", email=" + email + ", username=" + username
+				+ ", password=" + password + ", id=" + id + ", enabled=" + enabled + ", deleted=" + deleted + ", role="
+				+ role + ", address=" + address + ", bussinesRegistrationNumber=" + bussinesRegistrationNumber
+				+ ", blocked=" + blocked + "]";
+	}
 
-    /**
-     * Sets the value of the accommodationDTO property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AccommodationDTO }
-     *     
-     */
-    public void setAccommodationDTO(AccommodationDTO value) {
-        this.accommodationDTO = value;
-    }
+ 
 
 }

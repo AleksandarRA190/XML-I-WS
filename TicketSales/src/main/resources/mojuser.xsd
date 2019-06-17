@@ -137,8 +137,6 @@
 			<xs:element name="Bussines_registration_number"
 				type="xs:long" />
 			<xs:element name="Blocked" type="xs:boolean" />
-			<xs:element name="AccommodationDTO" type="tns:AccommodationDTO"  minOccurs="0"
-					maxOccurs="1" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -158,15 +156,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:complexType name="AccommodationDTO">
-		<xs:sequence>
-			<xs:element name="Country" type="xs:string" />
-			<xs:element name="City" type="xs:string" />
-			<xs:element name="Postal_code" type="xs:int" />
-			<xs:element name="Street" type="xs:string" />
-			<xs:element name="Number" type="xs:string" />
-		</xs:sequence>
-	</xs:complexType>
+
 	
 	<xs:complexType name="LoginDTO">
 		<xs:sequence>

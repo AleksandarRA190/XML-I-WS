@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommentDTO } from 'app/dto/CommentDTO';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ReservationDTO } from 'app/dto/ReservationDTO';
 
 @Component({
   selector: 'app-post-comment',
@@ -12,6 +13,7 @@ export class PostCommentComponent implements OnInit {
 
   request : CommentDTO = new CommentDTO();
   id : number;
+  reservation : ReservationDTO;
 
   constructor(private http: HttpClient,private router : Router, private route: ActivatedRoute) { }
 
@@ -22,6 +24,15 @@ export class PostCommentComponent implements OnInit {
     console.log(this.id);
     this.request.approvedComment = false;
     this.request.contentOfComment = "";
+
+    this.http.get<ReservationDTO>('http://localhost:9007/reservation/'+this.id).subscribe((data) => {
+      this.reservation = data;
+      console.log(data);
+      if(this.reservation.commentDTO != null) {
+        this.request.contentOfComment = this.reservation.commentDTO.contentOfComment;
+      }
+    });
+
   }
 
 

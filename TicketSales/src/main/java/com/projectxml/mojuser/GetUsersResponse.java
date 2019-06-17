@@ -45,7 +45,8 @@ import ftn.xmlws.dto.UserDTO;
 @XmlRootElement(name = "getUsersResponse")
 public class GetUsersResponse {
 
-    protected List<UserDTO> user;
+	
+    protected List<User> user;
 
     /**
      * Gets the value of the user property.
@@ -69,9 +70,9 @@ public class GetUsersResponse {
      * 
      * 
      */
-    public List<UserDTO> getUser() {
+    public List<User> getUser() {
         if (user == null) {
-            user = new ArrayList<UserDTO>();
+            user = new ArrayList<User>();
         }
         return this.user;
     }

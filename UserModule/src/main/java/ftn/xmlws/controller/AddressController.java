@@ -22,11 +22,7 @@ public class AddressController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Address> getAddress(@PathVariable("id") Long id) {
 		Address address = addressService.getAddress(id);
-		if (address == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(address, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(address, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.PUT, consumes = "application/json")
