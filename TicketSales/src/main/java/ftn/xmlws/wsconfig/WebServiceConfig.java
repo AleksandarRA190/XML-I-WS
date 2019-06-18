@@ -119,4 +119,19 @@ public class WebServiceConfig {
 	  return new SimpleXsdSchema(new ClassPathResource("Service.xsd"));
 	}
 	
+	@Bean(name = "accommodationUnitTypes")
+	public DefaultWsdl11Definition defaultWsdl18Definition(XsdSchema unitTypesSchema) {
+		DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+		  definition.setPortTypeName("AccommodationUnitTypePort");
+		  definition.setTargetNamespace("http://www.projectXml.com/accommmodationUnitTypes");
+		  definition.setLocationUri("/ws");
+		  definition.setSchema(unitTypesSchema);
+		  return definition;
+	}
+	
+	@Bean
+	public XsdSchema unitTypesSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("AccommodationUnitType.xsd"));
+	}
+	
 }

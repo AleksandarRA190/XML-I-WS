@@ -33,6 +33,8 @@ public class AccommodationUnitTypeService {
 		AccommodationUnitType aut = null;
 		try {
 			aut  = 	accommodationUnitTypeRepository.getOne(id);
+			if(aut.isDeleted())
+				return null;
 		} catch (EntityNotFoundException e) {
 			return null;
 		}	
@@ -45,7 +47,11 @@ public class AccommodationUnitTypeService {
 		return accommodationUnitTypeRepository.save(aut);
 	}
 	
-	public AccommodationUnitType updateAccommodationUnitType(AccommodationUnitType aut) {
+	public AccommodationUnitType updateAccommodationUnitType(Long id, AccommodationUnitTypeDTO autDTO) {
+		AccommodationUnitType aut = accommodationUnitTypeRepository.getOne(id);
+		if(aut == null)
+			return null;
+		aut.setName(autDTO.getName());
 		return accommodationUnitTypeRepository.save(aut);
 	}
 	

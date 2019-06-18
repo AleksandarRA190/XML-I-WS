@@ -41,6 +41,8 @@ public class AccommodationService {
 		Accommodation a = null; 
 		try {
 			a = accommodationRepository.getOne(id);
+			if(a.isDeleted())
+				return null;
 		} catch(EntityNotFoundException e) {
 			return null;
 		}
