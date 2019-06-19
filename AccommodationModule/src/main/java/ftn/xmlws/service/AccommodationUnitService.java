@@ -88,7 +88,8 @@ public class AccommodationUnitService {
 		List<AccommodationUnitDTO> ausDTO = new ArrayList<>();
 		for(AccommodationUnit au: aus) {
 			if(!au.isDeleted()) {
-				ausDTO.add(new AccommodationUnitDTO(au));
+				AccommodationUnitDTO auDTO = new AccommodationUnitDTO(au);
+				ausDTO.add(auDTO);
 			}
 		}
 		return ausDTO;

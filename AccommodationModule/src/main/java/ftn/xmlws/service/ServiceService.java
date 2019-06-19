@@ -90,6 +90,8 @@ public class ServiceService {
 		ftn.xmlws.model.Service s = this.findService(sDTO.getId());
 		if(s == null)
 			return null;
+		if(a.getServices().contains(s))
+			return null;
 		a.getServices().add(s);
 		return accommodationRepository.save(a);
 	}

@@ -17,6 +17,7 @@ import ftn.xmlws.dto.AccommodationUnitDTO;
 import ftn.xmlws.dto.AccommodationUnitsDTO;
 import ftn.xmlws.dto.AccommodationsDTO;
 import ftn.xmlws.dto.ServiceDTO;
+import ftn.xmlws.dto.ServicesDTO;
 import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.service.AccommodationService;
@@ -100,14 +101,15 @@ public class AccommodationController {
 	
 	//*********************** ACCOMMODATION SERVICES ***********************
 	@RequestMapping(value="{id}/services", method = RequestMethod.GET)
-	public ResponseEntity<List<ServiceDTO>> getAccommodationServices(@PathVariable("id") Long accommodationId) {
-		List<ServiceDTO> servicesDTO = serviceService.getAccommodationServices(accommodationId);
-		if(servicesDTO == null) 
+	public ResponseEntity<ServicesDTO> getAccommodationServices(@PathVariable("id") Long accommodationId) {
+		ServicesDTO servicesDTO = new  ServicesDTO();
+		servicesDTO.setServices(serviceService.getAccommodationServices(accommodationId));
+		if(servicesDTO.getServices().isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="{id}/services", method = RequestMethod.POST, consumes = "appliation/json")
+	@RequestMapping(value="{id}/services", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<AccommodationDTO> addServiceToAccommodation(@PathVariable("id") Long accommodationId, @RequestBody ServiceDTO serviceDTO) {
 		Accommodation accommodation = serviceService.addServiceToAccommodation(accommodationId, serviceDTO);
 		if(accommodation == null)

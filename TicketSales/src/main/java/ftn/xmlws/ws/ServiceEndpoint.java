@@ -1,12 +1,18 @@
 package ftn.xmlws.ws;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.projectxml.accommodation.Accommodation;
 import com.projectxml.service.AddAccommodationServiceRequest;
 import com.projectxml.service.AddAccommodationServiceResponse;
 import com.projectxml.service.AddServiceRequest;
@@ -20,10 +26,10 @@ import com.projectxml.service.GetServicesResponse;
 import com.projectxml.service.RemoveAccommodationServiceRequest;
 import com.projectxml.service.RemoveServiceRequest;
 import com.projectxml.service.Service;
-import com.projectxml.service.Services;
 import com.projectxml.service.UpdateServiceRequest;
 
 import ftn.xmlws.dto.ServiceDTO;
+import ftn.xmlws.dto.ServicesDTO;
 
 @Endpoint
 public class ServiceEndpoint {
@@ -38,9 +44,10 @@ public class ServiceEndpoint {
 	public GetAccommodationServicesResponse processGetAccommodationServicesRequest(@RequestPayload GetAccommodationServicesRequest request) {
 		GetAccommodationServicesResponse response = new GetAccommodationServicesResponse();
 	  
-		Services s = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", Services.class);
-		response.setServices(s);
-	
+		ServicesDTO s = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", ServicesDTO.class);
+		List<ServiceDTO> list = s.getServices();
+		
+		response.getServices().addAll(list);
 	  	return response;
 	 }
 	
@@ -49,7 +56,12 @@ public class ServiceEndpoint {
 	public AddAccommodationServiceResponse processAddAccommodationServiceRequest(@RequestPayload AddAccommodationServiceRequest request) {
 		AddAccommodationServiceResponse response = new AddAccommodationServiceResponse();
 	  
-		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", request, Service.class);
+		Service service = request.getService();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
+		
+		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", requestHeader, Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -67,9 +79,10 @@ public class ServiceEndpoint {
 	public GetServicesResponse processGetServicesRequest(@RequestPayload GetServicesRequest request) {
 		GetServicesResponse response = new GetServicesResponse();
 	  
-		Services s = restTemplate.getForObject("http://localhost:9009/services" , Services.class);
-		response.setServices(s);
-	
+		ServicesDTO s = restTemplate.getForObject("http://localhost:9009/accommodation/services" , ServicesDTO.class);
+		List<ServiceDTO> list = s.getServices();
+		
+		response.getServices().addAll(list);
 	  	return response;
 	 }
 	
@@ -78,7 +91,7 @@ public class ServiceEndpoint {
 	public GetServiceResponse processGetServiceRequest(@RequestPayload GetServiceRequest request) {
 		GetServiceResponse response = new GetServiceResponse();
 	  
-		Service s = restTemplate.getForObject("http://localhost:9009/services/" + request.getServiceId(), Service.class);
+		Service s = restTemplate.getForObject("http://localhost:9009/accommodation/services/" + request.getServiceId(), Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -89,9 +102,11 @@ public class ServiceEndpoint {
 	public AddServiceResponse processAddServiceRequest(@RequestPayload AddServiceRequest request) {
 		AddServiceResponse response = new AddServiceResponse();
 		
-		ServiceDTO sDTO = new ServiceDTO(request.getService());
-	  
-		Service s = restTemplate.postForObject("http://localhost:9009/services", sDTO, Service.class);
+		Service service = request.getService();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
+		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/services", requestHeader, Service.class);
 		response.setService(s);
 		
 	  	return response;
@@ -100,13 +115,17 @@ public class ServiceEndpoint {
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "updateServiceRequest")
 	@ResponsePayload
 	public void processUpdateServiceRequest(@RequestPayload UpdateServiceRequest request) {
-		ServiceDTO sDTO = new ServiceDTO(request.getService());
-		restTemplate.put("http://localhost:9009/services/" + request.getService().getId(), sDTO);
+		Service service = request.getService();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
+		restTemplate.put("http://localhost:9009/accommodation/services/" + request.getService().getId(), requestHeader);
 	 }
 	
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "removeServiceRequest")
 	@ResponsePayload
 	public void processRemoveServiceRequest(@RequestPayload RemoveServiceRequest request) {
-		restTemplate.delete("http://localhost:9009/services/" + request.getServiceId());
+		restTemplate.delete("http://localhost:9009/accommodation/services/" + request.getServiceId());
 	 }
 }

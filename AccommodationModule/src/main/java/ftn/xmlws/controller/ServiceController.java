@@ -1,7 +1,5 @@
 package ftn.xmlws.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +10,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.dto.ServiceDTO;
+import ftn.xmlws.dto.ServicesDTO;
 import ftn.xmlws.model.Service;
 import ftn.xmlws.service.ServiceService;
 
 @RestController
-@RequestMapping(value = "/services")
+@RequestMapping(value = "/accommodation/services")
 public class ServiceController {
 
 	@Autowired
 	private ServiceService serviceService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ServiceDTO>> getAllServices() {
-		List<ServiceDTO> servicesDTO = serviceService.getAllServices();
+	public ResponseEntity<ServicesDTO> getAllServices() {
+		ServicesDTO servicesDTO = new  ServicesDTO();
+		servicesDTO.setServices(serviceService.getAllServices());
+		if(servicesDTO.getServices().isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(servicesDTO, HttpStatus.OK);
 	}
 	
@@ -36,8 +38,9 @@ public class ServiceController {
 		return new ResponseEntity<>(new ServiceDTO(service), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ServiceDTO> addService(@RequestBody ServiceDTO serviceDTO) {
+		System.out.println(serviceDTO.toString() +  " ***************************************************");
 		Service service = serviceService.saveService(serviceDTO);
 		if(service == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

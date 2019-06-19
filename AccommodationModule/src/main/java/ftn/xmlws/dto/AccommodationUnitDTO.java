@@ -21,7 +21,11 @@ public class AccommodationUnitDTO {
 		number = au.getNumber();
 		numberOfBeds = au.getNumberOfBeds();
 		defaultPrice = au.getDefaultPrice();
-		accommodationUnitType = new AccommodationUnitTypeDTO(au.getAccommodationUnitType());
+		if(au.getAccommodationUnitType() != null) {
+			this.accommodationUnitType = new AccommodationUnitTypeDTO();
+			accommodationUnitType.setId(au.getAccommodationUnitType().getId());
+			accommodationUnitType.setName(au.getAccommodationUnitType().getName());
+		}
 		id = au.getId();
 		accommodation = new AccommodationDTO(au.getAccommodation());
 	}
