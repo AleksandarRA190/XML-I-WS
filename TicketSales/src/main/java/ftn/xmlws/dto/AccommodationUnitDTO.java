@@ -1,6 +1,7 @@
 package ftn.xmlws.dto;
 
 import ftn.xmlws.model.AccommodationUnit;
+import ftn.xmlws.model.AccommodationUnitType;
 
 public class AccommodationUnitDTO {
 	
@@ -10,6 +11,7 @@ public class AccommodationUnitDTO {
     private int numberOfBeds;
     private Double defaultPrice;
     private AccommodationDTO accommodation;
+    private AccommodationUnitTypeDTO accommodationUnitType;
     
     public AccommodationUnitDTO() {}
     
@@ -20,6 +22,7 @@ public class AccommodationUnitDTO {
     	this.numberOfBeds = unit.getNumberOfBeds();
     	this.defaultPrice = unit.getDefaultPrice();
     	this.accommodation = new AccommodationDTO(unit.getAccommodation());
+    	this.accommodationUnitType = new AccommodationUnitTypeDTO(unit.getAccommodationUnitType());
     }
 
 	public Long getId() {
@@ -69,8 +72,12 @@ public class AccommodationUnitDTO {
 	public void setAccommodation(AccommodationDTO accommodation) {
 		this.accommodation = accommodation;
 	}
-    
-    
-    
 
+	public AccommodationUnitTypeDTO getAccommodationUnitType() {
+		return accommodationUnitType;
+	}
+
+	public void setAccommodationUnitType(AccommodationUnitTypeDTO accommodationUnitType) {
+		this.accommodationUnitType = accommodationUnitType;
+	}
 }

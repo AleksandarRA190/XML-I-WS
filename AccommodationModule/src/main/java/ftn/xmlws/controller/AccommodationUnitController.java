@@ -1,7 +1,5 @@
 package ftn.xmlws.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.xmlws.dto.AccommodationUnitDTO;
 import ftn.xmlws.dto.PeriodPriceDTO;
 import ftn.xmlws.dto.PeriodPriceDatesDTO;
+import ftn.xmlws.dto.PeriodPricesDTO;
 import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.model.PeriodPrice;
 import ftn.xmlws.service.AccommodationUnitService;
@@ -53,10 +52,16 @@ public class AccommodationUnitController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	
+	
+	//**************************** PERIOD PRICES ***************************************
+	
+	
 	@RequestMapping(value="{id}/prices", method = RequestMethod.GET)
-	public ResponseEntity<List<PeriodPriceDTO>> getPrices(@PathVariable("id") Long unitId) {
-		List<PeriodPriceDTO> pricesDTO = periodPriceService.getAllPeriodPrices(unitId);
-		if(pricesDTO == null)
+	public ResponseEntity<PeriodPricesDTO> getPrices(@PathVariable("id") Long unitId) {
+		PeriodPricesDTO pricesDTO = new PeriodPricesDTO();
+		pricesDTO.setPeriodPrices(periodPriceService.getAllPeriodPrices(unitId));
+		if(pricesDTO.getPeriodPrices().isEmpty()) 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(pricesDTO, HttpStatus.OK);
 	}
@@ -70,8 +75,8 @@ public class AccommodationUnitController {
 	}
 	
 	@RequestMapping(value="/{id}/priceForPeriod", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<Double> getPriceForMonth(@PathVariable("id") Long unitId, @RequestBody PeriodPriceDatesDTO periodPricesDatesDTO) {
-		Double price = periodPriceService.getPeriodPriceForMonth(unitId, periodPricesDatesDTO);
+	public ResponseEntity<Double> getPriceForMonth(@PathVariable("id") Long unitId, @RequestBody PeriodPriceDatesDTO periodPriceDatesDTO) {
+		Double price = periodPriceService.getPeriodPriceForMonth(unitId, periodPriceDatesDTO);
 		if(price == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(price, HttpStatus.OK);

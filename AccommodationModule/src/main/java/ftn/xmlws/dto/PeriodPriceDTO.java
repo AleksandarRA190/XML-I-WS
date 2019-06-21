@@ -1,13 +1,14 @@
 package ftn.xmlws.dto;
 
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 import ftn.xmlws.model.PeriodPrice;
 
 public class PeriodPriceDTO {
 
-	private GregorianCalendar fromDate;
-	private GregorianCalendar toDate;
+	private LocalDate fromDate;
+	private LocalDate toDate;
 	private double price;
 	private Long id;
 	private AccommodationUnitDTO accommodationUnit;
@@ -17,26 +18,26 @@ public class PeriodPriceDTO {
 	}
 	
 	public PeriodPriceDTO(PeriodPrice pp) {
-		fromDate = pp.getFromDate().toGregorianCalendar();
-		toDate = pp.getToDate().toGregorianCalendar();
+		fromDate = pp.getFromDate();
+		toDate = pp.getToDate();
 		price = pp.getPrice();
 		id = pp.getId();
 		accommodationUnit = new AccommodationUnitDTO(pp.getAccommodationUnit());
 	}
 
-	public GregorianCalendar getFromDate() {
+	public LocalDate getFromDate() {
 		return fromDate;
 	}
 
-	public void setFromDate(GregorianCalendar fromDate) {
+	public void setFromDate(LocalDate fromDate) {
 		this.fromDate = fromDate;
 	}
 
-	public GregorianCalendar getToDate() {
+	public LocalDate getToDate() {
 		return toDate;
 	}
 
-	public void setToDate(GregorianCalendar toDate) {
+	public void setToDate(LocalDate toDate) {
 		this.toDate = toDate;
 	}
 

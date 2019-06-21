@@ -134,4 +134,19 @@ public class WebServiceConfig {
 	  return new SimpleXsdSchema(new ClassPathResource("AccommodationUnitType.xsd"));
 	}
 	
+	@Bean(name = "periodPrices")
+	public DefaultWsdl11Definition defaultWsdl19Definition(XsdSchema periodPricesSchema) {
+		DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+		  definition.setPortTypeName("PeriodPricePort");
+		  definition.setTargetNamespace("http://www.projectXml.com/periodPrices");
+		  definition.setLocationUri("/ws");
+		  definition.setSchema(periodPricesSchema);
+		  return definition;
+	}
+	
+	@Bean
+	public XsdSchema periodPricesSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("PeriodPrice.xsd"));
+	}
+	
 }

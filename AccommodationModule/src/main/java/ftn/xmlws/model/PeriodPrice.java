@@ -8,6 +8,8 @@
 
 package ftn.xmlws.model;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -73,26 +75,31 @@ public class PeriodPrice {
     protected Long id;
     
 	
-	@Transient
-    @XmlElement(name = "From_date", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar fromDate;
+//	@Transient
+//    @XmlElement(name = "From_date", required = true)
+//    @XmlSchemaType(name = "dateTime")
+//    protected XMLGregorianCalendar fromDate;
+//    
+//    @Column(name = "from_date")
+//	public Calendar getFromDateToCalendar() {
+//	    return new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay());
+//	}
     
-    @Column(name = "from_date")
-	public Calendar getFromDateToCalendar() {
-	    return new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay());
-	}
-    
-    @Transient
-    @XmlElement(name = "To_date", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar toDate;
+//    @Transient
+//    @XmlElement(name = "To_date", required = true)
+//    @XmlSchemaType(name = "dateTime")
+//    protected XMLGregorianCalendar toDate;
+//	
+//	@Column(name = "To_date")
+//	public Calendar getToDateToCalendar() {
+//	    return new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay());
+//	}
+	
+	@Column(name = "From_date")
+	protected LocalDate fromDate;
 	
 	@Column(name = "To_date")
-	public Calendar getToDateToCalendar() {
-	    return new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay());
-	}
-	
+	protected LocalDate toDate;
 	
 	@XmlElement(name = "Price")
     protected double price;
@@ -113,7 +120,7 @@ public class PeriodPrice {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getFromDate() {
+    public LocalDate getFromDate() {
         return fromDate;
     }
 
@@ -125,12 +132,8 @@ public class PeriodPrice {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFromDate(GregorianCalendar value) {
-        try {
-        	this.fromDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(value);        	
-        } catch (DatatypeConfigurationException e) {
-        	e.printStackTrace();
-        }
+    public void setFromDate(LocalDate value) {
+       this.fromDate = value;
         
     }
 
@@ -142,7 +145,7 @@ public class PeriodPrice {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getToDate() {
+    public LocalDate getToDate() {
         return toDate;
     }
 
@@ -154,13 +157,8 @@ public class PeriodPrice {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setToDate(GregorianCalendar value) {
-    	 try {
-         	this.toDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(value);        	
-         } catch (DatatypeConfigurationException e) {
-         	e.printStackTrace();
-         }
-         
+    public void setToDate(LocalDate value) {
+    	 this.toDate = value;
     }
 
     /**
@@ -183,7 +181,7 @@ public class PeriodPrice {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -191,7 +189,7 @@ public class PeriodPrice {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

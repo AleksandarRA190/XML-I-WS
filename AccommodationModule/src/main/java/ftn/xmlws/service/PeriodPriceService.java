@@ -33,8 +33,11 @@ public class PeriodPriceService {
 	
 	public PeriodPrice findPeriodPrice(Long id) {
 		PeriodPrice pp = periodPriceRepository.getOne(id);
-		if(pp == null || pp.isDeleted())
-			return null;
+		if(pp == null) {
+			if(pp.isDeleted()) {
+				return null;				
+			}
+		}
 		return pp;
 	}
 	
@@ -54,7 +57,8 @@ public class PeriodPriceService {
 		PeriodPrice pp = this.findPeriodPrice(ppId);
 		if(pp == null)
 			return null;
-		pp.setAccommodationUnit(accommodationUnitService.findAccommodationUnit(ppDTO.getAccommodationUnit().getId()));
+		AccommodationUnit au = accommodationUnitService.findAccommodationUnit(ppDTO.getAccommodationUnit().getId());
+		pp.setAccommodationUnit(au);
 		pp.setFromDate(ppDTO.getFromDate());
 		pp.setToDate(ppDTO.getToDate());
 		pp.setPrice(ppDTO.getPrice());
@@ -76,7 +80,7 @@ public class PeriodPriceService {
 			return null;
 		List<PeriodPrice> prices = au.getPeriodPrices();
 		for(PeriodPrice pp: prices) {
-			if(pp.getFromDate().getMonth() == ppdDTO.getFromDate().MONTH) {
+			if(pp.getFromDate().getMonthValue() == ppdDTO.getFromDate().getMonthValue()) {
 				return pp.getPrice();				
 			} 
 		}
