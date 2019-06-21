@@ -90,6 +90,10 @@ public class User {
     //@XmlElement(name = "AccommodationDTO")
     //protected AccommodationDTO accommodationDTO;
     
+    public User() {
+    	
+    }
+    
     public User(UserDTO user) {
     	this.name = user.getName();
     	this.lastname = user.getLastname();

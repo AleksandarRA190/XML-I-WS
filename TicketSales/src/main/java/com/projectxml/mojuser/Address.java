@@ -74,6 +74,10 @@ public class Address {
     @XmlElement(name = "Id")
     protected Long id;
     
+    public Address() {
+    	
+    }
+    
     public Address(ftn.xmlws.model.Address a) {
     	this.country = a.getCountry();
 		this.city = a.getCity();
