@@ -1,10 +1,9 @@
 <div class="container">
-  <h3>From :  , To : </h3>
+  <h3>From : {{mica(reservation.fromDateTime)}} , To : {{mica(reservation.toDateTime)}}</h3>
   <textarea class="form-control" rows="6" id="previous" name="Previous" [(ngModel)]="previousMessages" readonly></textarea>
   <form class="form-horizontal" role="form" (ngSubmit)="onSubmit()">
     <label for="comment">New message:</label>
     <textarea class="form-control" rows="3" id="comment" [(ngModel)]="messageDTO.messageContent" name="commentarea"></textarea>
-    <button type="submit" class="btn btn-primary btn-block"
-      style="background-color: #fed136; color: black">Send</button>
+    <button type="submit" class="btn btn-primary btn-block">Send</button>
   </form> <!-- /form -->
 </div>

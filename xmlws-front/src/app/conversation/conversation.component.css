@@ -6,7 +6,7 @@
 .left_bar{
     float:left;
     width:15%;
-    background:#eaf4ff;
+    background:#ffda55;
     height:100vh;
 }
 
@@ -30,8 +30,13 @@
     float:left;
     width:100%;
     padding: 15px;
-    border-bottom:1px solid #adcff7;
-    color:#1276F0;
+    border-bottom:1px solid black;
+    color:black;
+    
+}
+
+li:hover{
+    background-color:#ffffff;
 }
 
 .nav-tabs--vertical li a.active::after {

@@ -1,5 +1,7 @@
 <div class="container">
-  <div class="row">
+  <h3 *ngIf="reservations.length>0">Reservation History</h3>
+  <h3 *ngIf="reservations.length==0">No reservations so far</h3>
+  <div class="row">   
     <div class="col-6" *ngFor="let res of reservations">
       <div class="card mt-3 tab-card">
         <div class="card-header tab-card-header">
@@ -25,22 +27,20 @@
             <p *ngIf="res.confirmed" class="card-text" style="background-color: #fed136; color:black">Confirmed</p>
             <p *ngIf="res.agentConfirmed" class="card-text" class="card-text"
               style="background-color: black; color: #fed136">Agent confirmed !</p>
-            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary"
-              style="background-color: #fed136; color: black" [routerLink]="['/postComment', res.id]" >Add comment</a>
+            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary" [routerLink]="['/postComment', res.id]" >Add comment</a>
             <!--Za sada home, posle komponenta commenta!-->
             <div *ngIf="res.commentDTO">
               <h6>Comment</h6>
               <p style="font-style: italic;"> {{res.commentDTO.contentOfComment}} </p>
               <p *ngIf="res.commentDTO.approvedComment">>Posted</p>
               <p *ngIf="!res.commentDTO.approvedComment">Waiting to be approved by admin...</p>
-              <a class="btn btn-primary"
-              style="background-color: #fed136; color: black" [routerLink]="['/postComment', res.id]" >Edit comment</a>
+              <a class="btn btn-primary"  [routerLink]="['/postComment', res.id]" >Edit comment</a>
             </div>
           </div>
           <div class="tab-pane fade" id="Two{{res.id}}" role="tabpanel" aria-labelledby="two-tab">
             <h5 class="card-title">Floor {{res.accommodationUnit.floor}}, number {{res.accommodationUnit.number}}</h5>
             <p class="card-text">Number of beds: {{res.accommodationUnit.numberOfBeds}}</p>
-            <a href="#" class="btn btn-primary" style="background-color: #fed136; color:black" routerLink="/home">Visit profile</a>
+            <a href="#" class="btn btn-primary"  routerLink="/home">Visit profile</a>
             <!--Za sada home, posle profil smestaja-->
           </div>
 

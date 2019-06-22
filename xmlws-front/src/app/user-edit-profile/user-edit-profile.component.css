@@ -42,7 +42,7 @@ body{
 	transform: translateY(-30px);
 	font-size: 18px;
 	opacity: 1;
-	color: #00bcd4;
+	color: #fed136;
 
 }
 textarea{
@@ -51,8 +51,14 @@ textarea{
 .button{
 	width: 100%;
     height: 50px;
-    border: none;
     outline: none;
     background: #fed136;
-    color: #fff;
+	color: black;
+	
+}
+
+.button:hover{
+    background-color:#ffe374;
+    color:black;
+    border-color:black;
 }

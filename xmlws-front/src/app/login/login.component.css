@@ -66,7 +66,7 @@ width: 100px;
 
 .login_btn:hover{
 color: black;
-background-color: white;
+background-color: #ffe374;
 }
 
 .links{
@@ -76,3 +76,13 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+
+.myClass2:hover{
+    color:#ffe374;
+    border-color:black;
+  }
+  
+  .myClass2{
+      color: #fed136;
+      border-color:black;
+  }

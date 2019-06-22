@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunicationService } from './communication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +10,28 @@ import { Router } from '@angular/router';
 export class AppComponent {
   
   title = 'xmlws-front';
-  duzina : number = 0;
+  ima : boolean = true;
 
-  constructor(private router : Router) {
-    
+  constructor(private router : Router, private _communicationService: CommunicationService) {
+    this._communicationService.changeEmitted$.subscribe(data => {
+      //this.ima = data;
+      console.log(data);
+      });
+  
   }
 
+  
   ngOnInit() {
     this.loadDuzina();
   }
 
   public loadDuzina() {
-    this.duzina = localStorage.length;
+    if(localStorage.length > 0) {
+      this.ima = true;
+    } else {
+      this.ima = false;
+    }
+      
   }
 
   logOut() {

@@ -30,6 +30,18 @@ body{
    .find-more{
      text-align: right;
    }
+
+   a:hover{
+    background-color:#ffe374;
+    color:black;
+    border-color:black;
+  }
+
+  a {
+    border-color:black; 
+    color:black; 
+    background-color:#fed136;
+  }
   
   
   .label-theme{
@@ -38,13 +50,4 @@ body{
     padding: .3em .7em .3em;
     color: #fff;
     border-radius: .25em;
-  }
-  
-  .label a{
-    color: inherit;
-  }
-  
-  #myCl {
-    color: #fed136;
-    border-color: #fed136;
   }

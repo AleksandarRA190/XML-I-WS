@@ -16,6 +16,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { PostCommentComponent } from './post-comment/post-comment.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { OneConversationComponent } from './conversation/one-conversation/one-conversation.component';
+import { CommunicationService } from './communication.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { OneConversationComponent } from './conversation/one-conversation/one-co
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    CommunicationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

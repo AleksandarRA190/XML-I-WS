@@ -17,6 +17,7 @@ export class UserReservationsComponent implements OnInit {
 
   ngOnInit() {
     this.reload();
+    
   }
 
   public reload() {

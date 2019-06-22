@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
       alert('Successful login!');
       localStorage.setItem('username',this.loginDto.username);
       console.log(localStorage);
-      this.router.navigate(['profile']);
+      //this.router.navigate(['profile']);
+      this.router.navigate(['home']);
     },
     (err: any) => { 
       console.log(err.status); console.log(err); 

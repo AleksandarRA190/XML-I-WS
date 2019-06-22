@@ -1,7 +1,3 @@
-/***
-Bootstrap4 Card with Tabs by @mdeuerlein
-***/
-
 body {
     background-color: #f7f8f9;
 }
@@ -48,4 +44,18 @@ body {
 
 .tab-card-header > .tab-content {
   padding-bottom: 0;
+}
+
+
+
+.btn-primary:hover{
+  background-color:#ffe374;
+  color:black;
+  border-color:black;
+}
+
+.btn-primary{
+	background: #fed136;
+	color: black;
+	border-color:black;
 }

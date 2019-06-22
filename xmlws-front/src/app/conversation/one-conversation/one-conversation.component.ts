@@ -14,7 +14,7 @@ import { AccommodationDTO } from 'app/dto/AccommodationDTO';
 export class OneConversationComponent implements OnInit {
 
   id: number;
-  reservation: ReservationDTO;
+  reservation: ReservationDTO = new ReservationDTO();
   messageDTO: MessageDTO;
   previousMessages: string;
   previousMessageDTOs: MessageDTO[] = [];
@@ -23,6 +23,10 @@ export class OneConversationComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    //ova 2 jer ne stigne da ucita pre nego sto html zatrazi
+    this.reservation.fromDateTime = new Date();
+    this.reservation.toDateTime = new Date();
+    
     this.route.params.subscribe(params => { //uzimanje parametara iz url-a
       this.id = + params['id'];
       this.reload();
@@ -88,6 +92,42 @@ export class OneConversationComponent implements OnInit {
     }
 
 
+  }
+
+
+
+
+
+
+
+  public mica(input) : string {
+    if(input == null) {
+      return "";
+    }
+
+    let dateParts : string[];
+    let dateString = input.toString();
+    dateParts = dateString.split('T');
+  
+    let dateComponents : string[];
+    dateComponents = dateParts[0].split('-');
+ 
+    let day = dateComponents[2];
+    let month = dateComponents[1];
+    let year = dateComponents[0];
+
+    
+    let timeComponents : string[];
+    timeComponents = dateParts[1].split(':');
+ 
+    let hours = timeComponents[2];
+    let minutes = timeComponents[1];
+    let seconds = timeComponents[0];
+
+    let retVal = "";
+    retVal = retVal + day + "/" + month + "/" + year;
+    //retVal = retVal + day + "/" + month + "/" + year + " at " + hours + " hours : " + minutes + " minutes : " + seconds + " seconds.";
+    return retVal;
   }
 
 }

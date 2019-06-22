@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -91,9 +92,11 @@ public class User {
     protected String lastname;
     
     @XmlElement(name = "Email", required = true)
+    @Column(unique = true)
     protected String email;
     
     @XmlElement(name = "Username", required = true)
+    @Column(unique = true)
     protected String username;
     
     @XmlElement(name = "Password", required = true)
@@ -114,6 +117,7 @@ public class User {
     protected Address address;
     
     @XmlElement(name = "Bussines_registration_number")
+    @Column(unique = true, nullable = true)
     protected long bussinesRegistrationNumber;
     
     @XmlElement(name = "Blocked")
@@ -165,8 +169,10 @@ public class User {
     	this.enabled = dto.isEnabled();
     	this.deleted = dto.isDeleted();
     	this.role = dto.getRole();
-    	this.bussinesRegistrationNumber = dto.getBussinesRegistrationNumber();
-    	this.blocked = dto.isBlocked();
+		if(dto.getRole() == Role.AGENT) {
+			this.setBussinesRegistrationNumber(dto.getBussinesRegistrationNumber());
+		}
+		this.blocked = dto.isBlocked();
     }
 
 

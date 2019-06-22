@@ -18,22 +18,22 @@
             <a class="nav-link" routerLink="/accomodations">Accomodations</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="duzina>0" routerLink="/profile">Profile</a>
+          <a class="nav-link" *ngIf="ima" routerLink="/profile">Profile</a>
+        </li>
+        <li class="nav-item" *ngIf=ima>
+          <a class="nav-link"  routerLink="/reservations">Reservations</a>  
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="duzina>0" routerLink="/reservations">Reservations</a>  
+          <a class="nav-link" *ngIf="ima" routerLink="/conversations">Conversations</a>  
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="duzina>0" routerLink="/conversations">Conversations</a>  
+            <a class="nav-link" *ngIf="!ima" routerLink="/login">Sign in</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" *ngIf="duzina===0" routerLink="/login">Sign in</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" *ngIf="duzina===0" routerLink="/register">Sign Up</a>
+            <a class="nav-link" *ngIf="!ima" routerLink="/register">Sign Up</a>
         </li> 
        <!-- Dropdown -->
-      <li *ngIf="duzina>0" class="nav-item dropdown">
+      <li *ngIf="ima" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
           Menu
         </a>
