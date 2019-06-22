@@ -2,10 +2,9 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:tns="http://www.projectXml.com/accommodation"
 	targetNamespace="http://www.projectXml.com/accommodation"
-	xmlns:add="http://www.projectXml.com/address"
 	elementFormDefault="qualified">
 
-	<xs:import namespace="http://www.projectXml.com/address" schemaLocation="address.xsd"/>
+
 	
 	<xs:element name="getAccommodationsRequest">
 		<xs:complexType>   
@@ -17,8 +16,7 @@
 	<xs:element name="getAccommodationsResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="accommodations" type="tns:accommodation" minOccurs="0"
-					maxOccurs="unbounded" />
+				<xs:element name="accommodations" type="tns:accommodations" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -80,6 +78,13 @@
 			<xs:element name="Address" type="tns:Address" />
 			<xs:element name="AccommodationType" type="tns:accommodationType" />
 			<xs:element name="Id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="accommodations">
+		<xs:sequence>
+			<xs:element name="Accommodations" type="tns:accommodation" minOccurs="0"
+					maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	

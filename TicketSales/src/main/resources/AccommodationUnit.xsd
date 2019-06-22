@@ -16,8 +16,7 @@
 	<xs:element name="getAccommodationUnitsResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="accommodationUnits" type="tns:accommodationUnit" 
-					minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="accommodationUnits" type="tns:accommodationUnits"  />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -83,6 +82,15 @@
 			<xs:element name="Accommodation" type="tns:accommodation"/>
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:complexType name="accommodationUnits">
+		<xs:sequence>
+			<xs:element name="AccommodationUnits" type="tns:accommodationUnit" 
+						minOccurs="0"
+						maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+		
 	
 	<xs:complexType name="accommodation">
 		<xs:sequence>

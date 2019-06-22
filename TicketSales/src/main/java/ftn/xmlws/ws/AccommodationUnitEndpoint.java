@@ -1,7 +1,5 @@
 package ftn.xmlws.ws;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +11,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.projectxml.accommodationunit.AccommodationUnit;
+import com.projectxml.accommodationunit.AccommodationUnits;
 import com.projectxml.accommodationunit.AddAccommodationUnitRequest;
 import com.projectxml.accommodationunit.AddAccommodationUnitResponse;
 import com.projectxml.accommodationunit.GetAccommodationUnitRequest;
@@ -36,10 +35,14 @@ public class AccommodationUnitEndpoint {
 	public GetAccommodationUnitsResponse processGetAccommodationUnitsRequest(@RequestPayload GetAccommodationUnitsRequest request) {
 		GetAccommodationUnitsResponse response = new GetAccommodationUnitsResponse();
 	  
-		AccommodationUnitsDTO aus = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getId() + "/units", AccommodationUnitsDTO.class);
-		List<AccommodationUnitDTO> list = aus.getAccommodationUnits();
+		AccommodationUnitsDTO ausDTO = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getId() + "/units", AccommodationUnitsDTO.class);
 		
-		response.getAccommodationUnits().addAll(list);
+		AccommodationUnits aus = new AccommodationUnits();
+		for(AccommodationUnitDTO auDTO: ausDTO.getAccommodationUnits()) {
+			AccommodationUnit au = new AccommodationUnit(auDTO);
+			aus.getAccommodationUnits().add(au);
+		}
+		response.setAccommodationUnits(aus);
 	  	return response;
 	 }
 	

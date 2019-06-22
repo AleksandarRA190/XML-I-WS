@@ -1,7 +1,5 @@
 package ftn.xmlws.ws;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +11,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.projectxml.accommodation.Accommodation;
+import com.projectxml.accommodation.Accommodations;
 import com.projectxml.accommodation.AddAccommodationRequest;
 import com.projectxml.accommodation.AddAccommodationResponse;
 import com.projectxml.accommodation.GetAccommodationRequest;
@@ -37,10 +36,15 @@ public class AccommodationEndpoint {
 	public GetAccommodationsResponse processGetAccommodationsRequest(@RequestPayload GetAccommodationsRequest request) {
 		GetAccommodationsResponse response = new GetAccommodationsResponse();
 		
-		AccommodationsDTO as = restTemplate.getForObject("http://localhost:9009/accommodation", AccommodationsDTO.class);
-		List<AccommodationDTO> list = as.getAccommodations();
+		AccommodationsDTO asDTO = restTemplate.getForObject("http://localhost:9009/accommodation", AccommodationsDTO.class);
 		
-		response.getAccommodations().addAll(list);
+		Accommodations as = new Accommodations();
+		for(AccommodationDTO aDTO: asDTO.getAccommodations()) {
+			Accommodation a = new Accommodation(aDTO);
+			as.getAccommodations().add(a);
+		}
+		
+		response.setAccommodations(as);
 	  	return response;
 	 }
 	

@@ -17,8 +17,7 @@
 	<xs:element name="getAccommodationServicesResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="services" type="tns:service" 
-					minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="services" type="tns:services" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -60,8 +59,7 @@
 	<xs:element name="getServicesResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="services" type="tns:service"
-					 minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="services" type="tns:services"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -124,6 +122,12 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	<xs:complexType name="services">
+		<xs:sequence>
+			<xs:element name="Services" type="tns:service" minOccurs="0"
+					maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	
 	
 </xs:schema>

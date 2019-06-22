@@ -12,7 +12,6 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.projectxml.accommodation.Accommodation;
 import com.projectxml.service.AddAccommodationServiceRequest;
 import com.projectxml.service.AddAccommodationServiceResponse;
 import com.projectxml.service.AddServiceRequest;
@@ -26,6 +25,7 @@ import com.projectxml.service.GetServicesResponse;
 import com.projectxml.service.RemoveAccommodationServiceRequest;
 import com.projectxml.service.RemoveServiceRequest;
 import com.projectxml.service.Service;
+import com.projectxml.service.Services;
 import com.projectxml.service.UpdateServiceRequest;
 
 import ftn.xmlws.dto.ServiceDTO;
@@ -44,10 +44,15 @@ public class ServiceEndpoint {
 	public GetAccommodationServicesResponse processGetAccommodationServicesRequest(@RequestPayload GetAccommodationServicesRequest request) {
 		GetAccommodationServicesResponse response = new GetAccommodationServicesResponse();
 	  
-		ServicesDTO s = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", ServicesDTO.class);
-		List<ServiceDTO> list = s.getServices();
+		ServicesDTO ssDTO = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", ServicesDTO.class);
 		
-		response.getServices().addAll(list);
+		Services ss = new Services();
+		for(ServiceDTO sDTO: ssDTO.getServices()) {
+			Service s = new Service(sDTO);
+			ss.getServices().add(s);
+		}
+		
+		response.setServices(ss);
 	  	return response;
 	 }
 	
@@ -79,10 +84,15 @@ public class ServiceEndpoint {
 	public GetServicesResponse processGetServicesRequest(@RequestPayload GetServicesRequest request) {
 		GetServicesResponse response = new GetServicesResponse();
 	  
-		ServicesDTO s = restTemplate.getForObject("http://localhost:9009/accommodation/services" , ServicesDTO.class);
-		List<ServiceDTO> list = s.getServices();
+		ServicesDTO ssDTO = restTemplate.getForObject("http://localhost:9009/accommodation/services" , ServicesDTO.class);
 		
-		response.getServices().addAll(list);
+		Services ss = new Services();
+		for(ServiceDTO sDTO: ssDTO.getServices()) {
+			Service s = new Service(sDTO);
+			ss.getServices().add(s);
+		}
+		
+		response.setServices(ss);
 	  	return response;
 	 }
 	
