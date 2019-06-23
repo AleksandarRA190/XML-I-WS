@@ -118,8 +118,31 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:element name="getUserCommentsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getUserCommentsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="comments" minOccurs="0"
+					maxOccurs="unbounded" type="tns:comment" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 
 
+	<xs:complexType name="comment">
+		<xs:sequence>
+			<xs:element name="contentOfComment" type="xs:string" />
+			<xs:element name="approvedComment" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
 	
 
 	<xs:complexType name="user">

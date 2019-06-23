@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.xmlws.dto.ChangePasswordDTO;
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.LoginDTO;
 import ftn.xmlws.dto.ReservationDTO;
+import ftn.xmlws.dto.UserCommentsDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
 import ftn.xmlws.enums.Role;
 import ftn.xmlws.model.Address;
+import ftn.xmlws.model.CommentRate;
 import ftn.xmlws.model.Reservation;
 import ftn.xmlws.model.User;
 import ftn.xmlws.repository.UserRepository;
@@ -101,7 +104,6 @@ public class UserService {
 		}
 
 		User user = new User(userToReg);
-		
 		Address address = new Address(userToReg.getAddress());
 		user.setAddress(address);
 		
@@ -221,6 +223,29 @@ public class UserService {
 		for(Reservation r : list) {
 			if(!r.isDeleted())
 				retVal.getReservations().add(new ReservationDTO(r));
+		}
+		
+		return retVal;
+	}
+	
+	public UserCommentsDTO getUserComments(String username) {
+		User user = this.getUserByUsernameNoDto(username);
+		List<Reservation> list = user.getReservations();
+		
+		UserCommentsDTO retVal = new UserCommentsDTO();
+		
+		for(Reservation r : list) {
+			if(!r.isDeleted()) {
+				if(r.getCommentRate()!=null) {
+					CommentRate comment = r.getCommentRate();
+					CommentDTO commentDTO = new CommentDTO();
+					commentDTO.setContentOfComment(comment.getContentOfComment());
+					commentDTO.setApprovedComment(comment.isApprovedComment());
+					retVal.getComments().add(commentDTO);
+				}
+					
+			}
+				
 		}
 		
 		return retVal;

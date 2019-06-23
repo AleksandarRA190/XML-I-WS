@@ -24,9 +24,6 @@ public class UserDTO {
     	
     }
     
-    
-    
-    
 
     public UserDTO(User user) {
 		super();
@@ -47,6 +44,35 @@ public class UserDTO {
 			this.accommodation = new AccommodationDTO(user.getAgentOfAccommodation());
 		}
 	}
+    
+//    public UserDTO(com.projectxml.mojuser.User user) {
+//		super();
+//		this.name = user.getName();
+//		this.lastname = user.getLastname();
+//		this.email = user.getEmail();
+//		this.username = user.getUsername();
+//		this.password = user.getPassword();
+//		this.enabled = user.isEnabled();
+//		this.deleted = user.isDeleted();
+//		if(user.getRole() != null) {
+//			if(user.getRole().equals("REGISTERED_USER")) {
+//				this.role = Role.REGISTERED_USER;
+//			} else if (user.getRole().equals("ADMINISTRATOR")) {
+//				this.role = role.ADMINISTRATOR;
+//			} else {
+//				this.role = role.AGENT;
+//			}
+//		}
+//		
+//		this.bussinesRegistrationNumber = user.getBussinesRegistrationNumber();
+//		this.blocked = user.isBlocked();
+//		this.setAddress(new Address(user.getAddress()));
+//		this.id = user.getId();
+//		
+//		if(this.role == Role.AGENT && user.getAgentOfAccommodation() != null) {
+//			this.accommodation = new AccommodationDTO(user.getAgentOfAccommodation());
+//		}
+//	}
 
 
 

@@ -4,6 +4,7 @@ public class CommentDTO {
 	
 	private String contentOfComment;
 	private boolean approvedComment;
+	private Long reservationId;
 	
 	public CommentDTO() {
 		
@@ -24,7 +25,16 @@ public class CommentDTO {
 	public void setApprovedComment(boolean approvedComment) {
 		this.approvedComment = approvedComment;
 	}
-	
+
+	public Long getReservationId() {
+		return reservationId;
+	}
+
+	public void setReservationId(Long reservationId) {
+		this.reservationId = reservationId;
+	}
+
+
 	
 
 }

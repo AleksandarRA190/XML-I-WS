@@ -10,7 +10,7 @@
 	<xs:element name="getReservationsByUnitRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="unit_id" type="xs:long" />
+				<xs:element name="unitId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -20,6 +20,22 @@
 			<xs:sequence>
 				<xs:element name="reservation" type="tns:reservation"
 					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getReservationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getReservationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reservation" type="tns:reservation"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -39,15 +55,49 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:element name="deleteCommentRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id_reservation" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="deleteCommentResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="confirmCommentRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id_reservation" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="confirmCommentResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="success" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
 
 	<xs:complexType name="reservation">
 		<xs:sequence>
 			<xs:element name="id" type="xs:long" />
 			<xs:element name="confirmed" type="xs:boolean" />
-			<xs:element name="deleted" type="xs:boolean" />
-			<xs:element name="userDto" type="tns:user" />
-			<xs:element name="fromDate" type="xs:date" />
-			<xs:element name="toDate" type="xs:date" />
+			<xs:element name="agentConfirmed" type="xs:boolean" />
+			<xs:element name="guest" type="tns:user" />
+			<xs:element name="fromDateTime" type="xs:date" />
+			<xs:element name="toDateTime" type="xs:date" />
 		</xs:sequence>
 	</xs:complexType>
 

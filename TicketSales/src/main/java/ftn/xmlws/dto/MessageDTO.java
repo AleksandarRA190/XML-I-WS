@@ -2,6 +2,7 @@ package ftn.xmlws.dto;
 
 import java.time.LocalDateTime;
 
+import ftn.xmlws.miscellaneous.MyTypeConverter;
 import ftn.xmlws.model.Message;
 
 public class MessageDTO {
@@ -29,9 +30,24 @@ public class MessageDTO {
     	if(m.getReciever()!=null)
     		this.reciever = new UserDTO(m.getReciever());
     	this.reservation = new ReservationDTO(m.getReservation());
-    	this.accommodation = new AccommodationDTO(m.getAccommodation());
+    	if(m.getAccommodation() != null)
+    		this.accommodation = new AccommodationDTO(m.getAccommodation());
     	this.dateTime = m.getDateTime();
     }
+    
+//    public MessageDTO(com.projectxml.message.Message m) {
+//    	this.id = m.getId();
+//    	this.messageContent = m.getMessageContent();
+//    	this.seen = m.isSeen();
+//    	this.deleted = m.isDeleted();
+//    	this.sender = new UserDTO(m.getSender());
+//    	if(m.getReciever()!=null)
+//    		this.reciever = new UserDTO(m.getReciever());
+//    	this.reservation = new ReservationDTO(m.getReservation());
+//    	//if(m.getAccommodation() != null)
+//    		//this.accommodation = new AccommodationDTO(m.getAccommodation());
+//    	//this.dateTime = MyTypeConverter.xmlCalendarToLocalDateTime(m.getDateTime());
+//    }
 
 	public Long getId() {
 		return id;

@@ -24,6 +24,16 @@ public class AccommodationUnitDTO {
     	this.accommodation = new AccommodationDTO(unit.getAccommodation());
     	this.accommodationUnitType = new AccommodationUnitTypeDTO(unit.getAccommodationUnitType());
     }
+    
+//    public AccommodationUnitDTO(com.projectxml.accommodationunit.AccommodationUnit unit) {
+//    	this.id = unit.getId();
+//    	this.floor = unit.getFloor();
+//    	this.number = unit.getNumber();
+//    	this.numberOfBeds = unit.getNumberOfBeds();
+//    	this.defaultPrice = unit.getDefaultPrice();
+//    	this.accommodation = new AccommodationDTO(unit.getAccommodation());
+//    	//this.accommodationUnitType = new AccommodationUnitTypeDTO(unit.getAccommodationUnitType());
+//    }
 
 	public Long getId() {
 		return id;

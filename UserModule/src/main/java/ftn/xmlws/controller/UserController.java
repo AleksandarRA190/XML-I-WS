@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.dto.ChangePasswordDTO;
 import ftn.xmlws.dto.LoginDTO;
+import ftn.xmlws.dto.UserCommentsDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
 import ftn.xmlws.dto.Users;
@@ -181,7 +182,14 @@ public class UserController {
 		
 	}
 	
-	
+	@RequestMapping(value = "/getUserComments/{username}", method = RequestMethod.GET)
+	public ResponseEntity<UserCommentsDTO> getUserComments(@PathVariable("username") String username) {
+		
+		UserCommentsDTO response = userService.getUserComments(username);
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
+		
+	}
 	
 	
 	

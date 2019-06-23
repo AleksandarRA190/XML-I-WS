@@ -82,7 +82,7 @@ public class User {
     @XmlElement(name = "Role", required = true)
     protected String role;
     @XmlElement(name = "Address", required = true)
-    protected Address address;
+    protected com.projectxml.address.Address address;
     @XmlElement(name = "Bussines_registration_number")
     protected Long bussinesRegistrationNumber;
     @XmlElement(name = "Blocked")
@@ -107,7 +107,7 @@ public class User {
     		this.role = user.getRole().toString();
     	else
     		this.role = "REGISTERED_USER";
-    	this.address = new Address(user.getAddress());
+    	this.address = new com.projectxml.address.Address(user.getAddress());
     	this.bussinesRegistrationNumber = user.getBussinesRegistrationNumber();
     	this.blocked = user.isBlocked();
     	//this.accommodationDTO = user.getAccommodation();
@@ -313,7 +313,7 @@ public class User {
      *     {@link Address }
      *     
      */
-    public Address getAddress() {
+    public com.projectxml.address.Address getAddress() {
         return address;
     }
 
@@ -325,7 +325,7 @@ public class User {
      *     {@link Address }
      *     
      */
-    public void setAddress(Address value) {
+    public void setAddress(com.projectxml.address.Address value) {
         this.address = value;
     }
 

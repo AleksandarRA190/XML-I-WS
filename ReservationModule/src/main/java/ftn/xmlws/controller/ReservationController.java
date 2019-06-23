@@ -32,7 +32,9 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ReservationDTO> getReservation(@PathVariable("id") Long id) {
+		
 		ReservationDTO reservation = reservationService.getReservation(id);
+		
 		if (reservation == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
@@ -43,7 +45,6 @@ public class ReservationController {
 	@RequestMapping(value = "/add", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Void> makeReservation(@RequestBody ReservationDTO reservation) {
 
-		System.out.println("Mikroservis: " + reservation.getGuest().getUsername());
 		boolean success = reservationService.makeReservation(reservation);
 		
 		if (!success) {
@@ -100,9 +101,9 @@ public class ReservationController {
 		}
 	}
 	
-	@RequestMapping(value = "/confirmComment/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Boolean> confirmComment(@PathVariable("id") Long id) {
-		boolean success = reservationService.confirmComment(id);
+	@RequestMapping(value = "/confirmComment/{reserVationId}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> confirmComment(@PathVariable("reserVationId") Long reserVationId) {
+		boolean success = reservationService.confirmComment(reserVationId);
 		if (success) {
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		} else {
@@ -110,14 +111,22 @@ public class ReservationController {
 		}
 	}
 	
-	@RequestMapping(value = "/getComment/{id}", method = RequestMethod.GET)
-	public ResponseEntity<CommentDTO> getComment(@PathVariable("id") Long id) {
-		CommentDTO comment = reservationService.getComment(id);
+	@RequestMapping(value = "/getComment/{reserVationId}", method = RequestMethod.GET)
+	public ResponseEntity<CommentDTO> getComment(@PathVariable("reserVationId") Long reserVationId) {
+		CommentDTO comment = reservationService.getComment(reserVationId);
 		if (comment != null) {
 			return new ResponseEntity<>(comment,HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "/comment/{idReservation}", method = RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteComment(@PathVariable("idReservation") Long id) {
+
+		boolean success = reservationService.deleteComment(id);
+
+		return new ResponseEntity<>(success,HttpStatus.OK);
 	}
 	
 	

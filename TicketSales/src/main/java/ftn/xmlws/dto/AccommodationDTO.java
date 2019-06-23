@@ -5,18 +5,18 @@ import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.Address;
 
 public class AccommodationDTO {
-	
+
 	private String description;
 	private String name;
 	private String category;
 	private Address address;
 	private AccommodationType accommodationType;
 	private Long id;
-	
+
 	public AccommodationDTO() {
-		
+
 	}
-	
+
 	public AccommodationDTO(Accommodation a) {
 		description = a.getDescription();
 		name = a.getName();
@@ -25,7 +25,16 @@ public class AccommodationDTO {
 		accommodationType = a.getAccommodationType();
 		id = a.getId();
 	}
-	
+
+//	public AccommodationDTO(com.projectxml.periodprice.Accommodation a) {
+//		description = a.getDescription();
+//		name = a.getName();
+//		category = a.getCategory();
+//		//address = new Address(a.getAddress());
+//		//accommodationType = a.getAccommodationType();
+//		id = a.getId();
+//	}
+//	
 //	public AccommodationDTO(com.projectxml.accommodation.Accommodation a) {
 //		description = a.getDescription();
 //		name = a.getName();

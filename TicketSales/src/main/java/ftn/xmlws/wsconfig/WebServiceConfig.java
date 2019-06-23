@@ -149,4 +149,19 @@ public class WebServiceConfig {
 	  return new SimpleXsdSchema(new ClassPathResource("PeriodPrice.xsd"));
 	}
 	
+	@Bean(name = "messages")
+	public DefaultWsdl11Definition defaultWsdl20Definition(XsdSchema messagesSchema) {
+		DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+		  definition.setPortTypeName("MessagePort");
+		  definition.setTargetNamespace("http://www.projectXml.com/messages");
+		  definition.setLocationUri("/ws");
+		  definition.setSchema(messagesSchema);
+		  return definition;
+	}
+	
+	@Bean
+	public XsdSchema messagesSchema() {
+	  return new SimpleXsdSchema(new ClassPathResource("message.xsd"));
+	}
+	
 }

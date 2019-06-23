@@ -157,8 +157,8 @@ public class ReservationService {
 		return true;
 	}
 	
-	public CommentDTO getComment(Long id) {
-		Reservation reservation = this.reservationRepository.getOne(id);
+	public CommentDTO getComment(Long reserVationId) {
+		Reservation reservation = this.reservationRepository.getOne(reserVationId);
 		
 		if(reservation == null)
 			return null;
@@ -170,13 +170,30 @@ public class ReservationService {
 			CommentDTO commentDTO = new CommentDTO();
 			commentDTO.setContentOfComment(comment.getContentOfComment());
 			commentDTO.setApprovedComment(comment.isApprovedComment());
+			commentDTO.setReservationId(reserVationId);
 			return commentDTO;
 		}
 		
 	}
 	
-	public boolean confirmComment(Long id) {
-		Reservation reservation = this.reservationRepository.getOne(id);
+	public boolean deleteComment(Long reserVationId) {
+		Reservation reservation = this.reservationRepository.getOne(reserVationId);
+		
+		if(reservation == null)
+			return false;
+		
+		if(reservation.getCommentRate() == null) {
+			return false;
+		} else {
+			reservation.setCommentRate(null);
+			this.reservationRepository.save(reservation);
+			return true;
+		}
+		
+	}
+	
+	public boolean confirmComment(Long reserVationId) {
+		Reservation reservation = this.reservationRepository.getOne(reserVationId);
 		
 		if(reservation == null)
 			return false;

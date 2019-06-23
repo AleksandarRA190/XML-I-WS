@@ -5,7 +5,6 @@
 // Generated on: 2019.06.15 at 02:21:11 PM CEST 
 //
 
-
 package com.projectxml.address;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,11 +12,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for address complex type.
+ * <p>
+ * Java class for address complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="address">
@@ -42,220 +43,207 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "address", propOrder = {
-    "country",
-    "city",
-    "postalCode",
-    "street",
-    "number",
-    "apartmentNumber",
-    "longitude",
-    "latitude",
-    "id"
-})
+@XmlType(name = "address", propOrder = { "country", "city", "postalCode", "street", "number", "apartmentNumber",
+		"longitude", "latitude", "id" })
 public class Address {
 
-    @XmlElement(name = "Country", required = true)
-    protected String country;
-    @XmlElement(name = "City", required = true)
-    protected String city;
-    @XmlElement(name = "Postal_code")
-    protected int postalCode;
-    @XmlElement(name = "Street", required = true)
-    protected String street;
-    @XmlElement(name = "Number", required = true)
-    protected String number;
-    @XmlElement(name = "Apartment_number")
-    protected String apartmentNumber;
-    @XmlElement(name = "Longitude")
-    protected double longitude;
-    @XmlElement(name = "Latitude")
-    protected double latitude;
-    @XmlElement(name = "Id")
-    protected long id;
+	@XmlElement(name = "Country", required = true)
+	protected String country;
+	@XmlElement(name = "City", required = true)
+	protected String city;
+	@XmlElement(name = "Postal_code")
+	protected int postalCode;
+	@XmlElement(name = "Street", required = true)
+	protected String street;
+	@XmlElement(name = "Number", required = true)
+	protected String number;
+	@XmlElement(name = "Apartment_number")
+	protected String apartmentNumber;
+	@XmlElement(name = "Longitude")
+	protected double longitude;
+	@XmlElement(name = "Latitude")
+	protected double latitude;
+	@XmlElement(name = "Id")
+	protected Long id;
 
-    /**
-     * Gets the value of the country property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCountry() {
-        return country;
-    }
+	public Address() {
 
-    /**
-     * Sets the value of the country property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCountry(String value) {
-        this.country = value;
-    }
+	}
 
-    /**
-     * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCity() {
-        return city;
-    }
+	public Address(ftn.xmlws.model.Address a) {
+		this.country = a.getCountry();
+		this.city = a.getCity();
+		this.postalCode = a.getPostalCode();
+		this.street = a.getStreet();
+		this.number = a.getNumber();
+		this.apartmentNumber = a.getApartmentNumber();
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
+		this.id = a.getId();
+	}
 
-    /**
-     * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCity(String value) {
-        this.city = value;
-    }
+	/**
+	 * Gets the value of the country property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getCountry() {
+		return country;
+	}
 
-    /**
-     * Gets the value of the postalCode property.
-     * 
-     */
-    public int getPostalCode() {
-        return postalCode;
-    }
+	/**
+	 * Sets the value of the country property.
+	 * 
+	 * @param value allowed object is {@link String }
+	 * 
+	 */
+	public void setCountry(String value) {
+		this.country = value;
+	}
 
-    /**
-     * Sets the value of the postalCode property.
-     * 
-     */
-    public void setPostalCode(int value) {
-        this.postalCode = value;
-    }
+	/**
+	 * Gets the value of the city property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getCity() {
+		return city;
+	}
 
-    /**
-     * Gets the value of the street property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStreet() {
-        return street;
-    }
+	/**
+	 * Sets the value of the city property.
+	 * 
+	 * @param value allowed object is {@link String }
+	 * 
+	 */
+	public void setCity(String value) {
+		this.city = value;
+	}
 
-    /**
-     * Sets the value of the street property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStreet(String value) {
-        this.street = value;
-    }
+	/**
+	 * Gets the value of the postalCode property.
+	 * 
+	 */
+	public int getPostalCode() {
+		return postalCode;
+	}
 
-    /**
-     * Gets the value of the number property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNumber() {
-        return number;
-    }
+	/**
+	 * Sets the value of the postalCode property.
+	 * 
+	 */
+	public void setPostalCode(int value) {
+		this.postalCode = value;
+	}
 
-    /**
-     * Sets the value of the number property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNumber(String value) {
-        this.number = value;
-    }
+	/**
+	 * Gets the value of the street property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getStreet() {
+		return street;
+	}
 
-    /**
-     * Gets the value of the apartmentNumber property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getApartmentNumber() {
-        return apartmentNumber;
-    }
+	/**
+	 * Sets the value of the street property.
+	 * 
+	 * @param value allowed object is {@link String }
+	 * 
+	 */
+	public void setStreet(String value) {
+		this.street = value;
+	}
 
-    /**
-     * Sets the value of the apartmentNumber property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setApartmentNumber(String value) {
-        this.apartmentNumber = value;
-    }
+	/**
+	 * Gets the value of the number property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getNumber() {
+		return number;
+	}
 
-    /**
-     * Gets the value of the longitude property.
-     * 
-     */
-    public double getLongitude() {
-        return longitude;
-    }
+	/**
+	 * Sets the value of the number property.
+	 * 
+	 * @param value allowed object is {@link String }
+	 * 
+	 */
+	public void setNumber(String value) {
+		this.number = value;
+	}
 
-    /**
-     * Sets the value of the longitude property.
-     * 
-     */
-    public void setLongitude(double value) {
-        this.longitude = value;
-    }
+	/**
+	 * Gets the value of the apartmentNumber property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getApartmentNumber() {
+		return apartmentNumber;
+	}
 
-    /**
-     * Gets the value of the latitude property.
-     * 
-     */
-    public double getLatitude() {
-        return latitude;
-    }
+	/**
+	 * Sets the value of the apartmentNumber property.
+	 * 
+	 * @param value allowed object is {@link String }
+	 * 
+	 */
+	public void setApartmentNumber(String value) {
+		this.apartmentNumber = value;
+	}
 
-    /**
-     * Sets the value of the latitude property.
-     * 
-     */
-    public void setLatitude(double value) {
-        this.latitude = value;
-    }
+	/**
+	 * Gets the value of the longitude property.
+	 * 
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
 
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public long getId() {
-        return id;
-    }
+	/**
+	 * Sets the value of the longitude property.
+	 * 
+	 */
+	public void setLongitude(double value) {
+		this.longitude = value;
+	}
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(long value) {
-        this.id = value;
-    }
+	/**
+	 * Gets the value of the latitude property.
+	 * 
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * Sets the value of the latitude property.
+	 * 
+	 */
+	public void setLatitude(double value) {
+		this.latitude = value;
+	}
+
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 */
+	public void setId(Long value) {
+		this.id = value;
+	}
 
 }

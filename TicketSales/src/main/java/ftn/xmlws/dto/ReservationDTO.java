@@ -2,6 +2,7 @@ package ftn.xmlws.dto;
 
 import java.time.LocalDateTime;
 
+import ftn.xmlws.miscellaneous.MyTypeConverter;
 import ftn.xmlws.model.Reservation;
 
 public class ReservationDTO {
@@ -34,6 +35,18 @@ public class ReservationDTO {
 			commentDTO.setContentOfComment(res.getCommentRate().getContentOfComment());
 		}
 	}
+	
+//	public ReservationDTO(com.projectxml.reservation.Reservation res) {
+//		this.id = res.getId();
+//		this.confirmed = res.isConfirmed();
+//		this.guest = new UserDTO(res.getUserDto());
+//		this.fromDateTime = MyTypeConverter.xmlCalendarToLocalDateTime(res.getFromDate());
+//		this.toDateTime = MyTypeConverter.xmlCalendarToLocalDateTime(res.getToDate());
+//		//this.accommodationUnit = new AccommodationUnitDTO(res.getAccommodationUnit());
+//		//this.agentConfirmed = res.isAgentConfirmed();
+//		
+//
+//	}
 
 	public Long getId() {
 		return id;

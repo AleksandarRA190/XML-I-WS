@@ -18,8 +18,11 @@ import com.projectxml.mojuser.AddUserRequest;
 import com.projectxml.mojuser.AddUserResponse;
 import com.projectxml.mojuser.BlockRequest;
 import com.projectxml.mojuser.BlockResponse;
+import com.projectxml.mojuser.Comment;
 import com.projectxml.mojuser.DeleteRequest;
 import com.projectxml.mojuser.DeleteResponse;
+import com.projectxml.mojuser.GetUserCommentsRequest;
+import com.projectxml.mojuser.GetUserCommentsResponse;
 import com.projectxml.mojuser.GetUsersRequest;
 import com.projectxml.mojuser.GetUsersResponse;
 import com.projectxml.mojuser.LoginRequest;
@@ -28,6 +31,8 @@ import com.projectxml.mojuser.UnblockRequest;
 import com.projectxml.mojuser.UnblockResponse;
 import com.projectxml.mojuser.User;
 
+import ftn.xmlws.dto.CommentDTO;
+import ftn.xmlws.dto.UserCommentsDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.dto.Users;
 
@@ -49,6 +54,24 @@ public class MojUserEndpoint {
 			User kor = new User(u);
 			System.out.println(kor.toString());
 			response.getUser().add(kor);
+		}
+			
+		
+		return response;
+	}
+	
+	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "getUserCommentsRequest")
+	@ResponsePayload
+	public GetUserCommentsResponse processGetUserCommentsRequest(@RequestPayload GetUserCommentsRequest request) {
+		GetUserCommentsResponse response = new GetUserCommentsResponse();
+
+		UserCommentsDTO comments = restTemplate.getForObject("http://localhost:9006/users/getUserComments/"+request.getUsername(), UserCommentsDTO.class);
+		List<CommentDTO> commentDTOs = comments.getComments();
+		for(CommentDTO c : commentDTOs) {
+			Comment comment = new Comment();
+			comment.setApprovedComment(c.isApprovedComment());
+			comment.setContentOfComment(c.getContentOfComment());
+			response.getComments().add(comment);
 		}
 			
 		
