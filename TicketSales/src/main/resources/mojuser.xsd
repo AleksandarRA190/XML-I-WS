@@ -141,6 +141,7 @@
 		<xs:sequence>
 			<xs:element name="contentOfComment" type="xs:string" />
 			<xs:element name="approvedComment" type="xs:boolean" />
+			<xs:element name="idReservation" type="xs:long" />
 		</xs:sequence>
 	</xs:complexType>
 	

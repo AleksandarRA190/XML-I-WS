@@ -71,6 +71,7 @@ public class MojUserEndpoint {
 			Comment comment = new Comment();
 			comment.setApprovedComment(c.isApprovedComment());
 			comment.setContentOfComment(c.getContentOfComment());
+			comment.setIdReservation(c.getReservationId());
 			response.getComments().add(comment);
 		}
 			
