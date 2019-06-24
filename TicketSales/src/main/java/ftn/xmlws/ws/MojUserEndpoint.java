@@ -147,7 +147,7 @@ public class MojUserEndpoint {
 	public LoginResponse processLoginRequest(@RequestPayload LoginRequest request) {
 		LoginResponse response = new LoginResponse();
 		
-		UserDTO user = restTemplate.postForObject("http://localhost:9006/users/login",request.getLoginDTO(),UserDTO.class);
+		User user = restTemplate.postForObject("http://localhost:9006/users/login",request.getLoginDTO(),User.class);
 		response.setUser(user);
 		
 		return response;
