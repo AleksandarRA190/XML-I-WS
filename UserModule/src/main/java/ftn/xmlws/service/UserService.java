@@ -241,6 +241,7 @@ public class UserService {
 					CommentDTO commentDTO = new CommentDTO();
 					commentDTO.setContentOfComment(comment.getContentOfComment());
 					commentDTO.setApprovedComment(comment.isApprovedComment());
+					commentDTO.setReservationId(r.getId());
 					retVal.getComments().add(commentDTO);
 				}
 					
