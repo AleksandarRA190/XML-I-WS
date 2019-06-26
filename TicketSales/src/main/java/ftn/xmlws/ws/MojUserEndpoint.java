@@ -50,35 +50,37 @@ public class MojUserEndpoint {
 		Users users = restTemplate.getForObject("http://localhost:9006/users", Users.class);
 		List<UserDTO> userDTOs = users.getUsers();
 		System.out.println(userDTOs.size());
-		for(UserDTO u : userDTOs) {
+		for (UserDTO u : userDTOs) {
 			User kor = new User(u);
 			System.out.println(kor.toString());
 			response.getUser().add(kor);
 		}
-			
-		
+
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "getUserCommentsRequest")
 	@ResponsePayload
 	public GetUserCommentsResponse processGetUserCommentsRequest(@RequestPayload GetUserCommentsRequest request) {
 		GetUserCommentsResponse response = new GetUserCommentsResponse();
 
-		UserCommentsDTO comments = restTemplate.getForObject("http://localhost:9006/users/getUserComments/"+request.getUsername(), UserCommentsDTO.class);
+		UserCommentsDTO comments = restTemplate.getForObject(
+				"http://localhost:9006/users/getUserComments/" + request.getUsername(), UserCommentsDTO.class);
 		List<CommentDTO> commentDTOs = comments.getComments();
-		for(CommentDTO c : commentDTOs) {
+		for (CommentDTO c : commentDTOs) {
 			Comment comment = new Comment();
 			comment.setApprovedComment(c.isApprovedComment());
 			comment.setContentOfComment(c.getContentOfComment());
 			comment.setIdReservation(c.getReservationId());
 			response.getComments().add(comment);
 		}
-			
-		
+		for (Comment comm : response.getComments()) {
+			System.out.println("KOMENTAR: " + comm.getContentOfComment());
+		}
+
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "addUserRequest")
 	@ResponsePayload
 	public AddUserResponse processAddUserRequest(@RequestPayload AddUserRequest request) {
@@ -87,7 +89,7 @@ public class MojUserEndpoint {
 		User userToRegister = request.getUser();
 
 		System.out.println(request.getUser().getName());
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<User> requestHeader = new HttpEntity<>(userToRegister, headers);
@@ -96,27 +98,27 @@ public class MojUserEndpoint {
 
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "deleteRequest")
 	@ResponsePayload
 	public DeleteResponse processDeleteRequest(@RequestPayload DeleteRequest request) {
 		DeleteResponse response = new DeleteResponse();
-		
-		String url = "http://localhost:9006/users/"+request.getUsername();
+
+		String url = "http://localhost:9006/users/" + request.getUsername();
 		restTemplate.delete(url);
 		response.setSuccess(true);
-		
+
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "activateRequest")
 	@ResponsePayload
 	public ActivateResponse processActivateRequest(@RequestPayload ActivateRequest request) {
 		ActivateResponse response = new ActivateResponse();
-		
-		restTemplate.getForObject("http://localhost:9006/users/activate/"+request.getId(),Void.class);
+
+		restTemplate.getForObject("http://localhost:9006/users/activate/" + request.getId(), Void.class);
 		response.setSuccess(true);
-		
+
 		return response;
 	}
 
@@ -124,33 +126,33 @@ public class MojUserEndpoint {
 	@ResponsePayload
 	public BlockResponse processBlockRequest(@RequestPayload BlockRequest request) {
 		BlockResponse response = new BlockResponse();
-		
-		restTemplate.getForObject("http://localhost:9006/users/block/"+request.getUsername(),Void.class);
+
+		restTemplate.getForObject("http://localhost:9006/users/block/" + request.getUsername(), Void.class);
 		response.setSuccess(true);
-		
+
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "unblockRequest")
 	@ResponsePayload
 	public UnblockResponse processUnblockRequest(@RequestPayload UnblockRequest request) {
 		UnblockResponse response = new UnblockResponse();
-		
-		restTemplate.getForObject("http://localhost:9006/users/unblock/"+request.getUsername(),Void.class);
+
+		restTemplate.getForObject("http://localhost:9006/users/unblock/" + request.getUsername(), Void.class);
 		response.setSuccess(true);
-		
+
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "loginRequest")
 	@ResponsePayload
 	public LoginResponse processLoginRequest(@RequestPayload LoginRequest request) {
 		LoginResponse response = new LoginResponse();
-		
-		User user = restTemplate.postForObject("http://localhost:9006/users/login",request.getLoginDTO(),User.class);
+
+		User user = restTemplate.postForObject("http://localhost:9006/users/login", request.getLoginDTO(), User.class);
 		response.setUser(user);
-		
+
 		return response;
 	}
-	
+
 }
