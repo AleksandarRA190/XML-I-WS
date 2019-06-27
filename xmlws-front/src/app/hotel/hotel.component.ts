@@ -24,6 +24,7 @@ export class HotelComponent implements OnInit {
   accommodation: AccommodationDTO;
   accommodationUnits: AccommodationUnitDTO[] = [];
   services: ServiceDTO[] = [];
+  avgRating : number;
 
 
   constructor( 
@@ -37,6 +38,10 @@ export class HotelComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = + params['id'];
+      this.getAvgRating(this.id).subscribe(data => {
+        this.avgRating = data;
+        console.log(data);
+      });
     })
 
     this.getAccommodation(this.id).subscribe(data => {
@@ -49,7 +54,11 @@ export class HotelComponent implements OnInit {
 
     this.getServicesOfAccommodation(this.id).subscribe(data => {
       this.services = data.services;
-    });
+    },err => {});
+
+    
+
+
   }
 
   public getAccommodationUnits(id: number | string) : Observable<AccommodationUnitsDTO> {
@@ -58,6 +67,10 @@ export class HotelComponent implements OnInit {
 
   public getAccommodation(id: number | string) : Observable<AccommodationDTO> {
     return this.accommodationService.getAccommodation(id);
+  }
+
+  public getAvgRating(id: number) : Observable<number> {
+    return this.accommodationService.getAvgRating(id);
   }
 
   public getServicesOfAccommodation(id: number | string) : Observable<ServicesDTO> {

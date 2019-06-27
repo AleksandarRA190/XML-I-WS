@@ -1,13 +1,35 @@
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
   <div class="row panel">
     <div class="col-md-4  col-xs-8">
-      <img src="https://moneyinc.com/wp-content/uploads/2018/07/Hyatt-Zilara-Rose-Hall-750x422.jpg" class="img-thumbnail picture hidden-xs"
-      />
+      <img src="https://moneyinc.com/wp-content/uploads/2018/07/Hyatt-Zilara-Rose-Hall-750x422.jpg"
+        class="img-thumbnail picture hidden-xs" />
       <!-- <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="img-thumbnail visible-xs picture_mob" /> -->
     </div>
     <div class="col-md-8">
       <div class="header">
+
+        <div class="form-group" id="rating-ability-wrapper-1">
+
+          <i *ngIf="avgRating >= 0.5" class="btnrating btn btn-default btn-lg-da fa fa-star"></i>
+          <i *ngIf="!(avgRating >= 0.5)" class="btnrating btn btn-default btn-lg-ne fa fa-star"></i>
+
+          <i *ngIf="avgRating >= 1.5" class="btnrating btn btn-default btn-lg-da fa fa-star"></i>
+          <i *ngIf="!(avgRating >= 1.5)" class="btnrating btn btn-default btn-lg-ne fa fa-star"></i>
+
+          <i *ngIf="avgRating >= 2.5" class="btnrating btn btn-default btn-lg-da fa fa-star"></i>
+          <i *ngIf="!(avgRating >= 2.5)" class="btnrating btn btn-default btn-lg-ne fa fa-star"></i>
+
+          <i *ngIf="avgRating >= 3.5" class="btnrating btn btn-default btn-lg-da fa fa-star"></i>
+          <i *ngIf="!(avgRating >= 3.5)" class="btnrating btn btn-default btn-lg-ne fa fa-star"></i>
+
+          <i *ngIf="avgRating >= 4.5" class="btnrating btn btn-default btn-lg-da fa fa-star"></i>
+          <i *ngIf="!(avgRating >=4.5)" class="btnrating btn btn-default btn-lg-ne fa fa-star"></i>
+        </div>
+
+
+
         <h1 *ngIf="accommodation">{{accommodation.name}}</h1>
         <h4 *ngIf="accommodation">{{accommodation.accommodationType}}</h4>
         <h5 *ngIf="accommodation">{{accommodation.address.street}} {{accommodation.address.number}}</h5>
@@ -37,7 +59,8 @@
         <div class="product-image8">
           <a href="#">
             <img class="pic-1" src="https://thisispopulist.com/wp-content/uploads/2019/04/hotel-Exchange-750x422.jpg">
-            <img class="pic-2" src="http://theopinionator.com/wp-content/uploads/2017/12/Tempe-Guest-Room-Overall-750x422.jpg">
+            <img class="pic-2"
+              src="http://theopinionator.com/wp-content/uploads/2017/12/Tempe-Guest-Room-Overall-750x422.jpg">
           </a>
           <!-- <ul class="social">
                         <li><a href="" class="fa fa-search"></a></li>

@@ -59,3 +59,36 @@ body {
 	color: black;
 	border-color:black;
 }
+
+
+
+.rating-header {
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.rating-ability-wrapper {
+  width : 50%;
+}
+
+.btn-lg-da:hover {
+  color: rgb(255, 251, 0);
+  box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-lg-ne:hover {
+  color: rgb(255, 251, 0);
+  box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-lg-da {
+  color: rgb(255, 251, 0);
+}
+
+.btn-lg-ne {
+  color: rgb(0, 0, 0);
+}

@@ -10,16 +10,32 @@ import { Observable } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
-  user : UserDTO = new UserDTO();  
+  user: UserDTO = new UserDTO();
+  private lat: any;
+  private lon: any;
 
-  constructor(private http : HttpClient) { }
-  
-  ngOnInit() { 
-    this.http.get<UserDTO>('http://localhost:9007/users/'+localStorage.getItem('username')).subscribe((data) => {
+  constructor(private http: HttpClient) { }
+
+  ngOnInit() {
+    this.http.get<UserDTO>('http://localhost:9007/users/' + localStorage.getItem('username')).subscribe((data) => {
       console.log(data);
       this.user = data;
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lon = position.coords.longitude;
+        this.lat = position.coords.latitude;
+        console.log(this.lat);
+        console.log(this.lon);
+
+        let distance;
+        distance = Math.sqrt(Math.pow(this.lat - this.user.address.latitude, 2) - Math.pow(this.lon - this.user.address.longitude, 2));
+        console.log(distance);
+      });
+
     });
 
   }
+
+  
 
 }

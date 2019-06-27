@@ -134,6 +134,27 @@ public class ReservationController {
 		}
 	}
 	
+	@RequestMapping(value = "/comment/{idReservation}", method = RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteComment(@PathVariable("idReservation") Long id) {
+		
+		restTemplate.delete("http://localhost:9008/reservation/comment/"+id);
+
+		return new ResponseEntity<>(true,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/rateReservation", method = RequestMethod.POST)
+	public ResponseEntity<ReservationDTO> rateReservation(@RequestBody CommentDTO commentRateDTO) {
+
+		ReservationDTO res  = restTemplate.postForObject("http://localhost:9008/reservation/"
+				+ "rateReservation",commentRateDTO,ReservationDTO.class);
+
+		if (res!=null) {
+			return new ResponseEntity<>(res,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	
 	
 

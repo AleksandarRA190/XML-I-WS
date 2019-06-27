@@ -172,6 +172,14 @@ public class AccommodationController {
 	
 	
 	
+	@RequestMapping(value = "/getAvgRating/{accommodationId}", method = RequestMethod.GET)
+	public ResponseEntity<Double> getAvgRating(@PathVariable("accommodationId") Long id) {
+		Double avg = this.accommodationService.getAvgRating(id);
+		
+		return new ResponseEntity<>(avg,HttpStatus.OK);
+	}
+	
+	
 	
 	
 	

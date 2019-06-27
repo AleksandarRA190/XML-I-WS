@@ -28,4 +28,9 @@ export class AccommodationService {
     getAccommodationsWithFreeUnits(startDate: Date, endDate: Date, numberOfGuests: number) : Observable<AccommodationsDTO> {
         return this.http.get<AccommodationsDTO>(this.baseUrl+"/withFreeUnits", {responseType: 'json'});
     }
+    
+    getAvgRating(id: number) : Observable<number> {
+        return this.http.get<number>(this.baseUrl+"/getAvgRating/"+id);
+    }
+     
 }

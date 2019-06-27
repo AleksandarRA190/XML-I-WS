@@ -1,13 +1,14 @@
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
   <h3 *ngIf="reservations.length>0">Reservation History</h3>
   <h3 *ngIf="reservations.length==0">No reservations so far</h3>
-  <div class="row">   
+  <div class="row">
     <div class="col-6" *ngFor="let res of reservations">
       <div class="card mt-3 tab-card">
         <div class="card-header tab-card-header">
           <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link" id="one-tab"  data-toggle="tab" href="#One{{res.id}}" role="tab" aria-controls="One"
+              <a class="nav-link" id="one-tab" data-toggle="tab" href="#One{{res.id}}" role="tab" aria-controls="One"
                 aria-selected="true">Basic info</a>
             </li>
             <li class="nav-item">
@@ -17,8 +18,8 @@
           </ul>
         </div>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="One{{res.id}}" role="tabpanel"  aria-labelledby="one-tab">
+        <div class="tab-content" id="myTabContent" style="background-color: #fdfcf2;">
+          <div class="tab-pane fade show active" id="One{{res.id}}" role="tabpanel" aria-labelledby="one-tab">
             <h5 class="card-title">{{res.accommodationUnit.accommodation.name}}</h5>
             <p class="card-text">Start Date: {{mica(res.fromDateTime)}}</p>
             <p class="card-text">End Date: {{mica(res.toDateTime)}}</p>
@@ -27,20 +28,76 @@
             <p *ngIf="res.confirmed" class="card-text" style="background-color: #fed136; color:black">Confirmed</p>
             <p *ngIf="res.agentConfirmed" class="card-text" class="card-text"
               style="background-color: black; color: #fed136">Agent confirmed !</p>
-            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary" [routerLink]="['/postComment', res.id]" >Add comment</a>
-            <!--Za sada home, posle komponenta commenta!-->
+            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary"
+              [routerLink]="['/postComment', res.id]">Add comment</a>
+
+
+            <!--Za sada home, posle komponenta commenta! commentratedto znaci sadrzace i ocenu posle, sada ovako-->
+
+
+            <div *ngIf="res.agentConfirmed && res.confirmed && res.commentDTO" class="form-group"
+              id="rating-ability-wrapper-1">
+              <button type="button" *ngIf="res.commentDTO.rate >= 1" class="btnrating btn btn-default btn-lg-da"
+                data-attr="1" id="rating-star-11" (click)="updateRating(res.id , 1)"><i class="fa fa-star"></i></button>
+              <button type="button" *ngIf="!(res.commentDTO.rate >= 1)" class="btnrating btn btn-default btn-lg-ne"
+                data-attr="1" id="rating-star-11" (click)="updateRating(res.id , 1)"><i class="fa fa-star"></i></button>
+
+              <button type="button" *ngIf="res.commentDTO.rate >= 2" class="btnrating btn btn-default btn-lg-da"
+                data-attr="2" id="rating-star-12" (click)="updateRating(res.id , 2)"><i class="fa fa-star"></i></button>
+              <button type="button" *ngIf="!(res.commentDTO.rate >= 2)" class="btnrating btn btn-default btn-lg-ne"
+                data-attr="2" id="rating-star-12" (click)="updateRating(res.id , 2)"><i class="fa fa-star"></i></button>
+
+              <button type="button" *ngIf="res.commentDTO.rate >= 3" class="btnrating btn btn-default btn-lg-da"
+                data-attr="3" id="rating-star-13" (click)="updateRating(res.id , 3)"><i class="fa fa-star"></i></button>
+              <button type="button" *ngIf="!(res.commentDTO.rate >= 3)" class="btnrating btn btn-default btn-lg-ne"
+                data-attr="3" id="rating-star-13" (click)="updateRating(res.id , 3)"><i class="fa fa-star"></i></button>
+
+              <button type="button" *ngIf="res.commentDTO.rate >= 4" class="btnrating btn btn-default btn-lg-da"
+                data-attr="4" id="rating-star-14" (click)="updateRating(res.id , 4)"><i class="fa fa-star"></i></button>
+              <button type="button" *ngIf="!(res.commentDTO.rate >= 4)" class="btnrating btn btn-default btn-lg-ne"
+                data-attr="4" id="rating-star-14" (click)="updateRating(res.id , 4)"><i class="fa fa-star"></i></button>
+
+              <button type="button" *ngIf="res.commentDTO.rate >= 5" class="btnrating btn btn-default btn-lg-da"
+                data-attr="5" id="rating-star-15" (click)="updateRating(res.id , 5)"><i class="fa fa-star"></i></button>
+              <button type="button" *ngIf="!(res.commentDTO.rate >= 5)" class="btnrating btn btn-default btn-lg-ne"
+                data-attr="5" id="rating-star-15" (click)="updateRating(res.id , 5)"><i class="fa fa-star"></i></button>
+            </div>
+
+            <div *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="form-group"
+              id="rating-ability-wrapper-1">
+              <button type="button" class="btnrating btn btn-default btn-lg-ne" data-attr="1" id="rating-star-11"
+                (click)="updateRating(res.id , 1)"><i class="fa fa-star"></i></button>
+
+              <button type="button" class="btnrating btn btn-default btn-lg-ne" data-attr="2" id="rating-star-12"
+                (click)="updateRating(res.id , 2)"><i class="fa fa-star"></i></button>
+
+              <button type="button" class="btnrating btn btn-default btn-lg-ne" data-attr="3" id="rating-star-13"
+                (click)="updateRating(res.id , 3)"><i class="fa fa-star"></i></button>
+
+              <button type="button" class="btnrating btn btn-default btn-lg-ne" data-attr="4" id="rating-star-14"
+                (click)="updateRating(res.id , 4)"><i class="fa fa-star"></i></button>
+
+              <button type="button" class="btnrating btn btn-default btn-lg-ne" data-attr="5" id="rating-star-15"
+                (click)="updateRating(res.id , 5)"><i class="fa fa-star"></i></button>
+            </div>
+
+
+
             <div *ngIf="res.commentDTO">
               <h6>Comment</h6>
               <p style="font-style: italic;"> {{res.commentDTO.contentOfComment}} </p>
               <p *ngIf="res.commentDTO.approvedComment">>Posted</p>
               <p *ngIf="!res.commentDTO.approvedComment">Waiting to be approved by admin...</p>
-              <a class="btn btn-primary"  [routerLink]="['/postComment', res.id]" >Edit comment</a>
+              <a class="btn btn-primary" [routerLink]="['/postComment', res.id]">Edit comment</a> &nbsp;
+              <a class="btn btn-primary" (click)="deleteComment(res.id)">Delete comment</a>
+
             </div>
+
           </div>
           <div class="tab-pane fade" id="Two{{res.id}}" role="tabpanel" aria-labelledby="two-tab">
             <h5 class="card-title">Floor {{res.accommodationUnit.floor}}, number {{res.accommodationUnit.number}}</h5>
             <p class="card-text">Number of beds: {{res.accommodationUnit.numberOfBeds}}</p>
-            <a href="#" class="btn btn-primary"  routerLink="/home">Visit profile</a>
+            <a href="#" class="btn btn-primary" routerLink="/home">Visit profile</a>
             <!--Za sada home, posle profil smestaja-->
           </div>
 
@@ -49,4 +106,3 @@
     </div>
   </div>
 </div>
-
