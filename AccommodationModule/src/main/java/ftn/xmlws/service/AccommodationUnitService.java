@@ -1,13 +1,16 @@
 package ftn.xmlws.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import ftn.xmlws.dto.AccommodationUnitDTO;
-import ftn.xmlws.dto.AccommodationUnitTypeDTO;
+import ftn.xmlws.dto.ReservationDTO;
+import ftn.xmlws.dto.ReservationsDTO;
 import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.model.AccommodationUnitType;
@@ -24,6 +27,9 @@ public class AccommodationUnitService {
 	
 	@Autowired
 	private AccommodationService accommodationService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	public List<AccommodationUnitDTO> getAllAccommodationUnits() {
 		List<AccommodationUnit> list = accommodationUnitRepository.findAll(); 
@@ -93,5 +99,22 @@ public class AccommodationUnitService {
 			}
 		}
 		return ausDTO;
+	}
+	
+	public List<AccommodationUnitDTO> getFreeAccommodationUnits(LocalDate startDate, LocalDate endDate, Long aId) {
+		List<AccommodationUnitDTO> units = this.getAllUnitsOfAccommodation(aId);
+		List<AccommodationUnitDTO> freeUnits = new ArrayList<>();
+		for(AccommodationUnitDTO unit : units) {
+			boolean isReserved = false;
+			ReservationsDTO reservationsDTO = restTemplate.getForObject("http://localhost:9008/reservation/unit/" + unit.getId(), ReservationsDTO.class);
+			for(ReservationDTO reservationDTO : reservationsDTO.getReservations()) {
+				if(!(endDate.isBefore(reservationDTO.getFromDateTime().toLocalDate()) || startDate.isAfter(reservationDTO.getToDateTime().toLocalDate()))) {
+					isReserved = true;
+				}
+			}
+			if(!isReserved)
+				freeUnits.add(unit);
+		}
+		return freeUnits;
 	}
 }

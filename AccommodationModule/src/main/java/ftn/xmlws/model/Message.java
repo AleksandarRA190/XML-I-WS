@@ -8,6 +8,17 @@
 
 package ftn.xmlws.model;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,6 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import ftn.xmlws.dto.MessageDTO;
 
 
 /**
@@ -55,25 +68,62 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "reservation"
 })
 @XmlRootElement(name = "Message", namespace = "http://booking.uns.ac.rs/reservation")
+@Entity
 public class Message {
 
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlElement(name = "Id", namespace = "http://booking.uns.ac.rs/reservation")
+    protected Long id;
+    
     @XmlElement(name = "Message_content", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     protected String messageContent;
+    
     @XmlElement(name = "Seen", namespace = "http://booking.uns.ac.rs/reservation")
     protected boolean seen;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Sender", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     protected User sender;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Reciever", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     protected User reciever;
-    @XmlElement(name = "Id", namespace = "http://booking.uns.ac.rs/reservation")
-    protected long id;
+    
     @XmlElement(name = "Deleted", namespace = "http://booking.uns.ac.rs/reservation")
     protected boolean deleted;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Reservation", namespace = "http://booking.uns.ac.rs/reservation", required = true)
     protected Reservation reservation;
+    
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@XmlElement(name = "Accomodation", namespace = "http://booking.uns.ac.rs/accommodation", required = true)
+    protected Accommodation accommodation;
+    
+    @Transient
     @XmlAttribute(name = "Datum_vreme")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar datumVreme;
+    
+    @Column(name = "Date_time")
+	protected LocalDateTime dateTime;
+    
+    public Message() {
+    	
+    }
+    
+    public Message(MessageDTO m) {
+    	this.messageContent = m.getMessageContent();
+    	this.seen = m.isSeen();
+    	this.deleted = m.isDeleted();
+    	//this.sender = m.getSender();
+    	//resiver je uvek u ovom trenutku null
+    	//this.reservation = m.getReservation();
+    	//this.accommodation = m.getAccommodation();
+    	this.dateTime = LocalDateTime.now();
+    }
 
     /**
      * Gets the value of the messageContent property.
@@ -167,7 +217,7 @@ public class Message {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -175,7 +225,7 @@ public class Message {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -242,5 +292,21 @@ public class Message {
     public void setDatumVreme(XMLGregorianCalendar value) {
         this.datumVreme = value;
     }
+
+	public Accommodation getAccommodation() {
+		return accommodation;
+	}
+
+	public void setAccommodation(Accommodation accommodation) {
+		this.accommodation = accommodation;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
+	}
 
 }

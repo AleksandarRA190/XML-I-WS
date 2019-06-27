@@ -38,6 +38,22 @@
 		</xs:complexType>
 	</xs:element>
 	
+		<xs:element name="getAccommodationByUserRequest">
+		<xs:complexType>   
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getAccommodationByUserResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodation" type="tns:accommodation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
 	<xs:element name="addAccommodationRequest">
 		<xs:complexType>   
 			<xs:sequence>

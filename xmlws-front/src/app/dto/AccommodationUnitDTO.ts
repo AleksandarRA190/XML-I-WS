@@ -1,4 +1,5 @@
 import { AccommodationDTO } from './AccommodationDTO';
+import { AccommodationUnitTypeDTO } from './AccommodationUnitTypeDTO';
 
 export class AccommodationUnitDTO {
     id: number;
@@ -7,4 +8,5 @@ export class AccommodationUnitDTO {
     numberOfBeds : number;
     defaultPrice : number;
     accommodation : AccommodationDTO;
+    accommodationUnitType: AccommodationUnitTypeDTO;
 }

@@ -1,57 +1,113 @@
-<section id="team" class="pb-5">
-  <div class="container">
-    <h5 class="section-title h1">Available accomodations</h5>
-    <div class="row">
-      <!-- Team member -->
-      <div class="col-xs-12 col-sm-6 col-md-4">
-        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-          <div class="mainflip">
-            <div class="frontside">
-              <div class="card">
-                <div class="card-body text-center">
-                  <p><img class=" img-fluid"
-                      src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png" alt="card image">
-                  </p>
-                  <h4 class="card-title">Hotel Park</h4>
-                  <p class="card-text">This is basic hotel description.</p>
-                  <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                </div>
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="container-fluid">
+
+        <div class="filter-sidebar">
+          <div class="row card-body py-2 mb-3 bg-dark twhite">
+            <h4>
+              <i class="fa fa-hotel"></i> Search Options</h4>
+          </div>
+
+          <div class="form-group">
+              <label for="country1">Country</label>
+              <input type="text" class="form-control" [(ngModel)]="countrySearch" id="country1" name="country" placeholder="Enter country">
+          </div>
+
+          <div class="form-group">
+              <label for="country1">City</label>
+              <input type="text" class="form-control" [(ngModel)]="citySearch" id="city1" name="city" placeholder="Enter city">
+          </div>
+
+          <div class="form-group">
+            <label for="startDate1">Start date</label>
+            <input type="date" id="startDate1" max="3000-12-31" min="1000-01-01" class="form-control">
+          </div>
+
+          <div class="form-group">
+              <label for="endDate1">End date</label>
+              <input type="date" id="endDate1" max="3000-12-31" min="1000-01-01" class="form-control">
+          </div>
+
+          <div class="form-group">
+              <label for="numberOfGuests1">Number of guests</label><br>
+              <input type="number" name="numberOfGuests" min="1" id="numberOfGuests1">
+          </div>
+
+
+          <div class="form-group">
+              <label for="accommodationType1">Accommodation type: </label>
+              <div *ngFor="let accommodationType of accommodationTypes">
+                <input type="checkbox" name="accommodationType1" value="type">{{accommodationType}}<br>
               </div>
-            </div>
-            <div class="backside">
-              <div class="card">
-                <div class="card-body text-center mt-4">
-                  <h4 class="card-title">Accomodation Category</h4><hr>
-                  <p class="card-text">Address: accomodationAddress</p><hr>
-                  <p class="card-text">AccomodationType : type</p><hr>
-                  <ul class="list-inline">
-                    <li class="list-inline-item">
-                      <a class="social-icon text-xs-center" target="_blank" href="#">
-                        <i class="fa fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a class="social-icon text-xs-center" target="_blank" href="#">
-                        <i class="fa fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a class="social-icon text-xs-center" target="_blank" href="#">
-                        <i class="fa fa-skype"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item">
-                      <a class="social-icon text-xs-center" target="_blank" href="#">
-                        <i class="fa fa-google"></i>
-                      </a>
-                    </li>
-                  </ul>
+          </div>
+
+          <div class="form-group">
+              <label for="accommodationType1">Accommodation services: </label>
+              <div *ngFor="let service of services">
+                <input type="checkbox" name="accommodationType1" value="type">{{service.name}}<br>
+              </div>
+          </div>
+
+          <hr>
+          <button type="btn" class="btn btn-primary">Find Now</button>
+          &nbsp;
+          <button type="btn" class="btn btn-primary">Reset All</button>
+          <div class="pb-3"> </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-9">
+      <section id="team" class="pb-5">
+        <div class="container">
+          <h5 class="section-title h1">Available accommodations</h5>
+          <div class="row">
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let accommodation of accommodations | accommodationpipe: countrySearch:citySearch">
+
+              <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                <div class="mainflip">
+                  <div class="frontside">
+                    <div class="card">
+                      <div class="card-body text-center">
+                        <p>
+                          <img class=" img-fluid" src="http://www.travelindream.com/wp-content/uploads/2015/08/hotel-hilton-750x422.jpg" alt="card image">
+                        </p>
+                        <h4 class="card-title">{{accommodation.name}}</h4>
+                        <p class="card-text">{{accommodation.address.city}}, {{accommodation.address.country}}</p>
+                        <!-- <a href="#" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plus"></i>
+                      </a> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="backside">
+                    <div class="card">
+                      <div class="card-body text-center mt-4">
+                        <h4 class="card-title">Accommodation name: {{accommodation.name}}</h4>
+                        <hr>
+                        <p class="card-text">{{accommodation.category}} </p>
+                        <hr>
+                        <p class="card-text">{{accommodation.accommodationType}}</p>
+                        <hr>
+                        <div class="form-group">
+                          <a [routerLink]="['/accommodations', accommodation.id]" class="btn float-right" role="button">See more</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </div>
-</section>
+</div>
+
+

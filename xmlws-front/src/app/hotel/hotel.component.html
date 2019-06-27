@@ -1,0 +1,87 @@
+
+<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+  <div class="row panel">
+    <div class="col-md-4  col-xs-8">
+      <img src="https://moneyinc.com/wp-content/uploads/2018/07/Hyatt-Zilara-Rose-Hall-750x422.jpg" class="img-thumbnail picture hidden-xs"
+      />
+      <!-- <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="img-thumbnail visible-xs picture_mob" /> -->
+    </div>
+    <div class="col-md-8">
+      <div class="header">
+        <h1 *ngIf="accommodation">{{accommodation.name}}</h1>
+        <h4 *ngIf="accommodation">{{accommodation.accommodationType}}</h4>
+        <h5 *ngIf="accommodation">{{accommodation.address.street}} {{accommodation.address.number}}</h5>
+        <h5 *ngIf="accommodation">{{accommodation.address.city}} {{accommodation.address.country}}</h5>
+        <span *ngIf="accommodation">{{accommodation.description}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid padding" *ngIf="startDate == undefined">
+  <div class="row welcome text-centre">
+    <div class="col-12">
+      <h1 class="display-4">Accommodation rooms</h1>
+      <hr>
+      <div class="col-12">
+        <p class="lead">List of accommodation rooms </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-sm-6" *ngFor="let accommodationUnit of accommodationUnits">
+      <div class="product-grid8">
+        <div class="product-image8">
+          <a href="#">
+            <img class="pic-1" src="https://thisispopulist.com/wp-content/uploads/2019/04/hotel-Exchange-750x422.jpg">
+            <img class="pic-2" src="http://theopinionator.com/wp-content/uploads/2017/12/Tempe-Guest-Room-Overall-750x422.jpg">
+          </a>
+          <!-- <ul class="social">
+                        <li><a href="" class="fa fa-search"></a></li>
+                        <li><a href="" class="fa fa-shopping-bag"></a></li>
+                        <li><a href="" class="fa fa-shopping-cart"></a></li>
+                    </ul> -->
+          <span class="product-discount-label">Beds number: {{accommodationUnit.numberOfBeds}}</span>
+        </div>
+        <div class="product-content">
+          <div class="price">{{accommodationUnit.defaultPrice}}e
+            <!-- <span>£ 10.00</span> -->
+          </div>
+          <span class="product-shipping">{{accommodationUnit.accommodationUnitType.name}}</span>
+          <h3 class="title">
+            <a href="#">Floor: {{accommodationUnit.floor}} Room: {{accommodationUnit.number}}</a>
+          </h3>
+          <a class="all-deals" href="">Make a reservation</a>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid padding" *ngIf="startDate == undefined">
+  <div class="row welcome text-centre">
+    <div class="col-12">
+      <h1 class="display-4">Accommodation services</h1>
+      <hr>
+      <div class="col-12">
+        <p class="lead">List of accommodation services </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let service of services">
+      <div class="jumbotron jumbotron-service">
+        <h4 class="service-name">{{service.name}}</h4>
+        <p>{{service.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>

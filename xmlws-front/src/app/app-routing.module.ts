@@ -12,13 +12,15 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { PostCommentComponent } from './post-comment/post-comment.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { OneConversationComponent } from './conversation/one-conversation/one-conversation.component';
+import { HotelComponent } from './hotel/hotel.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'login',component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
-  {path: 'accomodations', component: HotelsComponent },
+  {path: 'accommodations', component: HotelsComponent },
+  {path: 'accommodations/:id', component: HotelComponent},
   {path: 'profile', component: UserProfileComponent },
   {path: 'edit', component:UserEditProfileComponent},
   {path: 'activate/:id', component:ConfirmationPageComponent},

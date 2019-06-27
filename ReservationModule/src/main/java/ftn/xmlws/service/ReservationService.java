@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
+import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.model.CommentRate;
 import ftn.xmlws.model.Reservation;
 import ftn.xmlws.repository.AccommodationUnitRepository;
@@ -27,6 +28,7 @@ public class ReservationService {
 	
 	@Autowired
 	private AccommodationUnitRepository accommodationUnitRepository;
+	
 	
 	
 	
@@ -55,6 +57,19 @@ public class ReservationService {
 			return null;		
 		}
 		
+	}
+	
+	public List<ReservationDTO> getReservationsByUnit(Long auId) {
+		AccommodationUnit au = accommodationUnitRepository.getOne(auId);
+		if(au == null)
+			return null;
+		List<Reservation> list = au.getReservations();
+		List<ReservationDTO> listDTO = new ArrayList<>();
+		for(Reservation r : list) {
+			if(!r.isDeleted())
+				listDTO.add(new ReservationDTO(r));
+		}
+		return listDTO;
 	}
 
 	public boolean makeReservation(ReservationDTO reservation) {

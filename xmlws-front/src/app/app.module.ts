@@ -17,6 +17,11 @@ import { PostCommentComponent } from './post-comment/post-comment.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { OneConversationComponent } from './conversation/one-conversation/one-conversation.component';
 import { CommunicationService } from './communication.service';
+import { AccommodationService } from './services/AccommodationService';
+import { HotelComponent } from './hotel/hotel.component';
+import { AccommodationUnitService } from './services/accommodation-unit.service';
+import { ServiceService } from './services/service.service';
+import { AccommodationpipePipe } from './pipes/accommodationpipe.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,9 @@ import { CommunicationService } from './communication.service';
     ChangePasswordComponent,
     PostCommentComponent,
     ConversationComponent,
-    OneConversationComponent
+    OneConversationComponent,
+    HotelComponent,
+    AccommodationpipePipe
   ],
   imports: [
     BrowserModule,
@@ -41,7 +48,10 @@ import { CommunicationService } from './communication.service';
     HttpClientModule
   ],
   providers: [
-    CommunicationService
+    CommunicationService,
+    AccommodationService,
+    AccommodationUnitService,
+    ServiceService
   ],
   bootstrap: [AppComponent]
 })

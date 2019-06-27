@@ -8,6 +8,7 @@
 
 package ftn.xmlws.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +52,7 @@ import javax.xml.bind.annotation.XmlType;
 public class AccommodationUnitType {
 
     @XmlElement(name = "Name", required = true)
+    @Column(unique = true)
     protected String name;
     
     @Id

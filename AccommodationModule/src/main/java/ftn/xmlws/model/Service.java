@@ -11,12 +11,11 @@ package ftn.xmlws.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -67,6 +66,7 @@ public class Service {
     
 	
 	@XmlElement(name = "Name", required = true)
+	@Column(unique = true)
     protected String name;
     @XmlElement(name = "Description", required = true)
     protected String description;

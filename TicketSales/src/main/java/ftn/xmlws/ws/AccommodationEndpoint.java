@@ -14,6 +14,8 @@ import com.projectxml.accommodation.Accommodation;
 import com.projectxml.accommodation.Accommodations;
 import com.projectxml.accommodation.AddAccommodationRequest;
 import com.projectxml.accommodation.AddAccommodationResponse;
+import com.projectxml.accommodation.GetAccommodationByUserRequest;
+import com.projectxml.accommodation.GetAccommodationByUserResponse;
 import com.projectxml.accommodation.GetAccommodationRequest;
 import com.projectxml.accommodation.GetAccommodationResponse;
 import com.projectxml.accommodation.GetAccommodationsRequest;
@@ -59,6 +61,19 @@ public class AccommodationEndpoint {
 		
 	  	return response;
 	 }
+	
+	
+	@PayloadRoot(namespace = "http://www.projectXml.com/accommodation", localPart = "getAccommodationByUserRequest")
+	@ResponsePayload
+	public GetAccommodationByUserResponse processGetAccommodationByUserRequest(@RequestPayload GetAccommodationByUserRequest request) {
+		GetAccommodationByUserResponse response = new GetAccommodationByUserResponse();
+	  
+		Accommodation a = restTemplate.getForObject("http://localhost:9009/accommodation/byUser/" + request.getUsername(), Accommodation.class);
+		response.setAccommodation(a);
+		
+	  	return response;
+	 }
+	
 	
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodation", localPart = "addAccommodationRequest")
 	@ResponsePayload
