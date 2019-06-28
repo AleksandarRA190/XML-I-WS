@@ -11,55 +11,48 @@
               <i class="fa fa-hotel"></i> Search Options</h4>
           </div>
 
-          <div class="form-group">
+          <form (ngSubmit)="search()">
+            <div class="form-group">
               <label for="country1">Country</label>
               <input type="text" class="form-control" [(ngModel)]="countrySearch" id="country1" name="country" placeholder="Enter country">
-          </div>
 
-          <div class="form-group">
               <label for="country1">City</label>
               <input type="text" class="form-control" [(ngModel)]="citySearch" id="city1" name="city" placeholder="Enter city">
-          </div>
 
-          <div class="form-group">
-            <label for="startDate1">Start date</label>
-            <input type="date" id="startDate1" max="3000-12-31" min="1000-01-01" class="form-control">
-          </div>
+              <label for="startDate1">Start date</label>
+              <input type="date" id="startDate1" [(ngModel)]="startDate" name="startDate" max="3000-12-31" min="1000-01-01" class="form-control">
 
-          <div class="form-group">
               <label for="endDate1">End date</label>
-              <input type="date" id="endDate1" max="3000-12-31" min="1000-01-01" class="form-control">
-          </div>
+              <input type="date" id="endDate1" [(ngModel)]="endDate" name="endDate" max="3000-12-31" min="1000-01-01" class="form-control">
 
-          <div class="form-group">
-              <label for="numberOfGuests1">Number of guests</label><br>
-              <input type="number" name="numberOfGuests" min="1" id="numberOfGuests1">
-          </div>
+              <label for="numberOfGuests1">Number of guests</label>
+              <br>
+              <input type="number" name="numberOfGuests" [(ngModel)]="numberOfGuests"  min="1" id="numberOfGuests1">
+              <hr>
 
-
-          <div class="form-group">
               <label for="accommodationType1">Accommodation type: </label>
-              <div *ngFor="let accommodationType of accommodationTypes">
-                <input type="checkbox" name="accommodationType1" value="type">{{accommodationType}}<br>
+              <div *ngFor="let accommodationTypeChecked of accommodationTypesChecked">
+                <input type="checkbox" [(ngModel)]="accommodationTypeChecked.checked" (change)="changeAccommodationType()" name="accommodationType" value="type">{{accommodationTypeChecked.accommodationType}}
+                <br>
               </div>
-          </div>
+              <hr>
 
-          <div class="form-group">
-              <label for="accommodationType1">Accommodation services: </label>
-              <div *ngFor="let service of services">
-                <input type="checkbox" name="accommodationType1" value="type">{{service.name}}<br>
+              <label for="accommodationService1">Accommodation services: </label>
+              <div *ngFor="let serviceChecked of servicesChecked">
+                <input type="checkbox" [(ngModel)]="serviceChecked.checked" (change)="change()" name="accommodationService" value="service">{{serviceChecked.service.name}}
+                <br>
               </div>
-          </div>
 
-          <hr>
-          <button type="btn" class="btn btn-primary">Find Now</button>
-          &nbsp;
-          <button type="btn" class="btn btn-primary">Reset All</button>
-          <div class="pb-3"> </div>
+              <hr>
+              <button type="btn" class="btn btn-primary">Find Now</button>
+              &nbsp;
+              <button type="btn" class="btn btn-primary">Reset All</button>
+              <div class="pb-3"> </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-
 
     <div class="col-md-9">
       <section id="team" class="pb-5">
@@ -109,5 +102,3 @@
     </div>
   </div>
 </div>
-
-

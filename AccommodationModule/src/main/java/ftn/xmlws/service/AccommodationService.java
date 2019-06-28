@@ -47,42 +47,38 @@ public class AccommodationService {
 
 	public AccommodationDTO getAccommodationByUser(String username) {
 		UserDTO userDTO = restTemplate.getForObject("http://localhost:9006/users/" + username, UserDTO.class);
+		System.out.println(userDTO.getUsername() + " -> " + userDTO.getAccommodation().getName());
 		if (userDTO.getRole().equals(Role.AGENT)) {
 			return userDTO.getAccommodation();
 		}
 		return null;
 	}
 
-	// kako uraditi ako je neko polje za pretragu nepopunjeno?
 	public List<AccommodationDTO> getAccommodationWithFreeUnits(AccommodationSearchDTO asDTO) {
 		List<AccommodationDTO> accommodationsDTO = this.getAllAccommodations();
 		List<AccommodationDTO> freeAccommodations = new ArrayList<>();
-		for (AccommodationDTO aDTO : accommodationsDTO) {
-			List<AccommodationUnitDTO> unitsDTO = accommodationUnitService
-					.getFreeAccommodationUnits(asDTO.getStartDate(), asDTO.getEndDate(), aDTO.getId());
+		for(AccommodationDTO aDTO : accommodationsDTO) {
+			List<AccommodationUnitDTO> unitsDTO = accommodationUnitService.getFreeAccommodationUnits(asDTO.getStartDate(), asDTO.getEndDate(), aDTO.getId());
 			Accommodation a = accommodationRepository.getOne(aDTO.getId());
-			if (!unitsDTO.isEmpty()) {
+			if(!unitsDTO.isEmpty()) {
 				int numberOfBeds = 0;
-				for (AccommodationUnitDTO unitDTO : unitsDTO) {
+				for(AccommodationUnitDTO unitDTO: unitsDTO) {
 					numberOfBeds += unitDTO.getNumberOfBeds();
 				}
-				if (numberOfBeds > asDTO.getNumberOfGuests()) {
-					if (asDTO.getCategories().contains(aDTO.getCategory()) || asDTO.getCategories().isEmpty()) {
-						if (asDTO.getAccommodationTypes().contains(aDTO.getAccommodationType())
-								|| asDTO.getAccommodationTypes().isEmpty()) {
-							int numberOfServices = 0;
-							for (ServiceDTO sDTO : asDTO.getServices()) {
-								for (ftn.xmlws.model.Service s : a.getServices()) {
-									if (sDTO.getName().equals(s.getName())) {
-										numberOfServices++;
-									}
+				if(numberOfBeds > asDTO.getNumberOfGuests()) {
+					if(asDTO.getAccommodationTypes().contains(aDTO.getAccommodationType()) || asDTO.getAccommodationTypes().isEmpty()) {
+						int numberOfServices = 0;
+						for(ServiceDTO sDTO : asDTO.getServices()) {
+							for(ftn.xmlws.model.Service s : a.getServices()) {
+								if(sDTO.getName().equals(s.getName())) {
+									numberOfServices ++;
 								}
 							}
-							if (numberOfServices >= asDTO.getServices().size())
-								freeAccommodations.add(aDTO);
 						}
+						if(numberOfServices >= asDTO.getServices().size()) 
+							freeAccommodations.add(aDTO);
 					}
-				}
+				}					
 			}
 		}
 		return freeAccommodations;

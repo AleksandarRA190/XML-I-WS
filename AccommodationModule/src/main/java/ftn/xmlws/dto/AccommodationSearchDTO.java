@@ -12,12 +12,10 @@ public class AccommodationSearchDTO {
 	private LocalDate endDate;
 	private int numberOfGuests;
 	private List<AccommodationType> accommodationTypes;
-	private List<String> categories;
 	private List<ServiceDTO> services;
 	
 	public AccommodationSearchDTO() {
 		this.accommodationTypes = new ArrayList<>();
-		this.categories = new ArrayList<>();
 		this.services = new ArrayList<>();
 	}
 
@@ -43,14 +41,6 @@ public class AccommodationSearchDTO {
 
 	public void setAccommodationTypes(List<AccommodationType> accommodationTypes) {
 		this.accommodationTypes = accommodationTypes;
-	}
-
-	public List<String> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
 	}
 
 	public List<ServiceDTO> getServices() {

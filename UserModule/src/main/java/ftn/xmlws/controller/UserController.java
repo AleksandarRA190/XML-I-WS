@@ -46,10 +46,11 @@ public class UserController {
 	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username) {
 		
 		UserDTO user = userService.getUserByUsername(username);
-		
+		System.out.println("USAO U USER CONTROLLER *****");
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
+			System.out.println("POKUPIO USERA U USER CONTROLLERU ->" + user.getUsername());
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 		

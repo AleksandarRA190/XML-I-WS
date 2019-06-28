@@ -2,19 +2,23 @@ package ftn.xmlws.dto;
 
 import ftn.xmlws.enums.AccommodationType;
 import ftn.xmlws.model.Accommodation;
+import ftn.xmlws.model.Address;
 
 public class AccommodationDTO {
 	
-	private Long id;
-	private String name;
+	
+	
 	private String description;
+	private String name;
 	private String category;
+	private Address address;
 	private AccommodationType accommodationType;
+	private Long id;
 	
 	public AccommodationDTO() {
 		
 	}
-
+	
 	public AccommodationDTO(Long id, String name, String description, String category,
 			AccommodationType accommodationType) {
 		super();
@@ -26,28 +30,12 @@ public class AccommodationDTO {
 	}
 	
 	public AccommodationDTO(Accommodation a) {
-		super();
-		this.id = a.getId();
-		this.name = a.getName();
-		this.description = a.getDescription();
-		this.category = a.getCategory();
-		this.accommodationType = a.getAccommodationType();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		description = a.getDescription();
+		name = a.getName();
+		category = a.getCategory();
+		address = a.getAddress();
+		accommodationType = a.getAccommodationType();
+		id = a.getId();
 	}
 
 	public String getDescription() {
@@ -58,12 +46,28 @@ public class AccommodationDTO {
 		this.description = description;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public AccommodationType getAccommodationType() {
@@ -73,7 +77,12 @@ public class AccommodationDTO {
 	public void setAccommodationType(AccommodationType accommodationType) {
 		this.accommodationType = accommodationType;
 	}
-	
-	
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

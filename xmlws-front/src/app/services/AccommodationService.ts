@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AccommodationsDTO } from '../dto/AccommodationsDTO';
 import { AccommodationDTO } from '../dto/AccommodationDTO';
 import { AccommodationTypesDTO } from '../dto/AccommodationTypesDTO';
+import { AccommodationSearchDTO } from '../dto/AccommodationSearchDTO';
 
 @Injectable()
 export class AccommodationService {
@@ -25,8 +26,8 @@ export class AccommodationService {
         return this.http.get<AccommodationTypesDTO>(this.baseUrl+"/accommodationTypes", {responseType : 'json'} )
     }
 
-    getAccommodationsWithFreeUnits(startDate: Date, endDate: Date, numberOfGuests: number) : Observable<AccommodationsDTO> {
-        return this.http.get<AccommodationsDTO>(this.baseUrl+"/withFreeUnits", {responseType: 'json'});
+    getAccommodationsWithFreeUnits(accommodationToSearch: AccommodationSearchDTO) : Observable<AccommodationsDTO> {
+        return this.http.post<AccommodationsDTO>(this.baseUrl+"/withFreeUnits", accommodationToSearch);
     }
     
     getAvgRating(id: number) : Observable<number> {
