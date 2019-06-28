@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.projectxml.periodprice.Address;
-
 import ftn.xmlws.dto.AccommodationDTO;
 
 
