@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="isSearched == false">
   <div class="row">
     <div class="col-md-4 col-sm-6" *ngFor="let accommodationUnit of accommodationUnits">
       <div class="product-grid8">
@@ -62,20 +62,39 @@
             <img class="pic-2"
               src="http://theopinionator.com/wp-content/uploads/2017/12/Tempe-Guest-Room-Overall-750x422.jpg">
           </a>
-          <!-- <ul class="social">
-                        <li><a href="" class="fa fa-search"></a></li>
-                        <li><a href="" class="fa fa-shopping-bag"></a></li>
-                        <li><a href="" class="fa fa-shopping-cart"></a></li>
-                    </ul> -->
           <span class="product-discount-label">Beds number: {{accommodationUnit.numberOfBeds}}</span>
         </div>
         <div class="product-content">
-          <div class="price">{{accommodationUnit.defaultPrice}}e
-            <!-- <span>£ 10.00</span> -->
-          </div>
+          <div class="price">{{accommodationUnit.defaultPrice}}e</div>
           <span class="product-shipping">{{accommodationUnit.accommodationUnitType.name}}</span>
           <h3 class="title">
             <a href="#">Floor: {{accommodationUnit.floor}} Room: {{accommodationUnit.number}}</a>
+          </h3>
+          <!-- <a class="all-deals" *ngIf="isSearched" href="">Make a reservation</a> -->
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="isSearched">
+  <div class="row">
+    <div class="col-md-4 col-sm-6" *ngFor="let accommodationUnitPeriodPrice of accommodationUnitsPeriodPrices">
+      <div class="product-grid8">
+        <div class="product-image8">
+          <a href="#">
+            <img class="pic-1" src="https://thisispopulist.com/wp-content/uploads/2019/04/hotel-Exchange-750x422.jpg">
+            <img class="pic-2"
+              src="http://theopinionator.com/wp-content/uploads/2017/12/Tempe-Guest-Room-Overall-750x422.jpg">
+          </a>
+          <span class="product-discount-label">Beds number: {{accommodationUnitPeriodPrice.accommodationUnit.numberOfBeds}}</span>
+        </div>
+        <div class="product-content">
+          <div class="price">{{accommodationUnitPeriodPrice.price}}e</div>
+          <span class="product-shipping">{{accommodationUnitPeriodPrice.accommodationUnit.accommodationUnitType.name}}</span>
+          <h3 class="title">
+            <a href="#">Floor: {{accommodationUnitPeriodPrice.accommodationUnit.floor}} Room: {{accommodationUnitPeriodPrice.accommodationUnit.number}}</a>
           </h3>
           <a class="all-deals" href="">Make a reservation</a>
         </div>

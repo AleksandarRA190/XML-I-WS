@@ -79,10 +79,14 @@ public class PeriodPriceService {
 		if(au == null) 
 			return null;
 		List<PeriodPrice> prices = au.getPeriodPrices();
-		for(PeriodPrice pp: prices) {
-			if(pp.getFromDate().getMonthValue() == ppdDTO.getFromDate().getMonthValue()) {
-				return pp.getPrice();				
-			} 
+		if(prices == null) {
+			return au.getDefaultPrice();
+		} else {
+			for(PeriodPrice pp: prices) {
+				if(pp.getFromDate().getMonthValue() == ppdDTO.getFromDate().getMonthValue()) {
+					return pp.getPrice();				
+				} 
+			}			
 		}
 		return au.getDefaultPrice();
 	}

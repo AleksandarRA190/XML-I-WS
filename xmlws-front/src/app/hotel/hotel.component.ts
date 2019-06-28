@@ -11,6 +11,10 @@ import { AccommodationUnitService } from '../services/accommodation-unit.service
 import { ServiceService } from '../services/service.service';
 import { ServicesDTO } from 'app/dto/ServicesDTO';
 import { ServiceDTO } from 'app/dto/ServiceDTO';
+import { AccommodationUnitSearchDTO } from '../dto/AccommodationUnitSearchDTO';
+import { AccommodationSearchDTO } from '../dto/AccommodationSearchDTO';
+import { AccommodationUnitPeriodPrice } from '../dto/AccommodationUnitPeriodPriceDTO';
+import { PeriodPriceDates } from './PeriodPriceDates';
 
 @Component({
   selector: 'app-hotel',
@@ -25,6 +29,11 @@ export class HotelComponent implements OnInit {
   accommodationUnits: AccommodationUnitDTO[] = [];
   services: ServiceDTO[] = [];
   avgRating : number;
+  accommodationUnitsPeriodPrices: AccommodationUnitPeriodPrice[] = [];
+  startDate: Date;
+  endDate: Date;
+  
+  isSearched: boolean = false;
 
 
   constructor( 
@@ -42,24 +51,66 @@ export class HotelComponent implements OnInit {
         this.avgRating = data;
         console.log(data);
       });
-    })
+    });
 
     this.getAccommodation(this.id).subscribe(data => {
       this.accommodation = data;
     });
 
-    this.getAccommodationUnits(this.id).subscribe(data => {
+    this.startDate = JSON.parse(localStorage.getItem('startDate'));
+    this.endDate = JSON.parse(localStorage.getItem('endDate'));
+
+    if(localStorage.length > 0) {
+      this.isSearched = true;
+    }
+    
+    
+    if(this.startDate !== undefined && this.endDate !== undefined) {
+      let accommodationUnitSearch = new AccommodationUnitSearchDTO();
+      accommodationUnitSearch.startDate = this.startDate;
+      accommodationUnitSearch.endDate = this.endDate;
+      
+      this.getFreeAccommodationUnits(this.id, accommodationUnitSearch).subscribe(data => {
         this.accommodationUnits = data.accommodationUnits;
-    });
+        
+        //this.accommodationUnitsPeriodPrices.length = this.accommodationUnits.length;
+        console.log("duzina aupp:" + this.accommodationUnitsPeriodPrices.length);
+        for(let i=0; i<this.accommodationUnits.length; i++) {
+          let periodPriceDates = new PeriodPriceDates();
+          let acupp = new AccommodationUnitPeriodPrice();
+          periodPriceDates.startDate = this.startDate;
+          periodPriceDates.endDate = this.endDate;
+          // this.accommodationUnitsPeriodPrices[i].accommodationUnit = this.accommodationUnits[i];
+          acupp._accommodationUnit = this.accommodationUnits[i];
+          // console.log(this.accommodationUnitsPeriodPrices[i].accommodationUnit + " !!!!");
+          this.getPeriodPriceForMonth(this.accommodationUnits[i].id, periodPriceDates)
+          .subscribe(data => {
+            // this.accommodationUnitsPeriodPrices[i].price = data;
+            acupp.price = data;
+          });
+          this.accommodationUnitsPeriodPrices.push(acupp);
+          console.log("soba: " + this.accommodationUnitsPeriodPrices[i].accommodationUnit.number + 
+          "cena: " + this.accommodationUnitsPeriodPrices[i].price);
+  
+        }
+      });
+
+    } else {
+      this.getAccommodationUnits(this.id).subscribe(data => {
+          this.accommodationUnits = data.accommodationUnits;
+      });
+    }
 
     this.getServicesOfAccommodation(this.id).subscribe(data => {
       this.services = data.services;
     },err => {});
 
+
     
-
-
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
   }
+
 
   public getAccommodationUnits(id: number | string) : Observable<AccommodationUnitsDTO> {
     return this.accommodationUnitService.getAccommodationUnits(id);
@@ -76,4 +127,15 @@ export class HotelComponent implements OnInit {
   public getServicesOfAccommodation(id: number | string) : Observable<ServicesDTO> {
     return this.serviceService.getServicesOfAccommodation(id);
   }
+
+  public getFreeAccommodationUnits(id: number, accommodationUnitSearch: AccommodationUnitSearchDTO) : Observable<AccommodationUnitsDTO> {
+    return this.accommodationUnitService.getFreeAccommodationUnits(id,accommodationUnitSearch);
+  }
+
+  public getPeriodPriceForMonth(accommodationUnitId: number, periodPriceDates: PeriodPriceDates) : Observable<number> {
+    return this.accommodationUnitService.getPeriodPriceForMonth(accommodationUnitId, periodPriceDates);
+  }
+
+
+  
 }

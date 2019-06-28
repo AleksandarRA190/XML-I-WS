@@ -17,6 +17,7 @@ import ftn.xmlws.dto.AccommodationDTO;
 import ftn.xmlws.dto.AccommodationSearchDTO;
 import ftn.xmlws.dto.AccommodationTypesDTO;
 import ftn.xmlws.dto.AccommodationUnitDTO;
+import ftn.xmlws.dto.AccommodationUnitSearchDTO;
 import ftn.xmlws.dto.AccommodationUnitsDTO;
 import ftn.xmlws.dto.AccommodationsDTO;
 import ftn.xmlws.dto.ServiceDTO;
@@ -127,10 +128,10 @@ public class AccommodationController {
 		return new ResponseEntity<>(unitsDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{id}/freeUnits", method = RequestMethod.GET)
-	public ResponseEntity<AccommodationUnitsDTO> getFreeAccommodationUnits(@PathVariable("id") Long accommodationId, LocalDate startDate, LocalDate endDate) {
+	@RequestMapping(value="/{id}/freeUnits", method = RequestMethod.POST)
+	public ResponseEntity<AccommodationUnitsDTO> getFreeAccommodationUnits(@PathVariable("id") Long accommodationId, AccommodationUnitSearchDTO ausDTO) {
 		AccommodationUnitsDTO unitsDTO = new AccommodationUnitsDTO();
-		unitsDTO.setAccommodationUnits(accommodationUnitService.getFreeAccommodationUnits(startDate, endDate, accommodationId));
+		unitsDTO.setAccommodationUnits(accommodationUnitService.getFreeAccommodationUnits(ausDTO.getStartDate(), ausDTO.getEndDate(), accommodationId));
 		if(unitsDTO.getAccommodationUnits().isEmpty())
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(unitsDTO, HttpStatus.OK);

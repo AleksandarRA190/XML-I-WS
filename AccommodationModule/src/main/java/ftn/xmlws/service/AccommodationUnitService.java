@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import ftn.xmlws.dto.AccommodationUnitDTO;
@@ -106,14 +107,19 @@ public class AccommodationUnitService {
 		List<AccommodationUnitDTO> freeUnits = new ArrayList<>();
 		for(AccommodationUnitDTO unit : units) {
 			boolean isReserved = false;
-			ReservationsDTO reservationsDTO = restTemplate.getForObject("http://localhost:9008/reservation/unit/" + unit.getId(), ReservationsDTO.class);
-			for(ReservationDTO reservationDTO : reservationsDTO.getReservations()) {
-				if(!(endDate.isBefore(reservationDTO.getFromDateTime().toLocalDate()) || startDate.isAfter(reservationDTO.getToDateTime().toLocalDate()))) {
-					isReserved = true;
+			ReservationsDTO reservationsDTO = null;
+			try {
+				reservationsDTO = restTemplate.getForObject("http://localhost:9008/reservation/unit/" + unit.getId(), ReservationsDTO.class);
+				for(ReservationDTO reservationDTO : reservationsDTO.getReservations()) {
+					if(!(endDate.isBefore(reservationDTO.getFromDateTime().toLocalDate()) || startDate.isAfter(reservationDTO.getToDateTime().toLocalDate()))) {
+						isReserved = true;
+					}
 				}
-			}
-			if(!isReserved)
+				if(!isReserved)
+					freeUnits.add(unit);				
+			} catch(HttpClientErrorException e) {
 				freeUnits.add(unit);
+			}
 		}
 		return freeUnits;
 	}

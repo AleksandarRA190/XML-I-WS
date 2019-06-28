@@ -27,8 +27,6 @@ export class HotelsComponent implements OnInit {
   accommodationTypes: string[] = [];
   servicesChecked: ServiceCheckTable[] = [];
   accommodationTypesChecked: AccommodationTypeCheckTable[] = [];
-  countrySearch: string;
-  citySearch: string;
   
   // **** fields for search ****
   startDate: Date;
@@ -36,6 +34,8 @@ export class HotelsComponent implements OnInit {
   numberOfGuests: number;
   servicesToSearch: ServiceDTO[] = [];
   accommodationTypesToSearch: string[] = [];
+  countrySearch: string;
+  citySearch: string;
 
   constructor(
     private http: HttpClient,
@@ -44,7 +44,7 @@ export class HotelsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-
+    localStorage.removeItem('numberOfGuests');
     this.getAccommodations().subscribe(data =>{
         this.accommodations = data.accommodations;
     });
@@ -68,7 +68,6 @@ export class HotelsComponent implements OnInit {
       }
     });
 
-
   }
 
   public search() {
@@ -83,11 +82,37 @@ export class HotelsComponent implements OnInit {
       accommodationSearch.numberOfGuests = this.numberOfGuests;
       accommodationSearch.services = this.servicesToSearch;
       accommodationSearch.accommodationTypes = this.accommodationTypesToSearch;
-
+      
+      localStorage.setItem('startDate', JSON.stringify(this.startDate));
+      localStorage.setItem('endDate', JSON.stringify(this.endDate));
+      
       this.searchAccommodations(accommodationSearch).subscribe(data => {
         this.accommodations = data.accommodations;
       });
     }
+  }
+
+  public reset() {
+    console.log("usao u reset");
+
+    this.startDate = undefined;
+    this.endDate = undefined;
+    this.numberOfGuests = undefined;
+    this.servicesToSearch = [];
+    this.accommodationTypesToSearch = [];
+    this.countrySearch = undefined;
+    this.citySearch = undefined;
+
+    for(let i=0; i<this.servicesChecked.length; i++) {
+      this.servicesChecked[i].checked = false;
+    }
+    for(let i=0; i<this.accommodationTypesChecked.length; i++) {
+      this.accommodationTypesChecked[i].checked = false;
+    }
+
+    this.getAccommodations().subscribe(data => {
+      this.accommodations = data.accommodations;
+    });
   }
 
   public change() {
