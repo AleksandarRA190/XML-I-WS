@@ -57,45 +57,38 @@
 				<version>0.13.3</version>
 				<executions>
 					<execution>
+						<id>schema1-generate</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<schemaLanguage>WSDL</schemaLanguage>
+							<generatePackage>ftn.xmlws.AdminModule</generatePackage>
+							<schemas>
+								<schema>
+									<url>http://localhost:9007/ws/mojusers.wsdl</url>
+								</schema>
+							</schemas>
+						</configuration>
 					</execution>
-				</executions>
-				<configuration>
-					<schemaLanguage>WSDL</schemaLanguage>
-					<generatePackage>ftn.xmlws.AdminModule</generatePackage>
-					<schemas>
-						<schema>
-							<url>http://localhost:9007/ws/mojusers.wsdl</url>
-						</schema>
-					</schemas>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.13.3</version>
-				<executions>
 					<execution>
+						<id>schema2-generate</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<schemaLanguage>WSDL</schemaLanguage>
+							<generatePackage>ftn.xmlws.AdminModule.reservations</generatePackage>
+							<schemas>
+								<schema>
+									<url>http://localhost:9007/ws/reservations.wsdl</url>
+								</schema>
+							</schemas>
+						</configuration>
 					</execution>
-				</executions>
-				<configuration>
-					<schemaLanguage>WSDL</schemaLanguage>
-					<generatePackage>ftn.xmlws.AdminModule.reservations</generatePackage>
-					<schemas>
-						<schema>
-							<url>http://localhost:9007/ws/reservations.wsdl</url>
-						</schema>
-					</schemas>
-				</configuration>
-			</plugin>
 
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
