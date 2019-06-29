@@ -5,7 +5,7 @@ import { AccommodationsDTO } from '../dto/AccommodationsDTO';
 import { AccommodationUnitsDTO } from '../dto/AccommodationUnitsDTO';
 import { AccommodationUnitDTO } from '../dto/AccommodationUnitDTO';
 import { AccommodationUnitSearchDTO } from '../dto/AccommodationUnitSearchDTO';
-import { PeriodPriceDates } from '../hotel/PeriodPriceDates';
+import { PeriodPriceDatesDTO } from '../dto/PeriodPriceDatesDTO';
 
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AccommodationUnitService {
     return this.http.post<AccommodationUnitsDTO>(this.baseUrl + "/" + accommodationId + "/freeUnits", accommodationUnitSearch);
   }
 
-  getPeriodPriceForMonth(accommodationUnitId: number, periodPriceDates: PeriodPriceDates) : Observable<number> {
+  getPeriodPriceForMonth(accommodationUnitId: number, periodPriceDates: PeriodPriceDatesDTO) : Observable<number> {
     return this.http.post<number>(this.baseUrl + "/units/" + accommodationUnitId + "/priceForPeriod", periodPriceDates);
   }
   

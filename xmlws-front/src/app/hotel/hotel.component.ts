@@ -14,7 +14,7 @@ import { ServiceDTO } from 'app/dto/ServiceDTO';
 import { AccommodationUnitSearchDTO } from '../dto/AccommodationUnitSearchDTO';
 import { AccommodationSearchDTO } from '../dto/AccommodationSearchDTO';
 import { AccommodationUnitPeriodPrice } from '../dto/AccommodationUnitPeriodPriceDTO';
-import { PeriodPriceDates } from './PeriodPriceDates';
+import { PeriodPriceDatesDTO } from '../dto/PeriodPriceDatesDTO';
 
 @Component({
   selector: 'app-hotel',
@@ -49,7 +49,7 @@ export class HotelComponent implements OnInit {
       this.id = + params['id'];
       this.getAvgRating(this.id).subscribe(data => {
         this.avgRating = data;
-        console.log(data);
+        // console.log(data);
       });
     });
 
@@ -59,13 +59,11 @@ export class HotelComponent implements OnInit {
 
     this.startDate = JSON.parse(localStorage.getItem('startDate'));
     this.endDate = JSON.parse(localStorage.getItem('endDate'));
-
+    
+    // if(this.startDate !== undefined && this.endDate !== undefined) {
     if(localStorage.length > 0) {
       this.isSearched = true;
-    }
-    
-    
-    if(this.startDate !== undefined && this.endDate !== undefined) {
+
       let accommodationUnitSearch = new AccommodationUnitSearchDTO();
       accommodationUnitSearch.startDate = this.startDate;
       accommodationUnitSearch.endDate = this.endDate;
@@ -73,24 +71,20 @@ export class HotelComponent implements OnInit {
       this.getFreeAccommodationUnits(this.id, accommodationUnitSearch).subscribe(data => {
         this.accommodationUnits = data.accommodationUnits;
         
-        //this.accommodationUnitsPeriodPrices.length = this.accommodationUnits.length;
-        console.log("duzina aupp:" + this.accommodationUnitsPeriodPrices.length);
         for(let i=0; i<this.accommodationUnits.length; i++) {
-          let periodPriceDates = new PeriodPriceDates();
+          let periodPriceDates = new PeriodPriceDatesDTO();
           let acupp = new AccommodationUnitPeriodPrice();
-          periodPriceDates.startDate = this.startDate;
-          periodPriceDates.endDate = this.endDate;
-          // this.accommodationUnitsPeriodPrices[i].accommodationUnit = this.accommodationUnits[i];
+          
+          periodPriceDates.fromDate = this.startDate;
+          periodPriceDates.toDate = this.endDate;
           acupp._accommodationUnit = this.accommodationUnits[i];
-          // console.log(this.accommodationUnitsPeriodPrices[i].accommodationUnit + " !!!!");
+          
           this.getPeriodPriceForMonth(this.accommodationUnits[i].id, periodPriceDates)
           .subscribe(data => {
-            // this.accommodationUnitsPeriodPrices[i].price = data;
             acupp.price = data;
           });
           this.accommodationUnitsPeriodPrices.push(acupp);
-          console.log("soba: " + this.accommodationUnitsPeriodPrices[i].accommodationUnit.number + 
-          "cena: " + this.accommodationUnitsPeriodPrices[i].price);
+          
   
         }
       });
@@ -132,7 +126,7 @@ export class HotelComponent implements OnInit {
     return this.accommodationUnitService.getFreeAccommodationUnits(id,accommodationUnitSearch);
   }
 
-  public getPeriodPriceForMonth(accommodationUnitId: number, periodPriceDates: PeriodPriceDates) : Observable<number> {
+  public getPeriodPriceForMonth(accommodationUnitId: number, periodPriceDates: PeriodPriceDatesDTO) : Observable<number> {
     return this.accommodationUnitService.getPeriodPriceForMonth(accommodationUnitId, periodPriceDates);
   }
 
