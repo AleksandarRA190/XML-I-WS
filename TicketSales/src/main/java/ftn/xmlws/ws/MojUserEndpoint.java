@@ -14,6 +14,8 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.projectxml.mojuser.ActivateRequest;
 import com.projectxml.mojuser.ActivateResponse;
+import com.projectxml.mojuser.AddAccommodationToUserRequest;
+import com.projectxml.mojuser.AddAccommodationToUserResponse;
 import com.projectxml.mojuser.AddUserRequest;
 import com.projectxml.mojuser.AddUserResponse;
 import com.projectxml.mojuser.BlockRequest;
@@ -56,6 +58,16 @@ public class MojUserEndpoint {
 			response.getUser().add(kor);
 		}
 
+		return response;
+	}
+	
+	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "addAccommodationToUserRequest")
+	@ResponsePayload
+	public AddAccommodationToUserResponse processAddAccommodationToUserRequest(@RequestPayload AddAccommodationToUserRequest request) {
+		AddAccommodationToUserResponse response = new AddAccommodationToUserResponse();
+		
+		User user = restTemplate.getForObject("http://localhost:9006/users/" + request.getUserId() + "/addAccommodation/" + request.getAccommodationId(), User.class);
+		response.setUser(user);
 		return response;
 	}
 

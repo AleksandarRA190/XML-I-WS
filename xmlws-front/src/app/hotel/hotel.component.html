@@ -96,7 +96,7 @@
           <h3 class="title">
             <a href="#">Floor: {{accommodationUnitPeriodPrice.accommodationUnit.floor}} Room: {{accommodationUnitPeriodPrice.accommodationUnit.number}}</a>
           </h3>
-          <a class="all-deals"  (click)="makeReservation(accommodationUnitPeriodPrice.accommodationUnit)">Make a reservation</a>
+          <a class="all-deals" *ngIf="isLoggedIn"  (click)="makeReservation(accommodationUnitPeriodPrice.accommodationUnit)">Make a reservation</a>
         </div>
       </div>
       <hr>
@@ -104,7 +104,7 @@
   </div>
 </div>
 
-<div class="container-fluid padding" *ngIf="startDate == undefined">
+<div class="container-fluid padding">
   <div class="row welcome text-centre">
     <div class="col-12">
       <h1 class="display-4">Accommodation services</h1>

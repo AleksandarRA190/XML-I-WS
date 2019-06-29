@@ -202,9 +202,12 @@ public class UserController {
 		
 	}
 	
+	@RequestMapping(value="/{uId}/addAccommodation/{aId}", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> addAccommodationToAgent(@PathVariable("uId") Long userId, @PathVariable("aId") Long accommodationId) {
+		User user = userService.addAccommodationToAgent(userId, accommodationId);
+		if(user == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+	}
 	
-	
-
-
-
 }

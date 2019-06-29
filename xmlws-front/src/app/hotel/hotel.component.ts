@@ -39,6 +39,7 @@ export class HotelComponent implements OnInit {
   userCommentPairs: UserCommentPair[] = [];
   accommodationComments : AccommodationCommentsDTO = new AccommodationCommentsDTO();
   isSearched: boolean = false;
+  isLoggedIn: boolean = false;
 
   showFile = false
   fileUploads: Observable<string[]>
@@ -57,7 +58,6 @@ export class HotelComponent implements OnInit {
       this.id = + params['id'];
       this.getAvgRating(this.id).subscribe(data => {
         this.avgRating = data;
-        console.log(data);
         this.getAllComments(this.id).subscribe(data => {
           this.accommodationComments= data;
           let i = 0;
@@ -70,7 +70,7 @@ export class HotelComponent implements OnInit {
           }
           
           
-          console.log(this.userCommentPairs);
+          // console.log(this.userCommentPairs);
         });
       });
     });
@@ -79,17 +79,24 @@ export class HotelComponent implements OnInit {
       this.accommodation = data;
     });
 
+    console.log(localStorage);
+
     this.startDate = JSON.parse(localStorage.getItem('startDate'));
     this.endDate = JSON.parse(localStorage.getItem('endDate'));
 
     localStorage.setItem('startReservation', JSON.stringify(this.startDate));
     localStorage.setItem('endReservation', JSON.stringify(this.endDate));
-    console.log('aaaa' + this.startDate);
+    
     
 
     // if(this.startDate !== undefined && this.endDate !== undefined) {
-    if(localStorage.length > 0) {
+    if(this.startDate !== null && this.endDate !== null) {
       this.isSearched = true;
+
+      let username = localStorage.getItem('username');
+      if(username !== null) {
+        this.isLoggedIn = true;
+      }
 
       let accommodationUnitSearch = new AccommodationUnitSearchDTO();
       accommodationUnitSearch.startDate = this.startDate;

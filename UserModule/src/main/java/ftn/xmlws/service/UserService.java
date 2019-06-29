@@ -14,10 +14,12 @@ import ftn.xmlws.dto.UserCommentsDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
 import ftn.xmlws.enums.Role;
+import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.Address;
 import ftn.xmlws.model.CommentRate;
 import ftn.xmlws.model.Reservation;
 import ftn.xmlws.model.User;
+import ftn.xmlws.repository.AccommodationRepository;
 import ftn.xmlws.repository.UserRepository;
 
 @Service
@@ -26,6 +28,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private AccommodationRepository accommodationRepository;
 	
 	public boolean isRegistered(String username) {
 		
@@ -80,6 +84,19 @@ public class UserService {
 		this.userRepository.save(user);
 		
 		return userDTO;
+	}
+	
+	public User addAccommodationToAgent(Long uId, Long aId) {
+		User user = this.userRepository.getOne(uId);
+		if(!this.isRegistered(user.getUsername()) || user.getRole() != Role.AGENT) {
+			return null;
+		}
+		Accommodation accommodation = accommodationRepository.getOne(aId);
+		if(accommodation.isDeleted()) {
+			return null;
+		}
+		user.setAgentOfAccommodation(accommodation);
+		return userRepository.save(user);
 	}
 	
 	public UserDTO getUserByUsername(String username) {

@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     } else {
       this._communicationService.emitChange(true);
     }
-       
+    
     //this.getSearchStatusChange.emit(newValue)
     console.log(localStorage);
   }

@@ -26,7 +26,7 @@ export class AppComponent {
   }
 
   public loadDuzina() {
-    if(localStorage.length > 0) {
+    if(localStorage.getItem('username') !== null) {
       this.ima = true;
     } else {
       this.ima = false;

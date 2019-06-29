@@ -64,7 +64,6 @@ export class HotelsComponent implements OnInit {
         sct.service = data.services[i];
         sct.checked = false;
         this.servicesChecked.push(sct); 
-        console.log(this.servicesChecked[i].service.name);
       }
     });
 
@@ -86,6 +85,8 @@ export class HotelsComponent implements OnInit {
       localStorage.setItem('startDate', JSON.stringify(this.startDate));
       localStorage.setItem('endDate', JSON.stringify(this.endDate));
       
+      console.log(localStorage);
+
       this.searchAccommodations(accommodationSearch).subscribe(data => {
         this.accommodations = data.accommodations;
       });
@@ -93,7 +94,6 @@ export class HotelsComponent implements OnInit {
   }
 
   public reset() {
-    console.log("usao u reset");
 
     this.startDate = undefined;
     this.endDate = undefined;
@@ -123,7 +123,6 @@ export class HotelsComponent implements OnInit {
       return acc
     }, [])
     this.servicesToSearch = checkedStrings;
-    console.log(this.servicesToSearch);
   }
 
   public changeAccommodationType() {
@@ -134,7 +133,6 @@ export class HotelsComponent implements OnInit {
       return acc
     }, [])
     this.accommodationTypesToSearch = checkedStrings;
-    console.log(this.accommodationTypesToSearch);
   }
 
   public getAccommodations() : Observable<AccommodationsDTO> {
@@ -152,9 +150,6 @@ export class HotelsComponent implements OnInit {
   public searchAccommodations(accommodationToSearch: AccommodationSearchDTO) : Observable<AccommodationsDTO> {
     return this.accommodationService.getAccommodationsWithFreeUnits(accommodationToSearch);
   }  
-
- 
-   
 
  
 }

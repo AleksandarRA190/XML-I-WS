@@ -82,7 +82,7 @@ public class AccommodationController {
 		return new ResponseEntity<>(new AccommodationDTO(accommodation), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/withFreeUnits", method = RequestMethod.POST)
+	@RequestMapping(value="/withFreeUnits", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<AccommodationsDTO> getAccommodationsWithFreeUnits(@RequestBody AccommodationSearchDTO asDTO) {
 		AccommodationsDTO accommodationsDTO = new AccommodationsDTO();
 		accommodationsDTO.setAccommodations(accommodationService.getAccommodationWithFreeUnits(asDTO));
@@ -142,8 +142,8 @@ public class AccommodationController {
 		return new ResponseEntity<>(unitsDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{id}/freeUnits", method = RequestMethod.POST)
-	public ResponseEntity<AccommodationUnitsDTO> getFreeAccommodationUnits(@PathVariable("id") Long accommodationId, AccommodationUnitSearchDTO ausDTO) {
+	@RequestMapping(value="/{id}/freeUnits", method = RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<AccommodationUnitsDTO> getFreeAccommodationUnits(@PathVariable("id") Long accommodationId,@RequestBody AccommodationUnitSearchDTO ausDTO) {
 		AccommodationUnitsDTO unitsDTO = new AccommodationUnitsDTO();
 		unitsDTO.setAccommodationUnits(accommodationUnitService.getFreeAccommodationUnits(ausDTO.getStartDate(), ausDTO.getEndDate(), accommodationId));
 		if(unitsDTO.getAccommodationUnits().isEmpty())
