@@ -5,6 +5,7 @@ public class CommentDTO {
 	private String contentOfComment;
 	private boolean approvedComment;
 	private Long reservationId;
+	private int rate;
 	
 	public CommentDTO() {
 		
@@ -32,6 +33,14 @@ public class CommentDTO {
 
 	public void setReservationId(Long reservationId) {
 		this.reservationId = reservationId;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
 	}
 
 

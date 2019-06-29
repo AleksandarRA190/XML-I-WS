@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
-import ftn.xmlws.dto.ReservationsDTO;
 import ftn.xmlws.service.ReservationService;
 
 @RestController
@@ -42,16 +41,6 @@ public class ReservationController {
 			return new ResponseEntity<>(reservation, HttpStatus.OK);
 		}
 	}
-	
-	@RequestMapping(value="/unit/{id}", method = RequestMethod.GET)
-	public ResponseEntity<ReservationsDTO> getReservationsByUnit(@PathVariable("id") Long auId) {
-		ReservationsDTO reservationsDTO = new ReservationsDTO();
-		reservationsDTO.setReservations(reservationService.getReservationsByUnit(auId));
-		if(reservationsDTO.getReservations().isEmpty()) 
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(reservationsDTO, HttpStatus.OK);
-	}
-	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Void> makeReservation(@RequestBody ReservationDTO reservation) {
@@ -138,6 +127,14 @@ public class ReservationController {
 		boolean success = reservationService.deleteComment(id);
 
 		return new ResponseEntity<>(success,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/rateReservation", method = RequestMethod.POST)
+	public ResponseEntity<ReservationDTO> rateReservation(@RequestBody CommentDTO commentRateDTO) {
+
+		ReservationDTO res = reservationService.rateReservation(commentRateDTO.getReservationId(), commentRateDTO.getRate());
+
+		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
 	
 	

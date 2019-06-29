@@ -1,18 +1,26 @@
 package ftn.xmlws.controller;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import ftn.xmlws.dto.AccommodationCommentsDTO;
 import ftn.xmlws.dto.AccommodationDTO;
 import ftn.xmlws.dto.AccommodationSearchDTO;
 import ftn.xmlws.dto.AccommodationTypesDTO;
@@ -28,6 +36,7 @@ import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.service.AccommodationService;
 import ftn.xmlws.service.AccommodationUnitService;
 import ftn.xmlws.service.ServiceService;
+import ftn.xmlws.service.UploadService;
 
 @RestController
 @RequestMapping(value = "/accommodation")
@@ -41,6 +50,11 @@ public class AccommodationController {
 	
 	@Autowired
 	private ServiceService serviceService;
+	
+	 @Autowired
+	 private UploadService storageService;
+	 
+	 private List<String> files = new ArrayList<String>();
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<AccommodationsDTO> getAccommodations() {
@@ -179,6 +193,48 @@ public class AccommodationController {
 		
 		return new ResponseEntity<>(avg,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/{id}/comments", method = RequestMethod.GET)
+	public ResponseEntity<AccommodationCommentsDTO> getAllComments(@PathVariable("id") Long accommodationId) {
+		AccommodationCommentsDTO retVal = accommodationService.getAllComments(accommodationId);
+		System.out.println(retVal.getComments().size());
+		
+		return new ResponseEntity<>(retVal,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{id}/image", method = RequestMethod.GET)
+	public ResponseEntity<List<Byte>> getImage(@PathVariable("id") Long accommodationId) {
+		List<Byte> retVal = new ArrayList<Byte>();
+		try {
+			retVal = accommodationService.getImages(accommodationId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(retVal,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getallfiles", method = RequestMethod.GET)
+	  public ResponseEntity<List<String>> getListFiles(Model model) {
+		storageService.init();
+		List<String> fileNames = files
+	        .stream().map(fileName -> MvcUriComponentsBuilder
+	            .fromMethodName(AccommodationController.class, "getFile", fileName).build().toString())
+	        .collect(Collectors.toList());
+	 
+	    return ResponseEntity.ok().body(fileNames);
+	  }
+	 
+	  @GetMapping("/files/{filename:.+}")
+	  @ResponseBody
+	  public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+		  storageService.init();
+		  Resource file = storageService.loadFile(filename);
+	    return ResponseEntity.ok()
+	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+	        .body(file);
+	  }
+	
 	
 	
 	

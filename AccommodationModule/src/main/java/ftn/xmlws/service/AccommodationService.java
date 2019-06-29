@@ -1,5 +1,8 @@
 package ftn.xmlws.service;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import ftn.xmlws.dto.AccommodationCommentsDTO;
 import ftn.xmlws.dto.AccommodationDTO;
 import ftn.xmlws.dto.AccommodationSearchDTO;
 import ftn.xmlws.dto.AccommodationUnitDTO;
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ServiceDTO;
 import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.enums.Role;
 import ftn.xmlws.model.Accommodation;
 import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.model.Address;
+import ftn.xmlws.model.Image;
 import ftn.xmlws.model.Reservation;
 import ftn.xmlws.repository.AccommodationRepository;
 
@@ -145,5 +151,50 @@ public class AccommodationService {
 		}
 		
 		return sumOfRatings/numOfRatings;
+	}
+	
+	public AccommodationCommentsDTO getAllComments(Long id) {
+		Accommodation accommodation = this.findAccommodation(id);
+
+		List<AccommodationUnit> units = accommodation.getAccommodationUnits();
+		System.out.println("Units "  + units.size());
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		for(AccommodationUnit au : units)
+			reservations.addAll(au.getReservations());
+		
+		System.out.println("Res "  + reservations.size());
+		
+		AccommodationCommentsDTO retVal = new AccommodationCommentsDTO();
+		for(Reservation r : reservations) {
+			if(r.getCommentRate()!=null) {
+				if(r.getCommentRate().isApprovedComment() && r.getCommentRate().getContentOfComment() != null) {
+					if(!(r.getCommentRate().getContentOfComment().equals(""))) {
+						System.out.println("Usao");
+						CommentDTO comment = new CommentDTO();
+						comment.setContentOfComment(r.getCommentRate().getContentOfComment());
+						comment.setReservationId(r.getId());
+						comment.setApprovedComment(r.getCommentRate().isApprovedComment());
+						comment.setRate(r.getCommentRate().getOcena());
+						retVal.getComments().add(comment);
+						retVal.getUserDTOs().add(new UserDTO(r.getGuest()));
+					}
+					
+				}
+			}
+		}
+		
+		return retVal;
+	}
+	
+	public List<Byte> getImages(Long id) throws IOException {
+		Accommodation accommodation = this.findAccommodation(id);
+
+		Path currentRelativePath = Paths.get("");
+		
+		String s = 	currentRelativePath.toAbsolutePath().toString();
+		s+="/data/img/101_img1.jpg";
+		Image image = new Image(s);
+		
+		return image.getImage();
 	}
 }

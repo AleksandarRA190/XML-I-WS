@@ -5,6 +5,7 @@ import { AccommodationsDTO } from '../dto/AccommodationsDTO';
 import { AccommodationDTO } from '../dto/AccommodationDTO';
 import { AccommodationTypesDTO } from '../dto/AccommodationTypesDTO';
 import { AccommodationSearchDTO } from '../dto/AccommodationSearchDTO';
+import { AccommodationCommentsDTO } from 'app/dto/AccommodationCommentsDTO';
 
 @Injectable()
 export class AccommodationService {
@@ -33,5 +34,14 @@ export class AccommodationService {
     getAvgRating(id: number) : Observable<number> {
         return this.http.get<number>(this.baseUrl+"/getAvgRating/"+id);
     }
+
+    getAllComments(id: number) : Observable<AccommodationCommentsDTO> {
+        return this.http.get<AccommodationCommentsDTO>(this.baseUrl+"/"+id+"/comments");
+    }
+
+    getFiles(): Observable<string[]> {
+        return this.http.get<string[]>(this.baseUrl + '/getallfiles')
+    }
+    
      
 }

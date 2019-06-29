@@ -15,6 +15,10 @@ import { AccommodationUnitSearchDTO } from '../dto/AccommodationUnitSearchDTO';
 import { AccommodationSearchDTO } from '../dto/AccommodationSearchDTO';
 import { AccommodationUnitPeriodPrice } from '../dto/AccommodationUnitPeriodPriceDTO';
 import { PeriodPriceDatesDTO } from '../dto/PeriodPriceDatesDTO';
+import { AccommodationCommentsDTO } from 'app/dto/AccommodationCommentsDTO';
+import { UserCommentPair } from 'app/dto/UserCommentPair';
+import { ReservationDTO } from 'app/dto/ReservationDTO';
+import { UserDTO } from 'app/dto/UserDTO';
 
 @Component({
   selector: 'app-hotel',
@@ -32,8 +36,12 @@ export class HotelComponent implements OnInit {
   accommodationUnitsPeriodPrices: AccommodationUnitPeriodPrice[] = [];
   startDate: Date;
   endDate: Date;
-  
+  userCommentPairs: UserCommentPair[] = [];
+  accommodationComments : AccommodationCommentsDTO = new AccommodationCommentsDTO();
   isSearched: boolean = false;
+
+  showFile = false
+  fileUploads: Observable<string[]>
 
 
   constructor( 
@@ -49,7 +57,21 @@ export class HotelComponent implements OnInit {
       this.id = + params['id'];
       this.getAvgRating(this.id).subscribe(data => {
         this.avgRating = data;
-        // console.log(data);
+        console.log(data);
+        this.getAllComments(this.id).subscribe(data => {
+          this.accommodationComments= data;
+          let i = 0;
+          for(let comment of this.accommodationComments.comments) {
+            let pair = new UserCommentPair();
+            pair.comment = comment;
+            pair.userDTO = this.accommodationComments.userDTOs[i];
+            this.userCommentPairs.push(pair);
+            i++;
+          }
+          
+          
+          console.log(this.userCommentPairs);
+        });
       });
     });
 
@@ -59,7 +81,12 @@ export class HotelComponent implements OnInit {
 
     this.startDate = JSON.parse(localStorage.getItem('startDate'));
     this.endDate = JSON.parse(localStorage.getItem('endDate'));
+
+    localStorage.setItem('startReservation', JSON.stringify(this.startDate));
+    localStorage.setItem('endReservation', JSON.stringify(this.endDate));
+    console.log('aaaa' + this.startDate);
     
+
     // if(this.startDate !== undefined && this.endDate !== undefined) {
     if(localStorage.length > 0) {
       this.isSearched = true;
@@ -130,6 +157,32 @@ export class HotelComponent implements OnInit {
     return this.accommodationUnitService.getPeriodPriceForMonth(accommodationUnitId, periodPriceDates);
   }
 
+  public getAllComments(id: number) : Observable<AccommodationCommentsDTO> {
+    return this.accommodationService.getAllComments(id);
+  }
+
+  public makeReservation(unit : AccommodationUnitDTO){
+    
+    let res = new ReservationDTO();
+    let guest = new UserDTO();
+    guest.username = localStorage.getItem('username');
+
+    res.accommodationUnit =  unit;
+    res.agentConfirmed = false;
+    res.confirmed = false;
+    res.guest = guest;
+    let temp = JSON.parse(localStorage.getItem('startReservation'));
+    temp+="T00:00:00";
+    res.fromDateTime = temp;
+    temp =  JSON.parse(localStorage.getItem('endReservation'));
+    temp+="T00:00:00";
+    res.toDateTime = temp;
+
+    console.log(res);
+    this.http.put('http://localhost:9007/reservation/add', res).subscribe((data) => {});
+
+    alert('Reserved sucessfully!');
+  }
 
   
 }

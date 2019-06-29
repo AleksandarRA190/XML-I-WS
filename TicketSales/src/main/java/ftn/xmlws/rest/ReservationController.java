@@ -46,9 +46,18 @@ public class ReservationController {
 	@RequestMapping(value = "/add", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Void> makeReservation(@RequestBody ReservationDTO reservation) {
 
+		System.out.println("ajjajajaj");
+		System.out.println("From " + reservation.getFromDateTime());
+		
+		System.out.println("Glavni bekend: " + reservation.getGuest().getUsername());
+		
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ReservationDTO> request = new HttpEntity<>(reservation,headers);
+		
+		System.out.println("From " + reservation.getFromDateTime());
+		
 		System.out.println("Glavni bekend: " + reservation.getGuest().getUsername());
 		
 		restTemplate.put("http://localhost:9008/reservation/add", request);

@@ -32,6 +32,9 @@ public class ReservationDTO {
 			this.commentDTO = new CommentDTO();
 			commentDTO.setApprovedComment(res.getCommentRate().isApprovedComment());
 			commentDTO.setContentOfComment(res.getCommentRate().getContentOfComment());
+			commentDTO.setReservationId(res.getId());
+			commentDTO.setRate(res.getCommentRate().getOcena());
+			
 		}
 	}
 

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.ReservationDTO;
 import ftn.xmlws.dto.UserReservationsDTO;
-import ftn.xmlws.model.AccommodationUnit;
 import ftn.xmlws.model.CommentRate;
 import ftn.xmlws.model.Reservation;
 import ftn.xmlws.repository.AccommodationUnitRepository;
@@ -31,7 +30,6 @@ public class ReservationService {
 	
 	
 	
-	
 	public List<ReservationDTO> getAllReservations() {
 		List<Reservation> list = new ArrayList<Reservation>();
 		reservationRepository.findAll().forEach(list::add);
@@ -49,27 +47,12 @@ public class ReservationService {
 		Reservation r = reservationRepository.getOne(id);
 		
 		if(r!=null) {
-			System.out.println(r.getAccommodationUnit().getAccommodation().getId());
 			ReservationDTO res = new ReservationDTO(r);
-			System.out.println(res.getAccommodationUnit().getAccommodation().getId());
 			return res;
 		} else {
 			return null;		
 		}
 		
-	}
-	
-	public List<ReservationDTO> getReservationsByUnit(Long auId) {
-		AccommodationUnit au = accommodationUnitRepository.getOne(auId);
-		if(au == null)
-			return null;
-		List<Reservation> list = au.getReservations();
-		List<ReservationDTO> listDTO = new ArrayList<>();
-		for(Reservation r : list) {
-			if(!r.isDeleted())
-				listDTO.add(new ReservationDTO(r));
-		}
-		return listDTO;
 	}
 
 	public boolean makeReservation(ReservationDTO reservation) {
@@ -141,12 +124,6 @@ public class ReservationService {
 		return false;
 	}
 	
-	public UserReservationsDTO getUserReservations(String username) {
-		UserReservationsDTO retVal = new UserReservationsDTO();
-		
-		return retVal;
-	}
-	
 	public boolean addEditComment(Long id, String content) {
 		Reservation reservation = this.reservationRepository.getOne(id);
 		
@@ -172,6 +149,31 @@ public class ReservationService {
 		return true;
 	}
 	
+	public ReservationDTO rateReservation(Long reservationId, int rate) {
+		Reservation reservation = this.reservationRepository.getOne(reservationId);
+		
+		if(reservation == null)
+			return null;
+		
+		if(reservation.getCommentRate() == null && reservation.isAgentConfirmed()) {
+			
+			CommentRate newComment = new CommentRate();
+			newComment.setOcena(rate);
+			reservation.setCommentRate(newComment);
+			this.reservationRepository.save(reservation);
+		} else {
+			if(reservation.isAgentConfirmed()) {
+				CommentRate existingComment = reservation.getCommentRate();
+				existingComment.setOcena(rate);
+				reservation.setCommentRate(existingComment);
+				this.reservationRepository.save(reservation);	
+			}
+			
+		}
+		
+		return new ReservationDTO(reservation);
+	}
+	
 	public CommentDTO getComment(Long reserVationId) {
 		Reservation reservation = this.reservationRepository.getOne(reserVationId);
 		
@@ -185,6 +187,7 @@ public class ReservationService {
 			CommentDTO commentDTO = new CommentDTO();
 			commentDTO.setContentOfComment(comment.getContentOfComment());
 			commentDTO.setApprovedComment(comment.isApprovedComment());
+			commentDTO.setRate(comment.getOcena());
 			commentDTO.setReservationId(reserVationId);
 			return commentDTO;
 		}

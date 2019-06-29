@@ -96,7 +96,7 @@
           <h3 class="title">
             <a href="#">Floor: {{accommodationUnitPeriodPrice.accommodationUnit.floor}} Room: {{accommodationUnitPeriodPrice.accommodationUnit.number}}</a>
           </h3>
-          <a class="all-deals" href="">Make a reservation</a>
+          <a class="all-deals"  (click)="makeReservation(accommodationUnitPeriodPrice.accommodationUnit)">Make a reservation</a>
         </div>
       </div>
       <hr>
@@ -123,6 +123,26 @@
       <div class="jumbotron jumbotron-service">
         <h4 class="service-name">{{service.name}}</h4>
         <p>{{service.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid padding" *ngIf="startDate == undefined">
+  <div class="row welcome text-centre">
+    <div class="col-12">
+      <h1 class="display-4">Comments</h1>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let pair of userCommentPairs">
+      <div class="jumbotron jumbotron-service">
+        <h4 class="service-name">{{pair.userDTO.username}}</h4>
+        <p>{{pair.comment.contentOfComment}}</p>
       </div>
     </div>
   </div>

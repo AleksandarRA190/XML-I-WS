@@ -28,9 +28,16 @@
             <p *ngIf="res.confirmed" class="card-text" style="background-color: #fed136; color:black">Confirmed</p>
             <p *ngIf="res.agentConfirmed" class="card-text" class="card-text"
               style="background-color: black; color: #fed136">Agent confirmed !</p>
-            <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO" class="btn btn-primary"
-              [routerLink]="['/postComment', res.id]">Add comment</a>
-
+            <div *ngIf="!res.commentDTO">
+                <a *ngIf="res.agentConfirmed && res.confirmed" class="btn btn-primary"
+                [routerLink]="['/postComment', res.id]">Add comment</a>    
+            </div>
+            <div *ngIf="res.commentDTO">
+                <a *ngIf="res.agentConfirmed && res.confirmed && !res.commentDTO.contentOfComment" class="btn btn-primary"
+                [routerLink]="['/postComment', res.id]">Add comment</a>  
+            </div>
+              
+            
 
             <!--Za sada home, posle komponenta commenta! commentratedto znaci sadrzace i ocenu posle, sada ovako-->
 
@@ -84,13 +91,14 @@
 
 
             <div *ngIf="res.commentDTO">
-              <h6>Comment</h6>
-              <p style="font-style: italic;"> {{res.commentDTO.contentOfComment}} </p>
-              <p *ngIf="res.commentDTO.approvedComment">>Posted</p>
-              <p *ngIf="!res.commentDTO.approvedComment">Waiting to be approved by admin...</p>
-              <a class="btn btn-primary" [routerLink]="['/postComment', res.id]">Edit comment</a> &nbsp;
-              <a class="btn btn-primary" (click)="deleteComment(res.id)">Delete comment</a>
-
+              <div *ngIf="res.commentDTO.contentOfComment">
+                  <h6>Comment</h6>
+                  <p style="font-style: italic;"> {{res.commentDTO.contentOfComment}} </p>
+                  <p *ngIf="res.commentDTO.approvedComment">>Posted</p>
+                  <p *ngIf="!res.commentDTO.approvedComment">Waiting to be approved by admin...</p>
+                  <a class="btn btn-primary" [routerLink]="['/postComment', res.id]">Edit comment</a> &nbsp;
+                  <a class="btn btn-primary" (click)="deleteComment(res.id)">Delete comment</a>    
+              </div>
             </div>
 
           </div>
