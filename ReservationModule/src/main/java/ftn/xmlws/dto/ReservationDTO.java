@@ -14,6 +14,7 @@ public class ReservationDTO {
 	private LocalDateTime toDateTime;
 	private boolean agentConfirmed;
 	private CommentDTO commentDTO;
+	private double price = 0;
     
 	public ReservationDTO() {
 		
@@ -27,6 +28,9 @@ public class ReservationDTO {
 		this.toDateTime = res.getToDateTime();
 		this.accommodationUnit = new AccommodationUnitDTO(res.getAccommodationUnit());
 		this.agentConfirmed = res.isAgentConfirmed();
+
+		this.price = res.getPrice();
+		
 		
 		if(res.getCommentRate() != null) {
 			this.commentDTO = new CommentDTO();
@@ -100,6 +104,14 @@ public class ReservationDTO {
 
 	public void setCommentDTO(CommentDTO commentDTO) {
 		this.commentDTO = commentDTO;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	

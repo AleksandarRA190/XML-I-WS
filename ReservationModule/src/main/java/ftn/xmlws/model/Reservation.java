@@ -157,6 +157,8 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Message", required = true)
     protected List<Message> messages = new ArrayList<>();
+    
+    protected double price;
 
     
 public Reservation() {}
@@ -178,6 +180,7 @@ public Reservation() {}
 		this.toDateTime = res.getToDateTime();
 		this.confirmed = res.isConfirmed();
 		this.agentConfirmed = res.isAgentConfirmed();
+		this.price = res.getPrice();
 	}
 
     
@@ -399,6 +402,16 @@ public Reservation() {}
 
 	public void setAgentConfirmed(boolean agentConfirmed) {
 		this.agentConfirmed = agentConfirmed;
+	}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 
