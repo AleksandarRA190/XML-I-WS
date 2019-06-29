@@ -11,5 +11,6 @@ export class ReservationDTO {
     guest : UserDTO;
     accommodationUnit : AccommodationUnitDTO = new AccommodationUnitDTO();
     commentDTO : CommentDTO = new CommentDTO();
+    price : number;
 
 }
