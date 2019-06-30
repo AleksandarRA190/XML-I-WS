@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://booking.uns.ac.rs/reservation"
+    xmlns:accommodation="http://booking.uns.ac.rs/accommodation"
+    xmlns:reservation="http://booking.uns.ac.rs/reservation"
+    xmlns:users="http://booking.uns.ac.rs/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    jxb:version="2.0">
+
+    <xs:import namespace="http://booking.uns.ac.rs/users" schemaLocation="korisnici.xsd"/>
+    <xs:import namespace="http://booking.uns.ac.rs/accommodation" schemaLocation="smestaj.xsd"/>
+    <xs:element name="Reservation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="From_date" type="xs:dateTime"/>
+                <xs:element name="To_date" type="xs:dateTime"/>
+                <xs:element name="Confirmed" type="xs:boolean"/>
+                <xs:element minOccurs="0" name="Comment_rate">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="Comment">
+                                <xs:complexType>
+                                    <xs:attribute name="Odobren" type="xs:boolean"/>
+                                    <xs:attribute name="Sadrzaj" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Rate">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                        <xs:enumeration value="1"/>
+                                        <xs:enumeration value="2"/>
+                                        <xs:enumeration value="3"/>
+                                        <xs:enumeration value="4"/>
+                                        <xs:enumeration value="5"/>
+                                        <xs:enumeration value="0"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Date_of_rate" type="xs:dateTime"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="accommodation:Accommodation_unit"/>
+                <xs:element name="Guest" type="users:User"/>
+                <xs:element name="Id" type="xs:long"/>
+                <xs:element name="Deleted" type="xs:boolean"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="reservation:Message">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:property name="messages"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="price" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Message_content" type="xs:string"/>
+                <xs:element name="Seen" type="xs:boolean"/>
+                <xs:element name="Sender" type="users:User"/>
+                <xs:element name="Reciever" type="users:User"/>
+                <xs:element name="Id" type="xs:long"/>
+                <xs:element name="Deleted" type="xs:boolean"/>
+                <xs:element ref="reservation:Reservation"/>
+                <xs:element ref="accommodation:Accommodation"/>
+                <xs:element name="datumVreme" type="xs:dateTime"/>
+            </xs:sequence>
+            <xs:attribute name="Date_of_message" type="xs:dateTime"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
