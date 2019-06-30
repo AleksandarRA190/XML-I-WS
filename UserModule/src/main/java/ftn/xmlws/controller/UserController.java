@@ -88,20 +88,9 @@ public class UserController {
 		System.out.println(userToReg.toString());
 		boolean success = userService.registerUser(userToReg);
 		
-
-		
 		if (!success) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
-			try {
-				mailService.sendNotification(userToReg); // send mail
-			} catch (MailException m) {
-				System.out.println("Neuspesno poslata poruka");
-				m.printStackTrace();
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-
-			//mailService.sendNotification(userService.getUserByUsernameNoDto(userToReg.getUsername()));
 			return new ResponseEntity<>(HttpStatus.CREATED);	
 		}
 	}
