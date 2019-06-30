@@ -14,7 +14,7 @@ export class ConversationComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get<ReservationDTO[]>('http://localhost:9007/users/getByUser/'+localStorage.getItem('username')).subscribe((data) => {
+    this.http.get<ReservationDTO[]>('http://localhost:8762/ticketSales-service/users/getByUser/'+localStorage.getItem('username')).subscribe((data) => {
       this.reservations = data;
       console.log(data);
     });

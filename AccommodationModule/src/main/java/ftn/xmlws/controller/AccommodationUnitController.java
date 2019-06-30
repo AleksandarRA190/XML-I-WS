@@ -57,7 +57,7 @@ public class AccommodationUnitController {
 	//**************************** PERIOD PRICES ***************************************
 	
 	
-	@RequestMapping(value="{id}/prices", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}/prices", method = RequestMethod.GET)
 	public ResponseEntity<PeriodPricesDTO> getPrices(@PathVariable("id") Long unitId) {
 		PeriodPricesDTO pricesDTO = new PeriodPricesDTO();
 		pricesDTO.setPeriodPrices(periodPriceService.getAllPeriodPrices(unitId));

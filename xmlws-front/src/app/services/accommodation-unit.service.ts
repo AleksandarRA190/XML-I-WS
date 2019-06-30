@@ -12,7 +12,7 @@ import { ReservationDTO } from 'app/dto/ReservationDTO';
 @Injectable()
 export class AccommodationUnitService {
 
-  private baseUrl = 'http://localhost:9009/accommodation';
+  private baseUrl = 'http://localhost:8762/ticketSales-service/accommodation';
   private headers = { headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*' }) }
 
   constructor(private http: HttpClient) { }
@@ -35,7 +35,7 @@ export class AccommodationUnitService {
 
   makeReservation(reservationDTO: ReservationDTO) {
     console.log('aaaaddd');
-    return this.http.put('http://localhost:9007/reservation/add', reservationDTO);
+    return this.http.put('http://localhost:8762/ticketSales-service/reservation/add', reservationDTO);
   }
   
 }

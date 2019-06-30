@@ -48,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
     let allOk = this.validatePasswords();
     if(allOk) {
       console.log(this.request);
-      this.http.post('http://localhost:9007/users/changePassword', this.request).subscribe((data) => {
+      this.http.post('http://localhost:8762/ticketSales-service/users/changePassword', this.request).subscribe((data) => {
         if(data == true) {
           alert('Password successfully changed!');
           this.router.navigate(['profile']);

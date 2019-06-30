@@ -19,7 +19,7 @@ export class ConfirmationPageComponent implements OnInit {
       this.id = + params['id'];
     });
 
-    this.http.get("http://localhost:9007/users/activate/" + this.id)
+    this.http.get("http://localhost:8762/ticketSales-service/users/activate/" + this.id)
     .subscribe(data => {
       
     });

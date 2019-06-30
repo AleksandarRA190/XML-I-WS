@@ -15,18 +15,15 @@ export class UserEditProfileComponent implements OnInit {
   constructor(private http : HttpClient, private router : Router) { }
 
   ngOnInit() {
-    this.http.get<UserDTO>('http://localhost:9007/users/'+localStorage.getItem('username')).subscribe((data) => {
+    this.http.get<UserDTO>('http://localhost:8762/ticketSales-service/users/'+localStorage.getItem('username')).subscribe((data) => {
       this.user = data;
     });
   }
 
   public onSubmit() {
-    this.http.post<UserDTO>('http://localhost:9007/users/update',this.user).subscribe((data) => {
+    this.http.post<UserDTO>('http://localhost:8762/ticketSales-service/users/update',this.user).subscribe((data) => {
       console.log(data);
       this.router.navigate(['profile']);
     });
   }
-
-
-
 }

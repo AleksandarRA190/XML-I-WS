@@ -17,7 +17,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get<UserDTO>('http://localhost:9007/users/' + localStorage.getItem('username')).subscribe((data) => {
+    this.http.get<UserDTO>('http://localhost:8762/ticketSales-service/users/' + localStorage.getItem('username')).subscribe((data) => {
       console.log(data);
       this.user = data;
 

@@ -7,7 +7,7 @@ import { ServicesDTO } from '../dto/ServicesDTO';
 @Injectable()
 export class ServiceService {
 
-  private baseUrl = 'http://localhost:9009/accommodation';
+  private baseUrl = 'http://localhost:8762/accommodation-service/accommodation';
   private headers = { headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*' }) }
 
   constructor(private http: HttpClient) { }

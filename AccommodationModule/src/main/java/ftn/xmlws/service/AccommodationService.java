@@ -52,7 +52,7 @@ public class AccommodationService {
 	}
 
 	public AccommodationDTO getAccommodationByUser(String username) {
-		UserDTO userDTO = restTemplate.getForObject("http://localhost:9006/users/" + username, UserDTO.class);
+		UserDTO userDTO = restTemplate.getForObject("http://user-service/users/" + username, UserDTO.class);
 		System.out.println(userDTO.getUsername() + " -> " + userDTO.getAccommodation().getName());
 		if (userDTO.getRole().equals(Role.AGENT)) {
 			return userDTO.getAccommodation();

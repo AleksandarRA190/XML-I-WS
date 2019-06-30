@@ -10,7 +10,7 @@ import { AccommodationCommentsDTO } from 'app/dto/AccommodationCommentsDTO';
 @Injectable()
 export class AccommodationService {
 
-    private baseUrl = 'http://localhost:9009/accommodation';
+    private baseUrl = 'http://localhost:8762/ticketSales-service/accommodation';
     private headers = { headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*' }) }
     
     constructor(private http: HttpClient) { }

@@ -72,7 +72,7 @@ public class AccommodationUnitController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Double> request = new HttpEntity<Double>(headers);
-		ResponseEntity<Double> price = restTemplate.postForEntity(uri + "/" + unitId + "/priceForPeriod", request,
+		ResponseEntity<Double> price = restTemplate.postForEntity(uri + "/" + unitId + "/priceForPeriod", periodPriceDatesDTO,
 				Double.class);
 		return new ResponseEntity<>(price.getBody(), HttpStatus.OK);
 	}

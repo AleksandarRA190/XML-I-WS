@@ -151,7 +151,7 @@ export class RegistrationComponent implements OnInit {
     let allOk = this.validation();
     if(allOk) {
       console.log(this.user);
-      this.http.put('http://localhost:9007/users/register', this.user).subscribe((data) => {});
+      this.http.put('http://localhost:8762/ticketSales-service/users/register', this.user).subscribe((data) => {});
       alert("Go to your email to activate your account");
       this.user = new UserDTO();
       this.confirmPassword = "";

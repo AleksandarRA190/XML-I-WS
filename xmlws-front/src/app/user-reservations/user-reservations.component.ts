@@ -23,14 +23,14 @@ export class UserReservationsComponent implements OnInit {
   }
 
   public reload() {
-    this.http.get<ReservationDTO[]>('http://localhost:9007/users/getByUser/'+localStorage.getItem('username')).subscribe((data) => {
+    this.http.get<ReservationDTO[]>('http://localhost:8762/ticketSales-service/users/getByUser/'+localStorage.getItem('username')).subscribe((data) => {
       this.reservations = data;
       console.log(data);
     });
   }
 
   public confirm(id : number) {
-    this.http.get('http://localhost:9007/reservation/confirm/'+id).subscribe((data) => {
+    this.http.get('http://localhost:8762/ticketSales-service/reservation/confirm/'+id).subscribe((data) => {
       alert('Reservation successfuly confirmed!');
       this.reload();
     });
@@ -67,7 +67,7 @@ export class UserReservationsComponent implements OnInit {
   }
 
   public deleteComment(id) {
-    this.http.delete<boolean>('http://localhost:9007/reservation/comment/'+id).subscribe((data) => {
+    this.http.delete<boolean>('http://localhost:8762/ticketSales-service/reservation/comment/'+id).subscribe((data) => {
       alert('Comment successfully deleted');
       console.log(data);
       this.reload();
@@ -82,7 +82,7 @@ export class UserReservationsComponent implements OnInit {
     myCommentDTO.reservationId = id;
     myCommentDTO.rate = rate;
     
-    this.http.post('http://localhost:9007/reservation/rateReservation',myCommentDTO).subscribe((data) => {
+    this.http.post('http://localhost:8762/ticketSales-service/reservation/rateReservation',myCommentDTO).subscribe((data) => {
       this.reload();
     });
   }

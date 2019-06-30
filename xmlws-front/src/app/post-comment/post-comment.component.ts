@@ -25,7 +25,7 @@ export class PostCommentComponent implements OnInit {
     this.request.approvedComment = false;
     this.request.contentOfComment = "";
 
-    this.http.get<ReservationDTO>('http://localhost:9007/reservation/'+this.id).subscribe((data) => {
+    this.http.get<ReservationDTO>('http://localhost:8762/ticketSales-service/reservation/'+this.id).subscribe((data) => {
       this.reservation = data;
       console.log(data);
       if(this.reservation.commentDTO != null) {
@@ -39,7 +39,7 @@ export class PostCommentComponent implements OnInit {
 
 
   onSubmit() {
-    this.http.post('http://localhost:9007/reservation/addEditComment/'+this.id, this.request).subscribe((data) => {
+    this.http.post('http://localhost:8762/ticketSales-service/reservation/addEditComment/'+this.id, this.request).subscribe((data) => {
         if(data == true) {
           alert('Comment sent to approval!');
         } else {

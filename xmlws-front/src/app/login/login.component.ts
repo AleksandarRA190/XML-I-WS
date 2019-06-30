@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDTO } from '../dto/UserDTO';
 import { LoginDTO } from '../dto/LoginDTO';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginDto : LoginDTO = new LoginDTO();
   user : UserDTO = new UserDTO();
+  private headers = { headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*' }) }
 
   constructor(private http: HttpClient, private router : Router) { }
 
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     //validation remaining
     console.log(this.loginDto);
-    this.http.post('http://localhost:9007/users/login', this.loginDto).subscribe((data) => {
+    this.http.post('http://localhost:8762/ticketSales-service/users/login', this.loginDto).subscribe((data) => {
       alert('Successful login!');
       localStorage.setItem('username',this.loginDto.username);
       console.log(localStorage);

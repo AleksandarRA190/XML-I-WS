@@ -186,7 +186,7 @@ export class HotelComponent implements OnInit {
     res.toDateTime = temp;
 
     console.log(res);
-    this.http.put('http://localhost:9007/reservation/add', res).subscribe((data) => {});
+    this.http.put('http://localhost:8762/ticketSales-service/reservation/add', res).subscribe((data) => {});
 
     alert('Reserved sucessfully!');
   }

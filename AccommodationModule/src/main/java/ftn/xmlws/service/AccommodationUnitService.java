@@ -109,7 +109,7 @@ public class AccommodationUnitService {
 			boolean isReserved = false;
 			ReservationsDTO reservationsDTO = null;
 			try {
-				reservationsDTO = restTemplate.getForObject("http://localhost:9008/reservation/unit/" + unit.getId(), ReservationsDTO.class);
+				reservationsDTO = restTemplate.getForObject("http://reservation-service/reservation/unit/" + unit.getId(), ReservationsDTO.class);
 				for(ReservationDTO reservationDTO : reservationsDTO.getReservations()) {
 					if(!(endDate.isBefore(reservationDTO.getFromDateTime().toLocalDate()) || startDate.isAfter(reservationDTO.getToDateTime().toLocalDate()))) {
 						isReserved = true;
