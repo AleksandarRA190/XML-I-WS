@@ -28,7 +28,7 @@ public class MessageController {
 	@RequestMapping(value = "/byReservation/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<MessageDTO>> getMessagesByReservation(@PathVariable("id") Long id) {
 		
-		Messages retVal = restTemplate.getForObject("http://localhost:9010/message/byReservation/"+id, Messages.class);
+		Messages retVal = restTemplate.getForObject("http://message-service/message/byReservation/"+id, Messages.class);
 		
 		return new ResponseEntity<>(retVal.getMessages(),HttpStatus.OK);
 
@@ -36,7 +36,7 @@ public class MessageController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<MessageDTO> getMessage(@PathVariable("id") Long id) {
-		MessageDTO message = restTemplate.getForObject("http://localhost:9010/message/"+id, MessageDTO.class);
+		MessageDTO message = restTemplate.getForObject("http://message-service/message/"+id, MessageDTO.class);
 		if (message == null) {
 			return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
 		} else {
@@ -51,7 +51,7 @@ public class MessageController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<MessageDTO> request = new HttpEntity<>(message,headers);
 		
-		restTemplate.put("http://localhost:9010/message/send", request);
+		restTemplate.put("http://message-service/message/send", request);
 
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
@@ -63,7 +63,7 @@ public class MessageController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<MessageDTO> request = new HttpEntity<>(message,headers);
 		
-		restTemplate.put("http://localhost:9010/message/respond/"+id, request);
+		restTemplate.put("http://message-service/message/respond/"+id, request);
 
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}

@@ -25,7 +25,7 @@ public class AddressController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Address> getAddress(@PathVariable("id") Long id) {
 		
-		Address address = restTemplate.getForObject("http://localhost:9006/address/"+id, Address.class);
+		Address address = restTemplate.getForObject("http://user-service/address/"+id, Address.class);
 		
 		if (address == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -41,7 +41,7 @@ public class AddressController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Address> request = new HttpEntity<>(address,headers);
 		
-		restTemplate.put("http://localhost:9006/address/add", request);
+		restTemplate.put("http://user-service/address/add", request);
 		return new ResponseEntity<>(HttpStatus.OK);	
 	}
 
@@ -53,7 +53,7 @@ public class AddressController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Address> request = new HttpEntity<>(address,headers);
 		
-		Address updatedAddress = restTemplate.postForObject("http://localhost:9006/address/update",request,Address.class);
+		Address updatedAddress = restTemplate.postForObject("http://user-service/address/update",request,Address.class);
 		
 		return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
 	}
@@ -61,7 +61,7 @@ public class AddressController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteAddress(@PathVariable("id") Long id) {
 
-		String url = "http://localhost:9006/address/"+id;
+		String url = "http://user-service/address/"+id;
 		restTemplate.delete(url);
 
 		return new ResponseEntity<>(HttpStatus.OK);

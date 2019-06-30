@@ -34,7 +34,7 @@ public class ReservationController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ReservationDTO> getResevation(@PathVariable("id") Long id) {
 		
-		ReservationDTO reservation = restTemplate.getForObject("http://localhost:9008/reservation/"+id, ReservationDTO.class);
+		ReservationDTO reservation = restTemplate.getForObject("http://reservation-service/reservation/"+id, ReservationDTO.class);
 		
 		if (reservation == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,7 +50,7 @@ public class ReservationController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ReservationDTO> request = new HttpEntity<>(reservation,headers);
 		
-		restTemplate.put("http://localhost:9008/reservation/add", request);
+		restTemplate.put("http://reservation-service/reservation/add", request);
 		
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
@@ -63,7 +63,7 @@ public class ReservationController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ReservationDTO> request = new HttpEntity<>(reservation,headers);
 		
-		ReservationDTO updatedReservation = restTemplate.postForObject("http://localhost:9008/reservation/update",request,ReservationDTO.class);
+		ReservationDTO updatedReservation = restTemplate.postForObject("http://reservation-service/reservation/update",request,ReservationDTO.class);
 		
 		return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
 	}
@@ -71,7 +71,7 @@ public class ReservationController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteReservation(@PathVariable("id") Long id) {
 
-		String url = "http://localhost:9008/reservation/"+id;
+		String url = "http://reservation-service/reservation/"+id;
 		restTemplate.delete(url);
 
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -80,7 +80,7 @@ public class ReservationController {
 	@RequestMapping(value = "/confirm/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Void> confirmReservation(@PathVariable("id") Long id) {
 		
-		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/confirm/"+id, boolean.class);
+		boolean success = restTemplate.getForObject("http://reservation-service/reservation/confirm/"+id, boolean.class);
 		
 		if (!success) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -92,7 +92,7 @@ public class ReservationController {
 	@RequestMapping(value = "/agentConfirm/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Void> agentConfirmReservation(@PathVariable("id") Long id) {
 		
-		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/agentConfirm/"+id, boolean.class);
+		boolean success = restTemplate.getForObject("http://reservation-service/reservation/agentConfirm/"+id, boolean.class);
 		
 		if (!success) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -104,7 +104,7 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/addEditComment/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> addEditComment(@PathVariable("id") Long id,@RequestBody CommentDTO commentDTO) {
-		boolean success = restTemplate.postForObject("http://localhost:9008/reservation/addEditComment/"+id, commentDTO,boolean.class);
+		boolean success = restTemplate.postForObject("http://reservation-service/reservation/addEditComment/"+id, commentDTO,boolean.class);
 		if (success) {
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		} else {
@@ -114,7 +114,7 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/confirmComment/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> confirmComment(@PathVariable("id") Long id) {
-		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/confirmComment/"+id,boolean.class);
+		boolean success = restTemplate.getForObject("http://reservation-service/reservation/confirmComment/"+id,boolean.class);
 		if (success) {
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		} else {
@@ -124,7 +124,7 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/getComment/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CommentDTO> getComment(@PathVariable("id") Long id) {
-		CommentDTO comment = restTemplate.getForObject("http://localhost:9008/reservation/getComment/"+id,CommentDTO.class);
+		CommentDTO comment = restTemplate.getForObject("http://reservation-service/reservation/getComment/"+id,CommentDTO.class);
 		
 		if (comment != null) {
 			return new ResponseEntity<>(comment,HttpStatus.OK);
@@ -136,7 +136,7 @@ public class ReservationController {
 	@RequestMapping(value = "/comment/{idReservation}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteComment(@PathVariable("idReservation") Long id) {
 		
-		restTemplate.delete("http://localhost:9008/reservation/comment/"+id);
+		restTemplate.delete("http://reservation-service/reservation/comment/"+id);
 
 		return new ResponseEntity<>(true,HttpStatus.OK);
 	}
@@ -144,7 +144,7 @@ public class ReservationController {
 	@RequestMapping(value = "/rateReservation", method = RequestMethod.POST)
 	public ResponseEntity<ReservationDTO> rateReservation(@RequestBody CommentDTO commentRateDTO) {
 
-		ReservationDTO res  = restTemplate.postForObject("http://localhost:9008/reservation/"
+		ReservationDTO res  = restTemplate.postForObject("http://reservation-service/reservation/"
 				+ "rateReservation",commentRateDTO,ReservationDTO.class);
 
 		if (res!=null) {

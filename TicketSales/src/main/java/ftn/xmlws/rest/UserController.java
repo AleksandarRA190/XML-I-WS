@@ -33,7 +33,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsers() {
 
-		Users users = restTemplate.getForObject("http://localhost:9006/users", Users.class);
+		Users users = restTemplate.getForObject("http://user-service/users", Users.class);
 
 		return new ResponseEntity<>(users.getUsers(), HttpStatus.OK);
 	}
@@ -41,7 +41,7 @@ public class UserController {
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username) {
 		
-		UserDTO user = restTemplate.getForObject("http://localhost:9006/users/"+username, UserDTO.class);
+		UserDTO user = restTemplate.getForObject("http://user-service/users/"+username, UserDTO.class);
 	
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<UserDTO> loginUser(@RequestBody LoginDTO userToLog) {
 		
-		UserDTO user = restTemplate.postForObject("http://localhost:9006/users/login",userToLog, UserDTO.class);
+		UserDTO user = restTemplate.postForObject("http://user-service/users/login",userToLog, UserDTO.class);
 		
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -69,7 +69,7 @@ public class UserController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<UserDTO> request = new HttpEntity<>(userToReg,headers);
 		
-		restTemplate.put("http://localhost:9006/users/register", request);
+		restTemplate.put("http://user-service/users/register", request);
 		
 		return new ResponseEntity<>(HttpStatus.OK);	
 	}
@@ -82,7 +82,7 @@ public class UserController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<UserDTO> request = new HttpEntity<>(userUpdated,headers);
 		
-		UserDTO user = restTemplate.postForObject("http://localhost:9006/users/update",request,UserDTO.class);
+		UserDTO user = restTemplate.postForObject("http://user-service/users/update",request,UserDTO.class);
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
@@ -90,7 +90,7 @@ public class UserController {
 	@RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteUser(@PathVariable("username") String username) {
 
-		String url = "http://localhost:9006/users/"+username;
+		String url = "http://user-service/users/"+username;
 		restTemplate.delete(url);
 
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -100,7 +100,7 @@ public class UserController {
 	@RequestMapping(value = "/activate/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Void> activateUser(@PathVariable("id") Long id) {
 
-		restTemplate.getForObject("http://localhost:9006/users/activate/"+id,Void.class);
+		restTemplate.getForObject("http://user-service/users/activate/"+id,Void.class);
 
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -108,7 +108,7 @@ public class UserController {
 	@RequestMapping(value = "/block/{username}", method = RequestMethod.GET)
 	public ResponseEntity<Void> blockUser(@PathVariable("username") String username) {
 
-		restTemplate.getForObject("http://localhost:9006/users/block/"+username,Void.class);
+		restTemplate.getForObject("http://user-service/users/block/"+username,Void.class);
 		
 		return new ResponseEntity<>(HttpStatus.OK);	
 	}
@@ -116,7 +116,7 @@ public class UserController {
 	@RequestMapping(value = "/unblock/{username}", method = RequestMethod.GET)
 	public ResponseEntity<Void> unblockUser(@PathVariable("username") String username) {
 
-		restTemplate.getForObject("http://localhost:9006/users/unblock/"+username,Void.class);
+		restTemplate.getForObject("http://user-service/users/unblock/"+username,Void.class);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -124,7 +124,7 @@ public class UserController {
 	@RequestMapping(value = "/changeRole/{username}/{role}", method = RequestMethod.GET)
 	public ResponseEntity<Void> changeRole(@PathVariable("username") String username, @PathVariable("role") String role) {
 		
-		restTemplate.getForObject("http://localhost:9006/users/changeRole/"+username+"/"+role,Void.class);
+		restTemplate.getForObject("http://user-service/users/changeRole/"+username+"/"+role,Void.class);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -134,7 +134,7 @@ public class UserController {
 	public ResponseEntity<List<ReservationDTO>> getUserReservations(@PathVariable("username") String username) {
 		
 		UserReservationsDTO response = restTemplate.getForObject(
-				"http://localhost:9006/users/getByUser/"+username, UserReservationsDTO.class);
+				"http://user-service/users/getByUser/"+username, UserReservationsDTO.class);
 		
 		return new ResponseEntity<>(response.getReservations(),HttpStatus.OK);
 		
@@ -147,7 +147,7 @@ public class UserController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ChangePasswordDTO> request = new HttpEntity<>(changePass,headers);
 		Boolean response = restTemplate.postForObject(
-				"http://localhost:9006/users/changePassword", request, Boolean.class);
+				"http://user-service/users/changePassword", request, Boolean.class);
 		
 		return new ResponseEntity<>(response,HttpStatus.OK);
 		
