@@ -15,35 +15,33 @@ import ftn.xmlws.dto.Rating;
 @RequestMapping(value = "/ratingRest")
 public class RatingController {
 
-	
 	@Autowired
 	private RestTemplate restTemplate;
 
 	@RequestMapping(value = "/{commentId}", method = RequestMethod.GET)
 	public ResponseEntity<Rating> getRating(Long reservationId) {
-		
+
 		Rating rating = new Rating();
 		rating.setCommentId(56L);
 		rating.setId(1L);
 		rating.setRate(4);
-		
+
 		return new ResponseEntity<>(rating, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{rate}/{commentId}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> addRating(@PathVariable("rate") int rate, @PathVariable("commentId") Long commentId) {
-		//ratingService.saveRating(rate, commentId);
-		
+		// ratingService.saveRating(rate, commentId);
+
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/accommodationAverage/{accommodationId}", method = RequestMethod.GET)
 	public ResponseEntity<Double> getAvgRating(@PathVariable("accommodationId") Long id) {
-		Double avg = restTemplate.getForObject("http://localhost:9009/accommodation/getAvgRating/" + id,Double.class);
-		
-		return new ResponseEntity<>(avg,HttpStatus.OK);
+		Double avg = restTemplate.getForObject("http://accommodation-service/accommodation/getAvgRating/" + id,
+				Double.class);
+
+		return new ResponseEntity<>(avg, HttpStatus.OK);
 	}
 
-	
-	
 }

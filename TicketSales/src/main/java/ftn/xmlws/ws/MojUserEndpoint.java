@@ -49,7 +49,7 @@ public class MojUserEndpoint {
 	public GetUsersResponse processGetUsersRequest(@RequestPayload GetUsersRequest request) {
 		GetUsersResponse response = new GetUsersResponse();
 
-		Users users = restTemplate.getForObject("http://localhost:9006/users", Users.class);
+		Users users = restTemplate.getForObject("http://user-service/users", Users.class);
 		List<UserDTO> userDTOs = users.getUsers();
 		System.out.println(userDTOs.size());
 		for (UserDTO u : userDTOs) {
@@ -60,13 +60,15 @@ public class MojUserEndpoint {
 
 		return response;
 	}
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/mojuser", localPart = "addAccommodationToUserRequest")
 	@ResponsePayload
-	public AddAccommodationToUserResponse processAddAccommodationToUserRequest(@RequestPayload AddAccommodationToUserRequest request) {
+	public AddAccommodationToUserResponse processAddAccommodationToUserRequest(
+			@RequestPayload AddAccommodationToUserRequest request) {
 		AddAccommodationToUserResponse response = new AddAccommodationToUserResponse();
-		
-		User user = restTemplate.getForObject("http://localhost:9006/users/" + request.getUserId() + "/addAccommodation/" + request.getAccommodationId(), User.class);
+
+		User user = restTemplate.getForObject("http://user-service/users/" + request.getUserId() + "/addAccommodation/"
+				+ request.getAccommodationId(), User.class);
 		response.setUser(user);
 		return response;
 	}
@@ -77,7 +79,7 @@ public class MojUserEndpoint {
 		GetUserCommentsResponse response = new GetUserCommentsResponse();
 
 		UserCommentsDTO comments = restTemplate.getForObject(
-				"http://localhost:9006/users/getUserComments/" + request.getUsername(), UserCommentsDTO.class);
+				"http://user-service/users/getUserComments/" + request.getUsername(), UserCommentsDTO.class);
 		List<CommentDTO> commentDTOs = comments.getComments();
 		for (CommentDTO c : commentDTOs) {
 			Comment comment = new Comment();
@@ -105,7 +107,7 @@ public class MojUserEndpoint {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<User> requestHeader = new HttpEntity<>(userToRegister, headers);
-		restTemplate.put("http://localhost:9006/users/register", requestHeader);
+		restTemplate.put("http://user-service/users/register", requestHeader);
 		response.setSuccess(true);
 
 		return response;
@@ -116,7 +118,7 @@ public class MojUserEndpoint {
 	public DeleteResponse processDeleteRequest(@RequestPayload DeleteRequest request) {
 		DeleteResponse response = new DeleteResponse();
 
-		String url = "http://localhost:9006/users/" + request.getUsername();
+		String url = "http://user-service/users/" + request.getUsername();
 		restTemplate.delete(url);
 		response.setSuccess(true);
 
@@ -128,7 +130,7 @@ public class MojUserEndpoint {
 	public ActivateResponse processActivateRequest(@RequestPayload ActivateRequest request) {
 		ActivateResponse response = new ActivateResponse();
 
-		restTemplate.getForObject("http://localhost:9006/users/activate/" + request.getId(), Void.class);
+		restTemplate.getForObject("http://user-service/users/activate/" + request.getId(), Void.class);
 		response.setSuccess(true);
 
 		return response;
@@ -139,7 +141,7 @@ public class MojUserEndpoint {
 	public BlockResponse processBlockRequest(@RequestPayload BlockRequest request) {
 		BlockResponse response = new BlockResponse();
 
-		restTemplate.getForObject("http://localhost:9006/users/block/" + request.getUsername(), Void.class);
+		restTemplate.getForObject("http://user-service/users/block/" + request.getUsername(), Void.class);
 		response.setSuccess(true);
 
 		return response;
@@ -150,7 +152,7 @@ public class MojUserEndpoint {
 	public UnblockResponse processUnblockRequest(@RequestPayload UnblockRequest request) {
 		UnblockResponse response = new UnblockResponse();
 
-		restTemplate.getForObject("http://localhost:9006/users/unblock/" + request.getUsername(), Void.class);
+		restTemplate.getForObject("http://user-service/users/unblock/" + request.getUsername(), Void.class);
 		response.setSuccess(true);
 
 		return response;
@@ -161,7 +163,7 @@ public class MojUserEndpoint {
 	public LoginResponse processLoginRequest(@RequestPayload LoginRequest request) {
 		LoginResponse response = new LoginResponse();
 
-		User user = restTemplate.postForObject("http://localhost:9006/users/login", request.getLoginDTO(), User.class);
+		User user = restTemplate.postForObject("http://user-service/users/login", request.getLoginDTO(), User.class);
 		response.setUser(user);
 
 		return response;

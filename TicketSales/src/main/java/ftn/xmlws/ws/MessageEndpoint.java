@@ -35,7 +35,7 @@ public class MessageEndpoint {
 	@ResponsePayload
 	public GetMessagesByReservationResponse processGetMessagesByReservationRequest(@RequestPayload GetMessagesByReservationRequest request) {
 		GetMessagesByReservationResponse response = new GetMessagesByReservationResponse();
-		Messages messages = restTemplate.getForObject("http://localhost:9010/message/byReservation/"+request.getId(), Messages.class);
+		Messages messages = restTemplate.getForObject("http://message-service/message/byReservation/"+request.getId(), Messages.class);
 
 		List<Message> toAdd = new ArrayList<Message>();
 		for(MessageDTO msg : messages.getMessages()) {
@@ -71,7 +71,7 @@ public class MessageEndpoint {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<MessageDTO> httpRequest = new HttpEntity<>(m,headers);
 		
-		restTemplate.put("http://localhost:9010/message/respond/"+reservationId, httpRequest);
+		restTemplate.put("http://message-service/message/respond/"+reservationId, httpRequest);
 		
 		response.setSuccess(true);
 	  	return response;

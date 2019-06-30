@@ -1,7 +1,5 @@
 package ftn.xmlws.ws;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -36,106 +34,116 @@ public class ServiceEndpoint {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	
-	//********************************* get, add, remove service from/to accommodation *****************************************88
+
+	// ********************************* get, add, remove service from/to
+	// accommodation *****************************************88
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "getAccommodationServicesRequest")
 	@ResponsePayload
-	public GetAccommodationServicesResponse processGetAccommodationServicesRequest(@RequestPayload GetAccommodationServicesRequest request) {
+	public GetAccommodationServicesResponse processGetAccommodationServicesRequest(
+			@RequestPayload GetAccommodationServicesRequest request) {
 		GetAccommodationServicesResponse response = new GetAccommodationServicesResponse();
-	  
-		ServicesDTO ssDTO = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", ServicesDTO.class);
-		
+
+		ServicesDTO ssDTO = restTemplate.getForObject(
+				"http://accommodation-service/accommodation/" + request.getAccommodationId() + "/services", ServicesDTO.class);
+
 		Services ss = new Services();
-		for(ServiceDTO sDTO: ssDTO.getServices()) {
+		for (ServiceDTO sDTO : ssDTO.getServices()) {
 			Service s = new Service(sDTO);
 			ss.getServices().add(s);
 		}
-		
+
 		response.setServices(ss);
-	  	return response;
-	 }
-	
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "addAccommodationServiceRequest")
 	@ResponsePayload
-	public AddAccommodationServiceResponse processAddAccommodationServiceRequest(@RequestPayload AddAccommodationServiceRequest request) {
+	public AddAccommodationServiceResponse processAddAccommodationServiceRequest(
+			@RequestPayload AddAccommodationServiceRequest request) {
 		AddAccommodationServiceResponse response = new AddAccommodationServiceResponse();
-	  
+
 		Service service = request.getService();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
-		
-		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services", requestHeader, Service.class);
+
+		Service s = restTemplate.postForObject(
+				"http://accommodation-service/accommodation/" + request.getAccommodationId() + "/services", requestHeader,
+				Service.class);
 		response.setService(s);
-		
-	  	return response;
-	 }
-	
+
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "removeAccommodationServiceRequest")
 	@ResponsePayload
 	public void processRemoveAccommodationServiceRequest(@RequestPayload RemoveAccommodationServiceRequest request) {
-		restTemplate.delete("http://localhost:9009/accommodation/" + request.getAccommodationId() + "/services/" + request.getAccommodationServiceId());
-	 }
-	
-	// ********************************** crud for services **************************************************
+		restTemplate.delete("http://accommodation-service/accommodation/" + request.getAccommodationId() + "/services/"
+				+ request.getAccommodationServiceId());
+	}
+
+	// ********************************** crud for services
+	// **************************************************
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "getServicesRequest")
 	@ResponsePayload
 	public GetServicesResponse processGetServicesRequest(@RequestPayload GetServicesRequest request) {
 		GetServicesResponse response = new GetServicesResponse();
-	  
-		ServicesDTO ssDTO = restTemplate.getForObject("http://localhost:9009/accommodation/services" , ServicesDTO.class);
-		
+
+		ServicesDTO ssDTO = restTemplate.getForObject("http://accommodation-service/accommodation/services",
+				ServicesDTO.class);
+
 		Services ss = new Services();
-		for(ServiceDTO sDTO: ssDTO.getServices()) {
+		for (ServiceDTO sDTO : ssDTO.getServices()) {
 			Service s = new Service(sDTO);
 			ss.getServices().add(s);
 		}
-		
+
 		response.setServices(ss);
-	  	return response;
-	 }
-	
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "getServiceRequest")
 	@ResponsePayload
 	public GetServiceResponse processGetServiceRequest(@RequestPayload GetServiceRequest request) {
 		GetServiceResponse response = new GetServiceResponse();
-	  
-		Service s = restTemplate.getForObject("http://localhost:9009/accommodation/services/" + request.getServiceId(), Service.class);
+
+		Service s = restTemplate.getForObject("http://accommodation-service/accommodation/services/" + request.getServiceId(),
+				Service.class);
 		response.setService(s);
-		
-	  	return response;
-	 }
-	
+
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "addServiceRequest")
 	@ResponsePayload
 	public AddServiceResponse processAddServiceRequest(@RequestPayload AddServiceRequest request) {
 		AddServiceResponse response = new AddServiceResponse();
-		
+
 		Service service = request.getService();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
-		Service s = restTemplate.postForObject("http://localhost:9009/accommodation/services", requestHeader, Service.class);
+		Service s = restTemplate.postForObject("http://accommodation-service/accommodation/services", requestHeader,
+				Service.class);
 		response.setService(s);
-		
-	  	return response;
-	 }
-	
+
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "updateServiceRequest")
 	@ResponsePayload
 	public void processUpdateServiceRequest(@RequestPayload UpdateServiceRequest request) {
 		Service service = request.getService();
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Service> requestHeader = new HttpEntity<>(service, headers);
-		restTemplate.put("http://localhost:9009/accommodation/services/" + request.getService().getId(), requestHeader);
-	 }
-	
+		restTemplate.put("http://accommodation-service/accommodation/services/" + request.getService().getId(), requestHeader);
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/service", localPart = "removeServiceRequest")
 	@ResponsePayload
 	public void processRemoveServiceRequest(@RequestPayload RemoveServiceRequest request) {
-		restTemplate.delete("http://localhost:9009/accommodation/services/" + request.getServiceId());
-	 }
+		restTemplate.delete("http://accommodation-service/accommodation/services/" + request.getServiceId());
+	}
 }

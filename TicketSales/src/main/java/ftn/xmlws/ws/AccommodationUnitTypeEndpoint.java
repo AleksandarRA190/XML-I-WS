@@ -35,7 +35,7 @@ public class AccommodationUnitTypeEndpoint {
 	public GetAccommodationUnitTypesResponse processGetAccommodationUnitTypesRequest(@RequestPayload GetAccommodationUnitTypesRequest request) {
 		GetAccommodationUnitTypesResponse response = new GetAccommodationUnitTypesResponse();
 		
-		AccommodationUnitTypesDTO autsDTO = restTemplate.getForObject("http://localhost:9009/accommodationUnitType", AccommodationUnitTypesDTO.class);
+		AccommodationUnitTypesDTO autsDTO = restTemplate.getForObject("http://accommodation-service/accommodationUnitType", AccommodationUnitTypesDTO.class);
 		
 		AccommodationUnitTypes auts = new AccommodationUnitTypes();
 		for(AccommodationUnitTypeDTO autDTO: autsDTO.getAccommodationUnitTypes()) {
@@ -53,7 +53,7 @@ public class AccommodationUnitTypeEndpoint {
 	public GetAccommodationUnitTypeResponse processGetAccommodationUnitTypeRequest(@RequestPayload GetAccommodationUnitTypeRequest request) {
 		GetAccommodationUnitTypeResponse response = new GetAccommodationUnitTypeResponse();
 	  
-		AccommodationUnitType aut = restTemplate.getForObject("http://localhost:9009/accommodationUnitType/" + request.getAccommodationUnitTypeId(), AccommodationUnitType.class);
+		AccommodationUnitType aut = restTemplate.getForObject("http://accommodation-service/accommodationUnitType/" + request.getAccommodationUnitTypeId(), AccommodationUnitType.class);
 		response.setAccommodationUnitType(aut);
 		
 	  	return response;
@@ -69,7 +69,7 @@ public class AccommodationUnitTypeEndpoint {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<AccommodationUnitType> requestHeader = new HttpEntity<>(accommodationUnitType, headers);
-		AccommodationUnitType aut = restTemplate.postForObject("http://localhost:9009/accommodationUnitType", requestHeader, AccommodationUnitType.class);
+		AccommodationUnitType aut = restTemplate.postForObject("http://accommodation-service/accommodationUnitType", requestHeader, AccommodationUnitType.class);
 		response.setAccommodationUnitType(aut);
 		
 	  	return response;
@@ -84,14 +84,14 @@ public class AccommodationUnitTypeEndpoint {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<AccommodationUnitType> requestHeader = new HttpEntity<>(accommodationUnitType, headers);
 		
-		restTemplate.put("http://localhost:9009/accommodationUnitType/" + request.getAccommodationUnitType().getId(), requestHeader);
+		restTemplate.put("http://accommodation-service/accommodationUnitType/" + request.getAccommodationUnitType().getId(), requestHeader);
 	 }
 	
 	
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnitType", localPart = "removeAccommodationUnitTypeRequest")
 	@ResponsePayload
 	public void processRemoveAccommodationUnitTypeRequest(@RequestPayload RemoveAccommodationUnitTypeRequest request) {
-		restTemplate.delete("http://localhost:9009/accommodationUnitType/" + request.getAccommodationUnitTypeId());
+		restTemplate.delete("http://accommodation-service/accommodationUnitType/" + request.getAccommodationUnitTypeId());
 	 }
 
 }

@@ -34,7 +34,7 @@ public class ReservationEndpoint {
 		Long reservationId = request.getIdReservation();
 		System.out.println(reservationId);
 		
-		restTemplate.delete("http://localhost:9008/reservation/comment/"+reservationId);
+		restTemplate.delete("http://reservation-service/reservation/comment/"+reservationId);
 		response.setSuccess(true);
 		
 	  	return response;
@@ -57,7 +57,7 @@ public class ReservationEndpoint {
 		GetReservationResponse response = new GetReservationResponse();
 		
 		Long id = request.getId();
-		Reservation retVal = restTemplate.getForObject("http://localhost:9008/reservation/"+id, Reservation.class);
+		Reservation retVal = restTemplate.getForObject("http://reservation-service/reservation/"+id, Reservation.class);
 		
 		response.setReservation(retVal);
 	  
@@ -73,7 +73,7 @@ public class ReservationEndpoint {
 		
 		Long reservationId = request.getIdReservation();
 		
-		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/agentConfirm/"+reservationId, boolean.class);
+		boolean success = restTemplate.getForObject("http://reservation-service/reservation/agentConfirm/"+reservationId, boolean.class);
 		
 		response.setSuccess(success);
 		
@@ -88,7 +88,7 @@ public class ReservationEndpoint {
 		
 		Long idReservation = request.getIdReservation();
 		
-		boolean success = restTemplate.getForObject("http://localhost:9008/reservation/confirmComment/"+idReservation, boolean.class);
+		boolean success = restTemplate.getForObject("http://reservation-service/reservation/confirmComment/"+idReservation, boolean.class);
 		response.setSuccess(success);
 		
 	  	return response;

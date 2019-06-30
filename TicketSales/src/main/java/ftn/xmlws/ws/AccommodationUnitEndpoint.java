@@ -29,64 +29,74 @@ public class AccommodationUnitEndpoint {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnit", localPart = "getAccommodationUnitsRequest")
 	@ResponsePayload
-	public GetAccommodationUnitsResponse processGetAccommodationUnitsRequest(@RequestPayload GetAccommodationUnitsRequest request) {
+	public GetAccommodationUnitsResponse processGetAccommodationUnitsRequest(
+			@RequestPayload GetAccommodationUnitsRequest request) {
 		GetAccommodationUnitsResponse response = new GetAccommodationUnitsResponse();
-	  
-		AccommodationUnitsDTO ausDTO = restTemplate.getForObject("http://localhost:9009/accommodation/" + request.getId() + "/units", AccommodationUnitsDTO.class);
-		
+
+		AccommodationUnitsDTO ausDTO = restTemplate.getForObject(
+				"http://accommodation-service/accommodation/" + request.getId() + "/units",
+				AccommodationUnitsDTO.class);
+
 		AccommodationUnits aus = new AccommodationUnits();
-		for(AccommodationUnitDTO auDTO: ausDTO.getAccommodationUnits()) {
+		for (AccommodationUnitDTO auDTO : ausDTO.getAccommodationUnits()) {
 			AccommodationUnit au = new AccommodationUnit(auDTO);
 			aus.getAccommodationUnits().add(au);
 		}
 		response.setAccommodationUnits(aus);
-	  	return response;
-	 }
-	
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnit", localPart = "getAccommodationUnitRequest")
 	@ResponsePayload
-	public GetAccommodationUnitResponse processGetAccommodationUnitRequest(@RequestPayload GetAccommodationUnitRequest request) {
+	public GetAccommodationUnitResponse processGetAccommodationUnitRequest(
+			@RequestPayload GetAccommodationUnitRequest request) {
 		GetAccommodationUnitResponse response = new GetAccommodationUnitResponse();
-	  
-		AccommodationUnit au = restTemplate.getForObject("http://localhost:9009/accommodation/units/" + request.getAccommodationUnitId(), AccommodationUnit.class);
+
+		AccommodationUnit au = restTemplate.getForObject(
+				"http://accommodation-service/accommodation/units/" + request.getAccommodationUnitId(),
+				AccommodationUnit.class);
 		response.setAccommodationUnit(au);
-		
-	  	return response;
-	 }
-	
+
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnit", localPart = "addAccommodationUnitRequest")
 	@ResponsePayload
-	public AddAccommodationUnitResponse processAddAccommodationUnitRequest(@RequestPayload AddAccommodationUnitRequest request) {
+	public AddAccommodationUnitResponse processAddAccommodationUnitRequest(
+			@RequestPayload AddAccommodationUnitRequest request) {
 		AddAccommodationUnitResponse response = new AddAccommodationUnitResponse();
-		
+
 		AccommodationUnit unit = request.getAccommodationUnit();
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<AccommodationUnit> requestHeader = new HttpEntity<>(unit, headers);
-		AccommodationUnit au = restTemplate.postForObject("http://localhost:9009/accommodation/"+request.getAccommodationId()+"/units", requestHeader, AccommodationUnit.class);
+		AccommodationUnit au = restTemplate.postForObject(
+				"http://accommodation-service/accommodation/" + request.getAccommodationId() + "/units", requestHeader,
+				AccommodationUnit.class);
 		response.setAccommodationUnit(au);
-		
-	  	return response;
-	 }
-	
+
+		return response;
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnit", localPart = "updateAccommodationUnitRequest")
 	@ResponsePayload
 	public void processUpdateAccommodationUnitRequest(@RequestPayload UpdateAccommodationUnitRequest request) {
 		AccommodationUnit unit = request.getAccommodationUnit();
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<AccommodationUnit> requestHeader = new HttpEntity<>(unit, headers);
-		restTemplate.put("http://localhost:9009/accommodation/units/" + request.getAccommodationUnit().getId(), requestHeader);
-	 }
-	
+		restTemplate.put("http://accommodation-service/accommodation/units/" + request.getAccommodationUnit().getId(),
+				requestHeader);
+	}
+
 	@PayloadRoot(namespace = "http://www.projectXml.com/accommodationUnit", localPart = "removeAccommodationUnitRequest")
 	@ResponsePayload
 	public void processRemoveAccommodationUnitRequest(@RequestPayload RemoveAccommodationUnitRequest request) {
-		restTemplate.delete("http://localhost:9009/accommodation/units/" + request.getAccommodationUnitId());
-	 }
+		restTemplate.delete("http://accommodation-service/accommodation/units/" + request.getAccommodationUnitId());
+	}
 }
